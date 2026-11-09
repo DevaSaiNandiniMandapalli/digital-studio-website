@@ -16,20 +16,19 @@ export function FinalCta() {
       />
       <div className="shell relative">
         <Reveal>
-          <p className="font-mono text-[0.66rem] tracking-[0.16em] text-white/40 uppercase">
+          <p className="font-mono text-[0.66rem] tracking-[0.16em] text-white/55 uppercase">
             Ready when you are
           </p>
           <h2 className="display mt-5 max-w-3xl text-white">
-            You have a business idea. We have the skills to bring it online.
+            Let's Build Something Worth Remembering.
           </h2>
           <p className="mt-5 max-w-lg text-[0.92rem] leading-relaxed text-white/55">
-            Tell us what you do and what you need. We will recommend the right approach, a clear price
-            and a realistic timeline — usually within one business day.
+            Tell us what you do and what you need. We will recommend the right approach, a clear price and a realistic timeline — usually within one business day.
           </p>
 
           <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
             <a href="#contact" className="btn btn-accent">
-              Start a project
+              Start Your Project
               <ArrowUpRight className="size-4" />
             </a>
             <a
@@ -43,7 +42,7 @@ export function FinalCta() {
             </a>
           </div>
 
-          <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-night-line pt-6 text-[0.8rem] text-white/45">
+          <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-line pt-6 text-[0.8rem] text-white/60">
             <a href={`tel:${site.phoneRaw}`} className="inline-flex items-center gap-2 transition-colors hover:text-white">
               <Phone className="size-3.5" />
               {site.phone}

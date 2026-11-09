@@ -31,7 +31,7 @@ export function SectionHeading({
       )}
     >
       <div className={cn('max-w-2xl', align === 'center' && 'mx-auto')}>
-        <span className={cn('eyebrow', dark && 'text-white/45')}>{eyebrow}</span>
+        <span className={cn('eyebrow', dark && 'text-white/60')}>{eyebrow}</span>
         <h2 className={cn('h2 mt-4', dark ? 'text-white' : 'text-ink')}>{title}</h2>
         {copy && (
           <p className={cn('lede mt-4', dark && 'text-white/60', align === 'center' && 'mx-auto')}>{copy}</p>

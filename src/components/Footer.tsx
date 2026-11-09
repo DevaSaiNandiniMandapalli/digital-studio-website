@@ -30,7 +30,7 @@ export function Footer() {
               every size.
             </p>
             <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-line bg-surface py-1.5 pr-3 pl-2.5">
-              <span className="size-1.5 rounded-full bg-accent-deep" />
+              <span className="size-1.5 rounded-full bg-accent" />
               <span className="text-[0.68rem] text-mute">{site.availability}</span>
             </div>
           </div>

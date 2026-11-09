@@ -46,19 +46,21 @@ export function Navbar() {
 
   return (
     <>
-      <header
-        className={cn(
-          'fixed inset-x-0 top-0 z-50 transition-all duration-300',
-          scrolled ? 'border-b border-line bg-canvas/70 backdrop-blur-2xl' : 'border-b border-transparent',
-        )}
-      >
-        <div className="shell flex h-[4.5rem] items-center justify-between gap-6">
+      <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 transition-all duration-300 sm:px-5 sm:pt-4">
+        <div
+          className={cn(
+            'mx-auto flex h-[3.75rem] max-w-[76rem] items-center justify-between gap-6 rounded-full border px-4 transition-all duration-500 sm:px-5',
+            scrolled
+              ? 'border-line bg-[#070f1e]/85 shadow-[0_18px_44px_-28px_rgba(0,0,0,0.95)] backdrop-blur-2xl'
+              : 'border-line/70 bg-[#091426]/55 backdrop-blur-xl',
+          )}
+        >
           <a href="#home" aria-label={`${site.name} — home`} className="shrink-0">
-            <Logo showName={false} className="md:hidden" />
-            <Logo className="hidden md:flex" />
+            <Logo showName={false} className="lg:hidden" />
+            <Logo className="hidden lg:flex" />
           </a>
 
-          <nav aria-label="Primary" className="hidden md:block">
+          <nav aria-label="Primary" className="hidden lg:block">
             <ul className="flex items-center gap-1">
               {navLinks.map((link) => {
                 const id = link.href.replace('#', '');
@@ -88,8 +90,8 @@ export function Navbar() {
           </nav>
 
           <div className="flex items-center gap-2">
-            <a href="#contact" className="btn btn-primary hidden h-10 px-5 text-[0.82rem] md:inline-flex">
-              Let&apos;s Talk
+            <a href="#contact" className="btn btn-primary hidden h-10 px-5 text-[0.82rem] lg:inline-flex">
+              Get In Touch
               <ArrowUpRight className="size-3.5" />
             </a>
             <button
@@ -97,7 +99,7 @@ export function Navbar() {
               onClick={() => setOpen(true)}
               aria-label="Open menu"
               aria-expanded={open}
-              className="grid size-11 place-items-center rounded-full border border-line-strong bg-surface md:hidden"
+              className="grid size-11 place-items-center rounded-full border border-line-strong bg-surface lg:hidden"
             >
               <Menu className="size-[1.1rem]" />
             </button>
@@ -112,7 +114,7 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={reduce ? { opacity: 0 } : { opacity: 0, y: -12 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 z-[60] flex flex-col bg-canvas md:hidden"
+            className="fixed inset-0 z-[60] flex flex-col bg-canvas lg:hidden"
           >
             <div className="shell flex h-[4.5rem] items-center justify-between border-b border-line">
               <Logo />
@@ -148,7 +150,7 @@ export function Navbar() {
 
               <div className="mt-8 flex flex-col gap-3">
                 <a href="#contact" onClick={() => setOpen(false)} className="btn btn-primary w-full">
-                  Start a Project
+                  Start Your Project
                   <ArrowUpRight className="size-4" />
                 </a>
                 <a

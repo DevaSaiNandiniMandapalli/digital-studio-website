@@ -169,7 +169,7 @@ export function Contact() {
   const bad = 'border-red-500/60 bg-red-50/50 focus:border-red-500';
 
   return (
-    <section id="contact" className="relative border-t border-line bg-surface py-20 text-ink md:py-28">
+    <section id="contact" className="relative overflow-hidden border-t border-line bg-surface py-20 text-ink md:py-28">
       <div className="shell">
         <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
           <div>
@@ -238,7 +238,7 @@ export function Contact() {
 
             <Reveal delay={0.15}>
               <div className="mt-8 flex items-center gap-2.5 text-[0.75rem] text-mute">
-                <span className="size-1.5 rounded-full bg-accent-deep" />
+                <span className="size-1.5 rounded-full bg-accent" />
                 {site.availability} · taking projects for the current month
               </div>
             </Reveal>
@@ -324,7 +324,7 @@ export function Contact() {
                         <option key={c} value={c}>{c}</option>
                       ))}
                     </select>
-                    <ChevronDown aria-hidden="true" className="pointer-events-none absolute right-3 top-1/2 size-3.5 -translate-y-1/2 text-ink/40" />
+                    <ChevronDown aria-hidden="true" className="pointer-events-none absolute right-3 top-1/2 size-3.5 -translate-y-1/2 text-ink/55" />
                     </div>
                   </Field>
 
@@ -344,7 +344,7 @@ export function Contact() {
                         <option key={t} value={t}>{t}</option>
                       ))}
                     </select>
-                    <ChevronDown aria-hidden="true" className="pointer-events-none absolute right-3 top-1/2 size-3.5 -translate-y-1/2 text-ink/40" />
+                    <ChevronDown aria-hidden="true" className="pointer-events-none absolute right-3 top-1/2 size-3.5 -translate-y-1/2 text-ink/55" />
                     </div>
                   </Field>
 
@@ -499,8 +499,8 @@ function Field({
     <div className={className}>
       <label htmlFor={htmlFor} className="mb-1.5 flex items-center gap-1 text-[0.68rem] font-medium tracking-[0.1em] text-mute uppercase">
         {label}
-        {required && <span className="text-ink/30">*</span>}
-        {hint && <span className="ml-1 font-normal normal-case tracking-normal text-ink/30">({hint})</span>}
+        {required && <span className="text-ink/45">*</span>}
+        {hint && <span className="ml-1 font-normal normal-case tracking-normal text-ink/45">({hint})</span>}
       </label>
       {children}
       {error && (

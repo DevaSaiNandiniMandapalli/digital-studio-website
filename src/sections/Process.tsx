@@ -34,17 +34,17 @@ export function Process() {
       <div className="shell relative">
         <SectionHeading
           tone="dark"
-          eyebrow="Process"
-          title="A simple, transparent way to get online."
-          copy="No jargon and no endless back and forth. Four clear steps from first conversation to a live website."
+          eyebrow="How we work"
+          title="A Clear Path From Idea To Launch."
+          copy="No jargon and no endless back and forth. Four clear stages from the first conversation to a live website."
         />
 
-        <Stagger className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-night-line bg-[color:var(--color-night-line)] sm:grid-cols-2 lg:grid-cols-4">
+        <Stagger className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-line bg-[color:var(--color-line)] sm:grid-cols-2 lg:grid-cols-4">
           {steps.map((step, i) => (
             <StaggerItem key={step.title} className="bg-night/90 p-6 backdrop-blur-sm transition-colors duration-300 hover:bg-night-2 md:p-7">
               <div className="flex items-baseline justify-between">
-                <span className="font-display text-[0.8rem] font-semibold text-white/35">0{i + 1}</span>
-                <span className="text-[0.65rem] tracking-[0.1em] text-white/35 uppercase">{step.meta}</span>
+                <span className="font-display text-[0.8rem] font-semibold text-white/65">0{i + 1}</span>
+                <span className="text-[0.65rem] tracking-[0.1em] text-white/65 uppercase">{step.meta}</span>
               </div>
               <h3 className="mt-8 font-display text-[1.3rem] font-semibold tracking-[-0.02em] text-white">
                 {step.title}
@@ -54,7 +54,7 @@ export function Process() {
           ))}
         </Stagger>
 
-        <Reveal className="mt-8 flex flex-col gap-3 border-t border-night-line pt-6 text-[0.8rem] text-white/45 sm:flex-row sm:items-center sm:justify-between">
+        <Reveal className="mt-8 flex flex-col gap-3 border-t border-line pt-6 text-[0.8rem] text-white/60 sm:flex-row sm:items-center sm:justify-between">
           <p>Typical delivery: 5–7 days for a starter site, 10–14 days for a business site, 18–25 days for e-commerce.</p>
           <a href="#contact" className="font-medium text-white underline decoration-white/25 underline-offset-4 hover:decoration-accent">
             Book an intro call

@@ -1,10 +1,17 @@
 # Your Digital Studio — Website
 
-A production-ready marketing site for a freelance website design and development studio: 13 live
-projects, transparent INR pricing, a WhatsApp-first enquiry flow and a fully responsive dark/lime
-visual system.
+A production-ready marketing site for a digital design and development studio: 12 live project
+links, transparent INR pricing, a WhatsApp-first enquiry flow and a fully responsive
+"DIGITAL DIMENSION" visual system — deep navy canvas, electric blue and cyan lighting,
+glass surfaces and a cinematic 3D hero.
 
-**Stack:** Vite 6 · React 19 · TypeScript · Tailwind CSS v4 · Framer Motion · lucide-react
+**Stack:** Vite 6 · React 19 · TypeScript · Tailwind CSS v4 · React Three Fiber / Three.js ·
+Framer Motion · lucide-react
+
+**3D:** the hero scene (`src/three/DimensionScene.tsx`) is a lazily loaded React Three Fiber
+canvas with an architectural glass backdrop, floating device mockups and light rigs. It is
+compact on small screens, falls back to a CSS scene when WebGL is unavailable, and renders a
+static scene when `prefers-reduced-motion` is set.
 
 ---
 

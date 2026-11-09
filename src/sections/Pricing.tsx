@@ -11,7 +11,7 @@ const inr = (v: number) => `${site.pricing.symbol}${v.toLocaleString('en-IN')}`;
 
 export function Pricing() {
   return (
-    <section id="pricing" className="border-t border-line bg-canvas py-20 md:py-28">
+    <section id="pricing" className="relative overflow-hidden border-t border-line bg-canvas py-20 md:py-28">
       <div className="shell">
         <SectionHeading
           eyebrow="Pricing"
@@ -33,7 +33,7 @@ export function Pricing() {
                 className={cn(
                   'relative flex h-full flex-col rounded-2xl border p-6 md:p-7',
                   plan.highlight
-                    ? 'border-accent/40 bg-[linear-gradient(180deg,rgba(163,230,53,0.16),rgba(255,255,255,0.02))] text-white shadow-[0_40px_90px_-45px_rgba(163,230,53,0.45)]'
+                    ? 'border-accent/40 bg-[linear-gradient(180deg,rgba(36,123,255,0.22),rgba(56,213,255,0.06)_60%,rgba(9,20,38,0.9))] text-white shadow-[0_40px_90px_-45px_rgba(36,123,255,0.5)]'
                     : 'border-line bg-surface',
                 )}
               >
@@ -42,7 +42,7 @@ export function Pricing() {
                     <h3 className={cn('font-display text-[1.05rem] font-semibold', plan.highlight ? 'text-white' : 'text-ink')}>
                       {plan.name}
                     </h3>
-                    <p className={cn('mt-1 text-[0.78rem]', plan.highlight ? 'text-white/50' : 'text-mute-soft')}>
+                    <p className={cn('mt-1 text-[0.78rem]', plan.highlight ? 'text-white/65' : 'text-mute-soft')}>
                       {plan.tagline}
                     </p>
                   </div>
@@ -50,7 +50,7 @@ export function Pricing() {
                     <span
                       className={cn(
                         'inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[0.62rem] font-semibold tracking-wide uppercase',
-                        plan.highlight ? 'bg-accent text-[#14210a]' : 'border border-line bg-white/[0.05] text-ink',
+                        plan.highlight ? 'bg-accent text-[#04101f]' : 'border border-line bg-white/[0.05] text-ink',
                       )}
                     >
                       {plan.highlight && <Sparkles className="size-2.5" />}
@@ -63,7 +63,7 @@ export function Pricing() {
                   <span className={cn('font-display text-[2.4rem] leading-none font-semibold tracking-[-0.04em]', plan.highlight ? 'text-white' : 'text-ink')}>
                     {inr(plan.price)}
                   </span>
-                  <span className={cn('pb-1 text-[0.72rem]', plan.highlight ? 'text-white/45' : 'text-mute-soft')}>
+                  <span className={cn('pb-1 text-[0.72rem]', plan.highlight ? 'text-white/60' : 'text-mute-soft')}>
                     one-time
                   </span>
                 </div>
@@ -79,11 +79,11 @@ export function Pricing() {
                   Choose {plan.name.split(' ')[0]}
                 </button>
 
-                <ul className={cn('mt-6 space-y-2.5 border-t pt-6 text-[0.82rem]', plan.highlight ? 'border-night-line' : 'border-line')}>
+                <ul className={cn('mt-6 space-y-2.5 border-t pt-6 text-[0.82rem]', plan.highlight ? 'border-line' : 'border-line')}>
                   {plan.features.map((f) => (
                     <li key={f} className="flex gap-2.5">
                       <Check
-                        className={cn('mt-0.5 size-3.5 shrink-0', plan.highlight ? 'text-accent' : 'text-accent-deep')}
+                        className={cn('mt-0.5 size-3.5 shrink-0', plan.highlight ? 'text-accent' : 'text-accent')}
                         strokeWidth={2.5}
                       />
                       <span className={plan.highlight ? 'text-white/70' : 'text-mute'}>{f}</span>

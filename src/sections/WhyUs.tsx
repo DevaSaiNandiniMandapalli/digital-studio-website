@@ -27,11 +27,11 @@ const reasons = [
 
 export function WhyUs() {
   return (
-    <section id="why" className="border-t border-line bg-canvas py-20 md:py-28">
+    <section id="why" className="relative overflow-hidden border-t border-line bg-canvas py-20 md:py-28">
       <div className="shell">
         <SectionHeading
-          eyebrow="Why us"
-          title="A small studio, with the standards of a large one."
+          eyebrow="Why choose us"
+          title="A Small Studio With International Standards."
           copy="You get senior attention on design and code, plus a working relationship that stays simple from the first message to launch day."
         />
 

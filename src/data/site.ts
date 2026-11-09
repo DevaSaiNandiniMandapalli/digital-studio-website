@@ -6,9 +6,11 @@ export const site = {
   /** Temporary placeholder until the final brand name is supplied. */
   name: 'Your Digital Studio',
   shortName: 'YDS',
-  tagline: 'Good Ideas Deserve Great Websites.',
+  tagline: 'We Build Digital Experiences.',
+  supporting:
+    'From ambitious ideas to exceptional digital experiences, we design and develop websites that help businesses stand out, connect and grow.',
   description:
-    'A freelance website design and development studio building modern, fast and professional websites for businesses across India and beyond.',
+    'A digital design and development studio building immersive, professional websites for businesses across India and worldwide.',
   founded: '',
   url: 'https://yourdigitalstudio.example',
   phone: '+91 9392194979',
@@ -33,8 +35,9 @@ export const site = {
     note: 'Domain, premium hosting, paid APIs and third-party subscriptions are billed separately.',
   },
   cta: {
-    primary: 'Start a Project',
-    secondary: 'See Our Work',
+    primary: 'Start Your Project',
+    secondary: 'Explore Our Work',
+    navCta: 'Get In Touch',
   },
 } as const;
 

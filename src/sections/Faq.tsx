@@ -6,7 +6,7 @@ import { whatsappMessage } from '../data/site';
 
 export function Faq() {
   return (
-    <section id="faq" className="border-t border-line bg-canvas py-20 md:py-28">
+    <section id="faq" className="relative overflow-hidden border-t border-line bg-canvas py-20 md:py-28">
       <div className="shell grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
         <div className="lg:sticky lg:top-28 lg:self-start">
           <Reveal>

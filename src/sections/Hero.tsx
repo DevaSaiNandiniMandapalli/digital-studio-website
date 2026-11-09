@@ -1,202 +1,151 @@
-import { motion, useReducedMotion } from 'framer-motion';
-import { ArrowRight, ArrowUpRight, Layers, Sparkles, Zap } from 'lucide-react';
-import { site } from '../data/site';
+import { Suspense, lazy, useEffect, useMemo, useState } from 'react';
+import { ArrowRight, ArrowUpRight, Globe2, Layers, Sparkles } from 'lucide-react';
+import { site, whatsappMessage } from '../data/site';
 import { projects } from '../data/projects';
 import { asset } from '../lib/utils';
-import { TiltCard } from '../components/TiltCard';
 
-const stats = [
-  { value: '13', label: 'Live websites' },
-  { value: '06', label: 'Industries served' },
-  { value: '₹2,999', label: 'Starting price' },
-];
+const DimensionScene = lazy(() => import('../three/DimensionScene'));
+
+function useWebGL() {
+  const [supported, setSupported] = useState(false);
+  useEffect(() => {
+    try {
+      const canvas = document.createElement('canvas');
+      setSupported(Boolean(canvas.getContext('webgl2') ?? canvas.getContext('webgl')));
+    } catch {
+      setSupported(false);
+    }
+  }, []);
+  return supported;
+}
+
+function useMedia(query: string, fallback = false) {
+  const [matches, setMatches] = useState(fallback);
+  useEffect(() => {
+    const mq = window.matchMedia(query);
+    setMatches(mq.matches);
+    const onChange = () => setMatches(mq.matches);
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, [query]);
+  return matches;
+}
+
+/** CSS-only composition used before the scene loads and whenever WebGL is unavailable. */
+function StaticScene() {
+  const shots = useMemo(() => projects.slice(0, 3), []);
+  return (
+    <div className="relative h-full w-full">
+      <div className="absolute inset-x-6 top-1/2 h-64 -translate-y-1/2 rounded-[2rem] border border-line bg-[radial-gradient(70%_60%_at_50%_40%,rgba(36,123,255,0.28),transparent_70%)]" />
+      <div className="absolute left-1/2 top-1/2 w-[74%] -translate-x-1/2 -translate-y-[58%] overflow-hidden rounded-xl border border-line bg-surface shadow-[0_40px_80px_-40px_rgba(0,0,0,0.9)]">
+        <div className="flex items-center gap-1.5 border-b border-line bg-white/[0.04] px-3 py-2">
+          <span className="size-1.5 rounded-full bg-white/25" />
+          <span className="size-1.5 rounded-full bg-white/25" />
+          <span className="size-1.5 rounded-full bg-white/25" />
+        </div>
+        <img src={asset(shots[0]?.image ?? '')} alt="" className="aspect-[16/10] w-full object-cover" />
+      </div>
+      <div className="absolute bottom-6 right-3 w-[26%] overflow-hidden rounded-[1.1rem] border border-line bg-surface shadow-2xl sm:right-6">
+        <img src={asset(shots[1]?.image ?? '')} alt="" className="aspect-[9/17] w-full object-cover" />
+      </div>
+      <div className="absolute bottom-16 left-2 w-[34%] overflow-hidden rounded-lg border border-line bg-surface shadow-xl sm:left-5">
+        <img src={asset(shots[2]?.image ?? '')} alt="" className="aspect-[16/10] w-full object-cover" />
+      </div>
+    </div>
+  );
+}
 
 export function Hero() {
-  const reduce = useReducedMotion();
-  const [primary, secondary] = [projects[0], projects[5]];
-  const rise = (delay: number) =>
-    reduce
-      ? {}
-      : {
-          initial: { opacity: 0, y: 18 },
-          animate: { opacity: 1, y: 0 },
-          transition: { duration: 0.75, delay, ease: [0.16, 1, 0.3, 1] as const },
-        };
+  const webgl = useWebGL();
+  const reduced = useMedia('(prefers-reduced-motion: reduce)');
+  const compact = useMedia('(max-width: 767px)');
 
   return (
-    <section id="home" className="relative overflow-hidden pt-28 pb-16 md:pt-36 md:pb-24">
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+    <section id="home" className="relative overflow-hidden pt-28 pb-14 md:pt-32 md:pb-20">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
         <div className="grid-floor absolute inset-0 opacity-60" />
-        <div className="absolute -top-40 right-[-10%] h-[34rem] w-[34rem] rounded-full bg-accent/12 blur-[140px]" />
-        <div className="absolute top-24 left-[-15%] h-[26rem] w-[26rem] rounded-full bg-[#7c5cff]/12 blur-[130px]" />
+        <div className="absolute -top-40 left-[8%] h-[32rem] w-[32rem] rounded-full bg-[#247bff]/18 blur-[130px]" />
+        <div className="absolute top-24 right-[2%] h-[26rem] w-[26rem] rounded-full bg-[#38d5ff]/12 blur-[120px]" />
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-canvas" />
       </div>
 
-      <div className="shell relative">
-        <div className="grid items-center gap-14 lg:grid-cols-[1.02fr_0.98fr] lg:gap-10">
-          <div>
-            <motion.span
-              {...rise(0)}
-              className="inline-flex items-center gap-2 rounded-full border border-line bg-white/[0.03] px-3 py-1.5 text-[0.72rem] font-medium text-mute backdrop-blur"
-            >
-              <span className="relative flex size-1.5">
-                <span className="absolute inline-flex size-full animate-ping rounded-full bg-accent opacity-60" />
-                <span className="relative inline-flex size-1.5 rounded-full bg-accent" />
-              </span>
-              {site.availability} · Hyderabad, India
-            </motion.span>
+      <div className="shell grid items-center gap-12 lg:grid-cols-[1.02fr_1fr] lg:gap-8">
+        <div className="max-w-xl">
+          <span className="inline-flex items-center gap-2 rounded-full border border-line bg-white/[0.04] px-3 py-1.5 text-[0.66rem] font-semibold tracking-[0.14em] text-mute uppercase backdrop-blur">
+            <Sparkles className="size-3.5 text-accent" />
+            Digital Design · Development · Innovation
+          </span>
 
-            <motion.h1 {...rise(0.06)} className="display mt-6">
-              We build websites
-              <br className="hidden sm:block" /> that build{' '}
-              <span className="relative inline-block">
-                <span className="text-gradient">businesses</span>
-                <svg
-                  aria-hidden="true"
-                  viewBox="0 0 300 12"
-                  preserveAspectRatio="none"
-                  className="absolute inset-x-0 -bottom-1 h-[0.36em] w-full text-accent opacity-80"
-                >
-                  <path
-                    d="M2 8.5C58 3.4 148 2 298 5.6"
-                    stroke="currentColor"
-                    strokeWidth="5"
-                    fill="none"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </span>
-              .
-            </motion.h1>
+          <h1 className="display mt-6 text-[2.6rem] leading-[1.03] sm:text-[3.1rem] lg:text-[3.6rem]">
+            We Build Smarter{' '}
+            <span className="relative inline-block text-transparent [background:linear-gradient(120deg,#38d5ff,#247bff_65%,#7fb2ff)] [-webkit-background-clip:text] [background-clip:text]">
+              Digital Experiences
+            </span>
+            .
+          </h1>
 
-            <motion.p {...rise(0.12)} className="lede mt-6">
-              Good ideas deserve great websites. We design and develop fast, professional sites for
-              restaurants, hotels, retail stores, startups and established companies across India and
-              beyond.
-            </motion.p>
+          <p className="mt-6 max-w-lg text-[0.98rem] leading-relaxed text-mute">
+            Your business deserves more than an ordinary website. We create powerful digital
+            experiences that combine beautiful design, modern technology and business-focused
+            functionality.
+          </p>
 
-            <motion.div {...rise(0.18)} className="mt-8 flex flex-wrap items-center gap-3">
-              <a href="#contact" className="btn btn-primary">
-                {site.cta.primary}
-                <ArrowUpRight className="size-4" />
-              </a>
-              <a href="#work" className="btn btn-ghost">
-                {site.cta.secondary}
-                <ArrowRight className="size-4" />
-              </a>
-            </motion.div>
-
-            <motion.dl
-              {...rise(0.24)}
-              className="mt-12 grid max-w-md grid-cols-3 gap-6 border-t border-line pt-6"
-            >
-              {stats.map((s) => (
-                <div key={s.label}>
-                  <dt className="sr-only">{s.label}</dt>
-                  <dd className="font-display text-[1.35rem] font-semibold tracking-[-0.03em]">
-                    {s.value}
-                  </dd>
-                  <dd className="mt-1 text-[0.72rem] tracking-wide text-mute-soft uppercase">
-                    {s.label}
-                  </dd>
-                </div>
-              ))}
-            </motion.dl>
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <a href="#contact" className="btn btn-primary">
+              Start Your Project
+              <ArrowRight className="size-4" />
+            </a>
+            <a href="#work" className="btn btn-ghost">
+              Explore Our Work
+              <ArrowUpRight className="size-4" />
+            </a>
           </div>
 
-          <motion.div
-            {...(reduce
-              ? {}
-              : {
-                  initial: { opacity: 0, y: 26, rotateX: 8 },
-                  animate: { opacity: 1, y: 0, rotateX: 0 },
-                  transition: { duration: 1, delay: 0.18, ease: [0.16, 1, 0.3, 1] as const },
-                })}
-            className="scene relative mx-auto w-full max-w-xl lg:max-w-none"
-          >
-            <div
-              aria-hidden="true"
-              className="absolute inset-6 -z-10 rounded-[2rem] bg-accent/10 blur-3xl"
-            />
-
-            <div className="preserve-3d lg:[transform:rotateY(-13deg)_rotateX(7deg)_rotateZ(1deg)]">
-              <TiltCard max={4} className="preserve-3d">
-                <div className="panel overflow-hidden rounded-2xl">
-                  <div className="flex items-center gap-1.5 border-b border-line px-4 py-2.5">
-                    <span className="size-2 rounded-full bg-[#ff5f57]/70" />
-                    <span className="size-2 rounded-full bg-[#febc2e]/70" />
-                    <span className="size-2 rounded-full bg-[#28c840]/70" />
-                    <span className="ml-2 truncate rounded-sm bg-white/[0.04] px-2 py-0.5 text-[0.6rem] text-mute-soft">
-                      {new URL(primary.url).host}
-                    </span>
-                    <span className="ml-auto hidden items-center gap-1 text-[0.58rem] tracking-wide text-mute-soft uppercase sm:flex">
-                      <Layers className="size-3" />
-                      Live project
-                    </span>
-                  </div>
-                  <img
-                    src={asset(primary.image)}
-                    alt={`${primary.name} website built by ${site.name}`}
-                    width={1440}
-                    height={900}
-                    className="aspect-[16/11] w-full object-cover object-top"
-                  />
-                  <div className="flex items-center justify-between gap-3 border-t border-line px-4 py-3">
-                    <div>
-                      <p className="text-[0.78rem] font-medium">{primary.name}</p>
-                      <p className="text-[0.66rem] text-mute-soft">{primary.category}</p>
-                    </div>
-                    <a
-                      href={primary.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`View ${primary.name} live`}
-                      className="grid size-8 place-items-center rounded-full border border-line text-mute transition-colors hover:border-accent hover:text-accent"
-                    >
-                      <ArrowUpRight className="size-3.5" />
-                    </a>
-                  </div>
-                </div>
-              </TiltCard>
-
-              <div className="tilt-lift-sm absolute -bottom-10 -left-3 hidden w-[12.5rem] sm:block lg:-left-10">
-                <div className="panel overflow-hidden rounded-xl">
-                  <img
-                    src={asset(secondary.image)}
-                    alt={`${secondary.name} website built by ${site.name}`}
-                    width={1440}
-                    height={900}
-                    loading="lazy"
-                    className="aspect-[4/3] w-full object-cover object-top"
-                  />
-                  <div className="flex items-center justify-between gap-2 px-3 py-2.5">
-                    <span className="truncate text-[0.68rem] font-medium">{secondary.name}</span>
-                    <ArrowUpRight className="size-3 text-mute-soft" />
-                  </div>
-                </div>
+          <dl className="mt-10 grid grid-cols-2 gap-x-6 gap-y-4 border-t border-line pt-6 sm:grid-cols-3">
+            {[
+              { value: '12+', label: 'Website projects' },
+              { value: 'Multiple', label: 'Industries served' },
+              { value: '₹2,999', label: 'Starting package' },
+            ].map((stat) => (
+              <div key={stat.label}>
+                <dt className="font-display text-[1.35rem] leading-none font-semibold tracking-[-0.02em] text-ink">
+                  {stat.value}
+                </dt>
+                <dd className="mt-1.5 text-[0.72rem] text-mute-soft">{stat.label}</dd>
               </div>
+            ))}
+          </dl>
 
-              <div className="tilt-lift absolute -top-5 -right-2 hidden items-center gap-1.5 rounded-full border border-line bg-white/[0.05] px-3 py-1.5 text-[0.68rem] font-medium backdrop-blur-md sm:flex">
-                <Sparkles className="size-3 text-accent" />
-                Built for real businesses
-              </div>
+          <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-2 text-[0.74rem] text-mute-soft">
+            <span className="inline-flex items-center gap-2">
+              <span className="relative flex size-2">
+                <span className="absolute inset-0 animate-ping rounded-full bg-accent/70" />
+                <span className="relative inline-block size-2 rounded-full bg-accent" />
+              </span>
+              {site.availability}
+            </span>
+            <span className="inline-flex items-center gap-1.5">
+              <Globe2 className="size-3.5" />
+              India & worldwide
+            </span>
+            <a href={whatsappMessage()} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 transition-colors hover:text-accent">
+              <Layers className="size-3.5" />
+              WhatsApp
+            </a>
+          </div>
+        </div>
 
-              <div className="absolute top-1/2 -right-6 hidden flex-col gap-1 rounded-xl border border-line bg-white/[0.05] px-3 py-2 backdrop-blur-md xl:flex">
-                <span className="flex items-center gap-1.5 text-[0.62rem] text-mute">
-                  <Zap className="size-3 text-accent" />
-                  98 / 100 speed
-                </span>
-                <span className="flex items-center gap-1.5 text-[0.62rem] text-mute">
-                  <Layers className="size-3 text-accent" />
-                  Mobile-first build
-                </span>
-              </div>
-            </div>
-
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute -bottom-14 left-1/2 hidden h-32 w-[85%] -translate-x-1/2 rounded-[50%] bg-accent/15 blur-3xl lg:block"
-            />
-          </motion.div>
+        <div className="relative h-[22rem] w-full sm:h-[26rem] lg:h-[34rem]">
+          <div className="scene absolute inset-0">
+            {webgl && !reduced ? (
+              <Suspense fallback={<StaticScene />}>
+                <DimensionScene compact={compact} reduced={reduced} />
+              </Suspense>
+            ) : (
+              <StaticScene />
+            )}
+          </div>
+          <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-canvas" />
         </div>
       </div>
     </section>

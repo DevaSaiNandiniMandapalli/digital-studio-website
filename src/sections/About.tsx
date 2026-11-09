@@ -15,18 +15,18 @@ export function About() {
   const shot = projects[1] ?? projects[0];
 
   return (
-    <section id="about" className="border-t border-line bg-surface py-20 md:py-28">
+    <section id="about" className="relative overflow-hidden border-t border-line bg-surface py-20 md:py-28">
       <div className="shell grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-16">
         <div>
           <Reveal>
             <span className="eyebrow">About the studio</span>
             <h2 className="h2 mt-4">
-              We turn business ideas into websites people trust.
+              Built On Craft, Clarity And Real Business Goals.
             </h2>
             <div className="mt-6 space-y-4 text-[0.92rem] leading-relaxed text-mute">
               <p>
-                {site.name} is a freelance design and development studio based in Hyderabad, working
-                with businesses across India and worldwide. We are small on purpose — the person you
+                {site.name} is a digital design and development studio based in Hyderabad, building
+                for businesses across India and worldwide. We are small on purpose — the person you
                 speak with is the person designing and building your website.
               </p>
               <p>
@@ -76,7 +76,7 @@ export function About() {
           </TiltCard>
           <div className="mt-4 grid grid-cols-2 gap-4">
             <div className="rounded-2xl border border-accent/25 bg-accent/10 p-5 text-white">
-              <p className="font-display text-[1.7rem] leading-none font-semibold tracking-[-0.03em]">13</p>
+              <p className="font-display text-[1.7rem] leading-none font-semibold tracking-[-0.03em]">{projects.length}</p>
               <p className="mt-2 text-[0.72rem] text-white/60">Live websites delivered and maintained</p>
             </div>
             <div className="rounded-2xl border border-line bg-white/[0.04] p-5">
