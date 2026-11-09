@@ -1,25 +1,19 @@
-/**
- * Central brand + business configuration.
- * Update this file to rename the studio or change contact details.
- */
 export const site = {
-  /** Temporary placeholder until the final brand name is supplied. */
   name: 'Your Digital Studio',
   shortName: 'YDS',
-  tagline: 'We Build Digital Experiences.',
+  tagline: 'We make businesses look better online.',
   supporting:
-    'From ambitious ideas to exceptional digital experiences, we design and develop websites that help businesses stand out, connect and grow.',
+    'We create distinctive websites for ambitious businesses. From restaurants and retail brands to startups and established companies, we turn ideas into memorable digital experiences.',
   description:
-    'A digital design and development studio building immersive, professional websites for businesses across India and worldwide.',
-  founded: '',
-  url: 'https://yourdigitalstudio.example',
+    'An independent website design and development studio in Hyderabad, creating distinctive, high-performing websites for businesses across India and worldwide.',
+  url: 'https://devasainandinimandapalli.github.io/digital-studio-website/',
   phone: '+91 9392194979',
   phoneRaw: '+919392194979',
   whatsapp: 'https://wa.me/919392194979',
   email: '',
-  location: 'Hyderabad, India · Working with clients across India and worldwide',
+  location: 'Hyderabad, India',
+  clients: 'Working with clients across India and worldwide',
   availability: 'Available for new projects',
-  /** Only real URLs are rendered. Leave empty strings to hide a network. */
   socials: {
     instagram: '',
     linkedin: '',
@@ -35,19 +29,18 @@ export const site = {
     note: 'Domain, premium hosting, paid APIs and third-party subscriptions are billed separately.',
   },
   cta: {
-    primary: 'Start Your Project',
+    primary: 'Start a Project',
     secondary: 'Explore Our Work',
-    navCta: 'Get In Touch',
+    navCta: "Let's Talk",
   },
 } as const;
 
 export const navLinks = [
   { label: 'Home', href: '#home' },
   { label: 'Services', href: '#services' },
-  { label: 'Portfolio', href: '#work' },
+  { label: 'Work', href: '#work' },
   { label: 'Pricing', href: '#pricing' },
   { label: 'About', href: '#about' },
-  { label: 'Contact', href: '#contact' },
 ] as const;
 
 export const whatsappMessage = (message = 'Hi! I would like to discuss a website for my business.') =>

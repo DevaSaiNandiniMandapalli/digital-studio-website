@@ -1,152 +1,212 @@
-import { Suspense, lazy, useEffect, useMemo, useState } from 'react';
-import { ArrowRight, ArrowUpRight, Globe2, Layers, Sparkles } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from 'framer-motion';
+import { ArrowDownRight, ArrowUpRight } from 'lucide-react';
+import { BrowserFrame } from '../components/BrowserFrame';
+import { Logo } from '../components/Logo';
 import { site, whatsappMessage } from '../data/site';
-import { projects } from '../data/projects';
-import { asset } from '../lib/utils';
 
-const DimensionScene = lazy(() => import('../three/DimensionScene'));
-
-function useWebGL() {
-  const [supported, setSupported] = useState(false);
-  useEffect(() => {
-    try {
-      const canvas = document.createElement('canvas');
-      setSupported(Boolean(canvas.getContext('webgl2') ?? canvas.getContext('webgl')));
-    } catch {
-      setSupported(false);
-    }
-  }, []);
-  return supported;
-}
-
-function useMedia(query: string, fallback = false) {
-  const [matches, setMatches] = useState(fallback);
-  useEffect(() => {
-    const mq = window.matchMedia(query);
-    setMatches(mq.matches);
-    const onChange = () => setMatches(mq.matches);
-    mq.addEventListener('change', onChange);
-    return () => mq.removeEventListener('change', onChange);
-  }, [query]);
-  return matches;
-}
-
-/** CSS-only composition used before the scene loads and whenever WebGL is unavailable. */
-function StaticScene() {
-  const shots = useMemo(() => projects.slice(0, 3), []);
-  return (
-    <div className="relative h-full w-full">
-      <div className="absolute inset-x-6 top-1/2 h-64 -translate-y-1/2 rounded-[2rem] border border-line bg-[radial-gradient(70%_60%_at_50%_40%,rgba(36,123,255,0.28),transparent_70%)]" />
-      <div className="absolute left-1/2 top-1/2 w-[74%] -translate-x-1/2 -translate-y-[58%] overflow-hidden rounded-xl border border-line bg-surface shadow-[0_40px_80px_-40px_rgba(0,0,0,0.9)]">
-        <div className="flex items-center gap-1.5 border-b border-line bg-white/[0.04] px-3 py-2">
-          <span className="size-1.5 rounded-full bg-white/25" />
-          <span className="size-1.5 rounded-full bg-white/25" />
-          <span className="size-1.5 rounded-full bg-white/25" />
-        </div>
-        <img src={asset(shots[0]?.image ?? '')} alt="" className="aspect-[16/10] w-full object-cover" />
-      </div>
-      <div className="absolute bottom-6 right-3 w-[26%] overflow-hidden rounded-[1.1rem] border border-line bg-surface shadow-2xl sm:right-6">
-        <img src={asset(shots[1]?.image ?? '')} alt="" className="aspect-[9/17] w-full object-cover" />
-      </div>
-      <div className="absolute bottom-16 left-2 w-[34%] overflow-hidden rounded-lg border border-line bg-surface shadow-xl sm:left-5">
-        <img src={asset(shots[2]?.image ?? '')} alt="" className="aspect-[16/10] w-full object-cover" />
-      </div>
-    </div>
-  );
-}
+const ease = [0.16, 1, 0.3, 1] as const;
 
 export function Hero() {
-  const webgl = useWebGL();
-  const reduced = useMedia('(prefers-reduced-motion: reduce)');
-  const compact = useMedia('(max-width: 767px)');
+  const reduce = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  const [pointer, setPointer] = useState(false);
+
+  const px = useMotionValue(0);
+  const py = useMotionValue(0);
+  const sx = useSpring(px, { stiffness: 60, damping: 20, mass: 0.6 });
+  const sy = useSpring(py, { stiffness: 60, damping: 20, mass: 0.6 });
+  const ax = useTransform(sx, (v) => v * 14);
+  const bx = useTransform(sx, (v) => v * -26);
+  const by = useTransform(sy, (v) => v * -18);
+  const cx = useTransform(sx, (v) => v * 34);
+  const cy = useTransform(sy, (v) => v * 26);
+
+  useEffect(() => {
+    if (reduce) return;
+    setPointer(window.matchMedia('(pointer: fine)').matches);
+  }, [reduce]);
+
+  const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!pointer || !ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    px.set((e.clientX - rect.left) / rect.width - 0.5);
+    py.set((e.clientY - rect.top) / rect.height - 0.5);
+  };
+
+  const onLeave = () => {
+    px.set(0);
+    py.set(0);
+  };
+
+  const line = (delay: number) => ({
+    initial: reduce ? undefined : { y: '110%' },
+    animate: reduce ? undefined : { y: '0%' },
+    transition: { duration: 1.05, delay, ease },
+  });
 
   return (
-    <section id="home" className="relative overflow-hidden pt-28 pb-14 md:pt-32 md:pb-20">
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
-        <div className="grid-floor absolute inset-0 opacity-60" />
-        <div className="absolute -top-40 left-[8%] h-[32rem] w-[32rem] rounded-full bg-[#247bff]/18 blur-[130px]" />
-        <div className="absolute top-24 right-[2%] h-[26rem] w-[26rem] rounded-full bg-[#38d5ff]/12 blur-[120px]" />
-        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-canvas" />
+    <section id="home" className="relative overflow-hidden pt-28 pb-16 md:pt-36 md:pb-24">
+      <div className="shell">
+        <motion.div
+          initial={reduce ? undefined : { opacity: 0 }}
+          animate={reduce ? undefined : { opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          className="flex items-center justify-between border-b border-line pb-4"
+        >
+          <span className="eyebrow">Independent digital studio — Hyderabad, India</span>
+          <span className="hidden items-center gap-2 text-[0.62rem] tracking-[0.16em] text-mute uppercase md:flex">
+            <span className="size-1.5 rounded-full bg-accent" />
+            {site.availability}
+          </span>
+        </motion.div>
+
+        <div
+          ref={ref}
+          onMouseMove={onMove}
+          onMouseLeave={onLeave}
+          className="grid items-start gap-x-8 gap-y-12 pt-10 md:pt-14 lg:grid-cols-12 lg:gap-y-0"
+        >
+          <div className="lg:col-span-6 xl:col-span-6">
+            <h1 className="display">
+              <span className="block overflow-hidden">
+                <motion.span className="block" {...line(0.05)}>
+                  Good ideas.
+                </motion.span>
+              </span>
+              <span className="block overflow-hidden">
+                <motion.span className="block" {...line(0.16)}>
+                  Deserve great
+                </motion.span>
+              </span>
+              <span className="block overflow-hidden">
+                <motion.span className="block" {...line(0.27)}>
+                  <span className="text-accent">Websites</span>
+                  <span aria-hidden="true" className="text-accent">
+                    .
+                  </span>
+                </motion.span>
+              </span>
+            </h1>
+
+            <motion.p
+              initial={reduce ? undefined : { opacity: 0, y: 18 }}
+              animate={reduce ? undefined : { opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.45, ease }}
+              className="lede mt-7 max-w-[34rem] text-[1.02rem] md:mt-8"
+            >
+              We design and develop beautiful, high-performing websites that help businesses build
+              credibility, attract customers and grow online.
+            </motion.p>
+
+            <motion.div
+              initial={reduce ? undefined : { opacity: 0, y: 18 }}
+              animate={reduce ? undefined : { opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.55, ease }}
+              className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center"
+            >
+              <a href="#contact" className="btn btn-primary">
+                Let&rsquo;s build your website
+                <ArrowUpRight className="size-4" />
+              </a>
+              <a href="#work" className="btn btn-ghost">
+                Explore our work
+                <ArrowDownRight className="size-4" />
+              </a>
+            </motion.div>
+
+            <motion.div
+              initial={reduce ? undefined : { opacity: 0 }}
+              animate={reduce ? undefined : { opacity: 1 }}
+              transition={{ duration: 0.9, delay: 0.7 }}
+              className="mt-12 flex flex-wrap items-center gap-x-3 gap-y-2 border-t border-line pt-5 text-[0.66rem] tracking-[0.16em] text-mute uppercase md:mt-16"
+            >
+              <span>Website design</span>
+              <span aria-hidden="true" className="text-accent">
+                /
+              </span>
+              <span>Development</span>
+              <span aria-hidden="true" className="text-accent">
+                /
+              </span>
+              <span>Digital experiences</span>
+            </motion.div>
+          </div>
+
+          {/* Editorial collage */}
+          <div className="lg:col-span-6">
+            <div className="relative lg:-mt-6 lg:ml-6">
+              <motion.div
+                initial={reduce ? undefined : { opacity: 0, y: 40 }}
+                animate={reduce ? undefined : { opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.3, ease }}
+                className="relative"
+              >
+                <motion.div style={pointer ? { x: ax } : undefined}>
+                  <BrowserFrame
+                    image="/projects/kasoori.jpg"
+                    alt="Kasoori restaurant website preview"
+                    url="kasoori — restaurant"
+                    priority
+                    viewportClassName="aspect-[16/11] sm:aspect-[16/10]"
+                    className="lg:mr-10"
+                  />
+                </motion.div>
+
+                <div className="mt-4 grid grid-cols-2 gap-4 md:mt-5 lg:absolute lg:-right-2 lg:-bottom-16 lg:mt-0 lg:w-[58%] lg:gap-0">
+                  <motion.div style={pointer ? { x: bx, y: by } : undefined}>
+                    <BrowserFrame
+                      image="/projects/fluids-store.jpg"
+                      alt="Fluids Store e-commerce website preview"
+                      url="fluids — e-commerce"
+                      viewportClassName="aspect-[4/3]"
+                      className="float-slow"
+                    />
+                  </motion.div>
+
+                  <motion.div style={pointer ? { x: cx, y: cy } : undefined} className="flex flex-col gap-3">
+                    <BrowserFrame
+                      image="/projects/grand-4-seasons.jpg"
+                      alt="Grand 4 Seasons hospitality website preview"
+                      url="grand 4 seasons"
+                      viewportClassName="aspect-[4/3]"
+                    />
+                    <div className="hidden items-start gap-2 border-l-2 border-accent pl-3 md:flex">
+                      <p className="text-[0.66rem] leading-relaxed text-mute">
+                        Selected work across restaurants, retail and hospitality.
+                      </p>
+                    </div>
+                  </motion.div>
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={reduce ? undefined : { opacity: 0 }}
+                animate={reduce ? undefined : { opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.9 }}
+                className="mt-24 hidden items-center gap-4 lg:flex"
+              >
+                <Logo compact className="shrink-0" />
+                <p className="max-w-[18rem] text-[0.7rem] leading-relaxed tracking-[0.02em] text-mute">
+                  A small studio with international standards — design, build and launch handled
+                  end to end.
+                </p>
+              </motion.div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div className="shell grid items-center gap-12 lg:grid-cols-[1.02fr_1fr] lg:gap-8">
-        <div className="max-w-xl">
-          <span className="inline-flex items-center gap-2 rounded-full border border-line bg-white/[0.04] px-3 py-1.5 text-[0.66rem] font-semibold tracking-[0.14em] text-mute uppercase backdrop-blur">
-            <Sparkles className="size-3.5 text-accent" />
-            Digital Design · Development · Innovation
-          </span>
-
-          <h1 className="display mt-6 text-[2.6rem] leading-[1.03] sm:text-[3.1rem] lg:text-[3.6rem]">
-            We Build Smarter{' '}
-            <span className="relative inline-block text-transparent [background:linear-gradient(120deg,#38d5ff,#247bff_65%,#7fb2ff)] [-webkit-background-clip:text] [background-clip:text]">
-              Digital Experiences
-            </span>
-            .
-          </h1>
-
-          <p className="mt-6 max-w-lg text-[0.98rem] leading-relaxed text-mute">
-            Your business deserves more than an ordinary website. We create powerful digital
-            experiences that combine beautiful design, modern technology and business-focused
-            functionality.
-          </p>
-
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-            <a href="#contact" className="btn btn-primary">
-              Start Your Project
-              <ArrowRight className="size-4" />
-            </a>
-            <a href="#work" className="btn btn-ghost">
-              Explore Our Work
-              <ArrowUpRight className="size-4" />
-            </a>
-          </div>
-
-          <dl className="mt-10 grid grid-cols-2 gap-x-6 gap-y-4 border-t border-line pt-6 sm:grid-cols-3">
-            {[
-              { value: '12+', label: 'Website projects' },
-              { value: 'Multiple', label: 'Industries served' },
-              { value: '₹2,999', label: 'Starting package' },
-            ].map((stat) => (
-              <div key={stat.label}>
-                <dt className="font-display text-[1.35rem] leading-none font-semibold tracking-[-0.02em] text-ink">
-                  {stat.value}
-                </dt>
-                <dd className="mt-1.5 text-[0.72rem] text-mute-soft">{stat.label}</dd>
-              </div>
-            ))}
-          </dl>
-
-          <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-2 text-[0.74rem] text-mute-soft">
-            <span className="inline-flex items-center gap-2">
-              <span className="relative flex size-2">
-                <span className="absolute inset-0 animate-ping rounded-full bg-accent/70" />
-                <span className="relative inline-block size-2 rounded-full bg-accent" />
-              </span>
-              {site.availability}
-            </span>
-            <span className="inline-flex items-center gap-1.5">
-              <Globe2 className="size-3.5" />
-              India & worldwide
-            </span>
-            <a href={whatsappMessage()} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 transition-colors hover:text-accent">
-              <Layers className="size-3.5" />
-              WhatsApp
-            </a>
-          </div>
-        </div>
-
-        <div className="relative h-[22rem] w-full sm:h-[26rem] lg:h-[34rem]">
-          <div className="scene absolute inset-0">
-            {webgl && !reduced ? (
-              <Suspense fallback={<StaticScene />}>
-                <DimensionScene compact={compact} reduced={reduced} />
-              </Suspense>
-            ) : (
-              <StaticScene />
-            )}
-          </div>
-          <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-canvas" />
-        </div>
+      <div className="shell mt-12 md:mt-14">
+        <a
+          href={whatsappMessage()}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 border-t border-line pt-5 text-[0.66rem] tracking-[0.16em] text-mute uppercase transition-colors hover:text-accent"
+        >
+          <span aria-hidden="true" className="size-1.5 rounded-full bg-accent" />
+          Prefer to talk first? WhatsApp the studio
+        </a>
       </div>
     </section>
   );

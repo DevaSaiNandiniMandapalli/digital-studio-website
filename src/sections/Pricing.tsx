@@ -1,150 +1,173 @@
-import { Check, Sparkles } from 'lucide-react';
-import { comparison, plans, pricingRules } from '../data/pricing';
-import { site, whatsappMessage } from '../data/site';
-import { selectPlan } from '../lib/plan';
-import { cn } from '../lib/utils';
+import { useState } from 'react';
+import { ArrowUpRight, Check } from 'lucide-react';
+import { Accordion } from '../components/Accordion';
+import { Reveal } from '../components/Reveal';
 import { SectionHeading } from '../components/SectionHeading';
-import { Reveal, Stagger, StaggerItem } from '../components/Reveal';
-import { TiltCard } from '../components/TiltCard';
+import { plans, priceFaqs, pricingRules } from '../data/pricing';
+import { cn } from '../lib/utils';
 
-const inr = (v: number) => `${site.pricing.symbol}${v.toLocaleString('en-IN')}`;
+const ease = 'transition-all duration-500';
 
 export function Pricing() {
+  const [expanded, setExpanded] = useState(false);
+
   return (
     <section id="pricing" className="relative overflow-hidden border-t border-line bg-canvas py-20 md:py-28">
       <div className="shell">
         <SectionHeading
           eyebrow="Pricing"
-          title="Clear packages. No surprises."
-          copy="One-time project pricing in Indian Rupees. Pick the level of website your business needs today — you can always upgrade later."
-          action={
-            <div className="rounded-xl border border-line bg-surface px-4 py-3 text-[0.78rem] text-mute">
-              <p className="font-medium text-ink">Custom work quoted separately</p>
-              <p className="mt-1">E-commerce, web apps, AI & automation</p>
-            </div>
+          title={
+            <>
+              Honest packages, <span className="text-accent">clearly priced</span>.
+            </>
           }
+          copy="Three starting points for new websites. Every quote is confirmed in writing before work begins."
         />
 
-        <Stagger className="mt-12 grid gap-5 lg:grid-cols-3">
-          {plans.map((plan) => (
-            <StaggerItem key={plan.id} className="h-full">
-              <TiltCard max={plan.highlight ? 5 : 3} className="h-full">
+        <div className="mt-12 grid gap-5 md:mt-16 lg:grid-cols-3">
+          {plans.map((plan, i) => (
+            <Reveal key={plan.id} delay={i * 0.08} className="h-full">
               <article
                 className={cn(
-                  'relative flex h-full flex-col rounded-2xl border p-6 md:p-7',
+                  'flex h-full flex-col border p-6 md:p-7',
+                  ease,
                   plan.highlight
-                    ? 'border-accent/40 bg-[linear-gradient(180deg,rgba(36,123,255,0.22),rgba(56,213,255,0.06)_60%,rgba(9,20,38,0.9))] text-white shadow-[0_40px_90px_-45px_rgba(36,123,255,0.5)]'
-                    : 'border-line bg-surface',
+                    ? 'border-ink bg-ink text-canvas'
+                    : 'border-line bg-surface hover:border-line-strong',
                 )}
               >
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <h3 className={cn('font-display text-[1.05rem] font-semibold', plan.highlight ? 'text-white' : 'text-ink')}>
+                    <h3
+                      className={cn(
+                        'font-display text-[1.05rem] font-medium tracking-[-0.02em]',
+                        plan.highlight ? 'text-canvas' : 'text-ink',
+                      )}
+                    >
                       {plan.name}
                     </h3>
-                    <p className={cn('mt-1 text-[0.78rem]', plan.highlight ? 'text-white/65' : 'text-mute-soft')}>
+                    <p
+                      className={cn(
+                        'mt-1.5 text-[0.76rem]',
+                        plan.highlight ? 'text-canvas/60' : 'text-mute',
+                      )}
+                    >
                       {plan.tagline}
                     </p>
                   </div>
                   {plan.badge && (
                     <span
                       className={cn(
-                        'inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[0.62rem] font-semibold tracking-wide uppercase',
-                        plan.highlight ? 'bg-accent text-[#04101f]' : 'border border-line bg-white/[0.05] text-ink',
+                        'shrink-0 rounded-full px-2.5 py-1 text-[0.6rem] font-semibold tracking-[0.1em] uppercase',
+                        plan.highlight ? 'bg-accent text-white' : 'bg-surface-2 text-mute',
                       )}
                     >
-                      {plan.highlight && <Sparkles className="size-2.5" />}
                       {plan.badge}
                     </span>
                   )}
                 </div>
 
-                <div className="mt-8 flex items-end gap-1.5">
-                  <span className={cn('font-display text-[2.4rem] leading-none font-semibold tracking-[-0.04em]', plan.highlight ? 'text-white' : 'text-ink')}>
-                    {inr(plan.price)}
+                <div className="mt-6 flex items-baseline gap-1.5">
+                  <span
+                    className={cn(
+                      'font-display text-[2.1rem] leading-none font-medium tracking-[-0.05em]',
+                      plan.highlight ? 'text-canvas' : 'text-ink',
+                    )}
+                  >
+                    ₹{plan.price.toLocaleString('en-IN')}
                   </span>
-                  <span className={cn('pb-1 text-[0.72rem]', plan.highlight ? 'text-white/60' : 'text-mute-soft')}>
-                    one-time
+                  <span
+                    className={cn('text-[0.72rem]', plan.highlight ? 'text-canvas/55' : 'text-mute')}
+                  >
+                    starting
                   </span>
                 </div>
-                <p className={cn('mt-2 text-[0.82rem] leading-relaxed', plan.highlight ? 'text-white/60' : 'text-mute')}>
+
+                <p
+                  className={cn(
+                    'mt-3 text-[0.84rem] leading-relaxed',
+                    plan.highlight ? 'text-canvas/70' : 'text-mute',
+                  )}
+                >
                   {plan.description}
                 </p>
 
-                <button
-                  type="button"
-                  onClick={() => selectPlan(plan.id)}
-                  className={cn('btn mt-6 w-full', plan.highlight ? 'btn-accent' : 'btn-ghost')}
+                <ul
+                  className={cn(
+                    'mt-6 flex-1 space-y-2.5 border-t pt-5',
+                    plan.highlight ? 'border-white/15' : 'border-line',
+                  )}
                 >
-                  Choose {plan.name.split(' ')[0]}
-                </button>
-
-                <ul className={cn('mt-6 space-y-2.5 border-t pt-6 text-[0.82rem]', plan.highlight ? 'border-line' : 'border-line')}>
-                  {plan.features.map((f) => (
-                    <li key={f} className="flex gap-2.5">
+                  {plan.features.slice(0, expanded ? undefined : 6).map((f) => (
+                    <li key={f} className="flex items-start gap-2.5">
                       <Check
-                        className={cn('mt-0.5 size-3.5 shrink-0', plan.highlight ? 'text-accent' : 'text-accent')}
-                        strokeWidth={2.5}
+                        className={cn(
+                          'mt-[3px] size-3.5 shrink-0',
+                          plan.highlight ? 'text-accent' : 'text-blue',
+                        )}
                       />
-                      <span className={plan.highlight ? 'text-white/70' : 'text-mute'}>{f}</span>
+                      <span
+                        className={cn(
+                          'text-[0.82rem] leading-relaxed',
+                          plan.highlight ? 'text-canvas/80' : 'text-ink/80',
+                        )}
+                      >
+                        {f}
+                      </span>
                     </li>
                   ))}
                 </ul>
+
+                <a
+                  href="#contact"
+                  className={cn(
+                    'btn mt-7 w-full',
+                    plan.highlight ? 'btn-accent' : 'btn-primary',
+                  )}
+                >
+                  Choose {plan.name.split(' ')[0]}
+                  <ArrowUpRight className="size-4" />
+                </a>
               </article>
-              </TiltCard>
-            </StaggerItem>
+            </Reveal>
           ))}
-        </Stagger>
+        </div>
 
-        <Reveal className="mt-14">
-          <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
-            <h3 className="h3">Compare every detail</h3>
-            <p className="text-[0.78rem] text-mute-soft">Swipe the table sideways on smaller screens.</p>
-          </div>
-          <div className="no-scrollbar mt-5 overflow-x-auto rounded-2xl border border-line bg-surface">
-            <table className="w-full min-w-[42rem] border-collapse text-left text-[0.82rem]">
-              <thead>
-                <tr className="border-b border-line bg-white/[0.03]">
-                  <th scope="col" className="px-5 py-3.5 font-medium text-mute">Feature</th>
-                  {comparison.columns.map((c) => (
-                    <th key={c} scope="col" className="px-5 py-3.5 font-semibold text-ink">{c}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {comparison.rows.map((row) => (
-                  <tr key={row.label} className="border-b border-line/70 last:border-0">
-                    <th scope="row" className="px-5 py-3 font-normal text-mute">{row.label}</th>
-                    {row.values.map((v, i) => (
-                      <td key={i} className="px-5 py-3 text-ink/85">{v}</td>
-                    ))}
-                  </tr>
+        <div className="mt-6 flex flex-col items-start justify-between gap-3 border-t border-line pt-5 sm:flex-row sm:items-center">
+          <button
+            type="button"
+            onClick={() => setExpanded((v) => !v)}
+            aria-expanded={expanded}
+            className="text-[0.72rem] font-medium tracking-[0.1em] text-ink uppercase transition-colors hover:text-accent"
+          >
+            {expanded ? '— Show fewer features' : '+ Show every feature'}
+          </button>
+          <p className="text-[0.72rem] text-mute">{plans[0].features.length + plans[1].features.length} features across three packages</p>
+        </div>
+
+        <div className="mt-14 grid gap-10 lg:grid-cols-12 lg:gap-8">
+          <div className="lg:col-span-5">
+            <Reveal>
+              <span className="rule-label">What you should know</span>
+              <ul className="mt-4 space-y-3">
+                {pricingRules.map((rule) => (
+                  <li key={rule} className="flex gap-3 text-[0.82rem] leading-relaxed text-mute">
+                    <span aria-hidden="true" className="mt-[0.55em] size-1 shrink-0 rounded-full bg-accent" />
+                    {rule}
+                  </li>
                 ))}
-              </tbody>
-            </table>
+              </ul>
+            </Reveal>
           </div>
-        </Reveal>
-
-        <Reveal className="mt-8 grid gap-3 rounded-2xl border border-line bg-surface p-5 text-[0.78rem] leading-relaxed text-mute md:grid-cols-2 md:p-6">
-          <div>
-            {pricingRules.slice(0, 3).map((r) => (
-              <p key={r} className="mb-2 last:mb-0">· {r}</p>
-            ))}
+          <div className="lg:col-span-7">
+            <Reveal delay={0.1}>
+              <span className="rule-label">Pricing questions</span>
+              <div className="mt-3">
+                <Accordion items={priceFaqs.slice(0, 5)} />
+              </div>
+            </Reveal>
           </div>
-          <div className="flex flex-col items-start gap-2 md:items-end md:text-right">
-            {pricingRules.slice(3).map((r) => (
-              <p key={r}>· {r}</p>
-            ))}
-            <a
-              href={whatsappMessage('Hi! I need a custom quotation for my website.')}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-1 font-medium text-ink underline decoration-line-strong underline-offset-4 hover:decoration-ink"
-            >
-              Ask for a custom quotation
-            </a>
-          </div>
-        </Reveal>
+        </div>
       </div>
     </section>
   );

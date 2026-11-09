@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://yourdigitalstudio.example/sitemap.xml
+Sitemap: https://devasainandinimandapalli.github.io/digital-studio-website/sitemap.xml

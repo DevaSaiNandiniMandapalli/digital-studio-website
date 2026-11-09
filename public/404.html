@@ -3,63 +3,62 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#0B0C0E" />
+    <meta name="theme-color" content="#F5F2EA" />
     <title>Page not found — Your Digital Studio</title>
     <meta name="robots" content="noindex, follow" />
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <style>
-      :root { color-scheme: dark; }
+      :root { color-scheme: light; }
       * { box-sizing: border-box; }
       html, body { height: 100%; }
       body {
         margin: 0;
-        background: #0b0c0e;
-        color: #f1efe9;
-        font-family: 'Inter Tight', Inter, system-ui, -apple-system, 'Segoe UI', sans-serif;
+        background: #f5f2ea;
+        color: #171717;
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
         display: grid;
         place-items: center;
         padding: 1.5rem;
         -webkit-font-smoothing: antialiased;
       }
-      .card { max-width: 34rem; text-align: center; }
-      .code { font-size: clamp(5rem, 18vw, 9rem); line-height: .85; letter-spacing: -.06em; color: #c9f85a; margin: 0; font-weight: 500; }
-      h1 { font-size: clamp(1.5rem, 4vw, 2rem); letter-spacing: -.02em; font-weight: 500; margin: 1.6rem 0 .6rem; }
-      p { color: #9a9ca3; font-size: .93rem; line-height: 1.6; margin: 0 0 2rem; }
+      .wrap { max-width: 36rem; }
+      .brand { display: flex; align-items: baseline; gap: .35rem; font-weight: 700; letter-spacing: -.03em; font-size: 1.05rem; }
+      .brand span { color: #ff5a36; }
+      .brand em { font-style: normal; font-weight: 400; font-size: .62rem; letter-spacing: .2em; text-transform: uppercase; color: #74716c; margin-left: .6rem; }
+      .code { font-size: clamp(4.5rem, 16vw, 8rem); line-height: .82; letter-spacing: -.06em; margin: 2rem 0 1.2rem; font-weight: 500; }
+      h1 { font-size: clamp(1.4rem, 4vw, 1.9rem); letter-spacing: -.03em; font-weight: 500; margin: 0 0 .7rem; text-transform: uppercase; }
+      p { color: #74716c; font-size: .92rem; line-height: 1.65; margin: 0 0 2rem; max-width: 30rem; }
+      .row { display: flex; flex-wrap: wrap; gap: .65rem; }
       a.cta {
         display: inline-flex; align-items: center; gap: .5rem;
-        background: #c9f85a; color: #0b0c0e; text-decoration: none;
-        padding: .8rem 1.3rem; border-radius: .45rem; font-weight: 600; font-size: .86rem;
-        transition: transform .2s ease;
+        background: #171717; color: #f5f2ea; text-decoration: none;
+        padding: .85rem 1.35rem; font-size: .74rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 600;
+        transition: background .25s ease, transform .25s ease;
       }
-      a.cta:hover { transform: translateY(-1px); }
-      .links { margin-top: 1.6rem; display: flex; gap: 1.2rem; justify-content: center; }
-      .links a { color: #9a9ca3; font-size: .78rem; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.15); padding-bottom: 1px; }
-      .links a:hover { color: #f1efe9; }
+      a.cta:hover { background: #ff5a36; color: #fff; transform: translateY(-1px); }
+      a.ghost { border: 1px solid #dedad1; color: #171717; background: transparent; }
+      a.ghost:hover { border-color: #171717; background: transparent; color: #171717; transform: translateY(-1px); }
+      footer { margin-top: 3rem; border-top: 1px solid #dedad1; padding-top: 1rem; font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; color: #8d8981; }
     </style>
   </head>
   <body>
-    <main class="card">
+    <div class="wrap">
+      <div class="brand">YDS<span>.</span><em>Your Digital Studio</em></div>
       <p class="code">404</p>
-      <h1>This page took a different path.</h1>
-      <p>
-        The page you were looking for does not exist, or it has moved. Head back to the studio and
-        explore the work instead.
-      </p>
-      <a class="cta" href="./" data-go="">Back to the website</a>
-      <div class="links">
-        <a href="./#work" data-go="#work">Our work</a>
-        <a href="./#pricing" data-go="#pricing">Pricing</a>
-        <a href="./#contact" data-go="#contact">Contact</a>
+      <h1>This page has moved on.</h1>
+      <p>The page you were looking for does not exist — but the studio is still here. Head back to the homepage, or send us a message and we will point you in the right direction.</p>
+      <div class="row">
+        <a class="cta" href="./" data-go="home">Back to home →</a>
+        <a class="cta ghost" href="https://wa.me/919392194979" target="_blank" rel="noopener">Chat on WhatsApp ↗</a>
       </div>
-    </main>
+      <footer>Hyderabad, India · © 2026 Your Digital Studio</footer>
+    </div>
     <script>
       (function () {
-        var isRepo = location.pathname.indexOf('/digital-studio-website') === 0;
-        var base = isRepo ? '/digital-studio-website/' : '/';
-        document.querySelectorAll('[data-go]').forEach(function (a) {
-          var hash = a.getAttribute('data-go') || '';
-          a.setAttribute('href', hash ? base + hash : base);
-        });
+        var home = document.querySelector('[data-go="home"]');
+        var path = window.location.pathname;
+        var base = path.indexOf('/digital-studio-website') === 0 ? '/digital-studio-website/' : '/';
+        if (home) home.setAttribute('href', base);
       })();
     </script>
   </body>
