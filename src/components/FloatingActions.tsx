@@ -20,7 +20,7 @@ export function FloatingActions() {
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         aria-label="Back to top"
         className={cn(
-          'grid size-10 place-items-center rounded-full border border-line bg-surface text-ink shadow-sm transition-all duration-300 hover:border-ink',
+          'grid size-10 place-items-center border border-line bg-surface text-ink transition-all duration-300 hover:border-ink',
           showTop ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-2 opacity-0',
         )}
       >
@@ -32,7 +32,7 @@ export function FloatingActions() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat with us on WhatsApp"
-        className="flex items-center gap-2 rounded-full bg-[#1faf55] px-4 py-3.5 text-white shadow-[0_12px_36px_-12px_rgba(31,175,85,0.7)] transition-transform duration-300 hover:scale-[1.03] active:scale-95"
+        className="flex items-center gap-2 bg-ink px-4 py-3.5 text-canvas shadow-[0_12px_36px_-18px_rgba(22,26,27,0.9)] transition-colors duration-300 hover:bg-[#2e3a3f] active:bg-[#2e3a3f]"
       >
         <MessageCircle className="size-[1.15rem]" strokeWidth={2.1} />
         <span className="hidden text-[0.78rem] font-semibold sm:inline">Chat on WhatsApp</span>

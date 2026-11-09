@@ -14,7 +14,7 @@ export function Intro() {
             <Reveal>
               <span className="eyebrow">The studio</span>
             </Reveal>
-            <h2 className="font-display mt-6 text-[clamp(1.7rem,3.2vw+0.5rem,3.2rem)] leading-[1.06] font-medium tracking-[-0.04em] uppercase">
+            <h2 className="font-display mt-6 text-[clamp(1.7rem,3.2vw+0.5rem,3.2rem)] leading-[1.05] font-bold tracking-[-0.045em]">
               <motion.span
                 initial={reduce ? undefined : { opacity: 0, y: 24 }}
                 whileInView={reduce ? undefined : { opacity: 1, y: 0 }}

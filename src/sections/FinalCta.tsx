@@ -11,8 +11,8 @@ export function FinalCta() {
     <section className="relative overflow-hidden bg-night py-20 text-canvas md:py-28">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -top-24 -right-24 size-[22rem] rounded-full opacity-20 blur-[90px]"
-        style={{ background: 'radial-gradient(circle, #ff5a36, transparent 70%)' }}
+        className="pointer-events-none absolute -top-24 -right-24 size-[22rem] rounded-full opacity-25 blur-[90px]"
+        style={{ background: 'radial-gradient(circle, #93a7ad, transparent 70%)' }}
       />
       <div className="shell relative">
         <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
@@ -28,7 +28,7 @@ export function FinalCta() {
               Next project
             </motion.p>
 
-            <h2 className="mt-6 font-display text-[clamp(2.1rem,5vw+0.5rem,4.9rem)] leading-[0.97] font-medium tracking-[-0.045em] uppercase text-[#f3efe6]">
+            <h2 className="mt-6 font-display text-[clamp(2.1rem,5vw+0.5rem,4.9rem)] leading-[0.94] font-bold tracking-[-0.055em] lowercase text-[#efefeb]">
               {['Let’s build something', 'worth remembering.'].map((line, i) => (
                 <span key={line} className="block overflow-hidden">
                   <motion.span
@@ -57,7 +57,7 @@ export function FinalCta() {
                 out — and what it would cost.
               </p>
               <div className="mt-6 flex flex-col gap-3 sm:flex-row lg:flex-col">
-                <a href="#contact" className="btn btn-accent">
+                <a href="#contact" className="btn btn-on-dark">
                   Start your project
                   <ArrowUpRight className="size-4" />
                 </a>

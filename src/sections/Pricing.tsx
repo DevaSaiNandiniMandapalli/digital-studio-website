@@ -59,7 +59,7 @@ export function Pricing() {
                     <span
                       className={cn(
                         'shrink-0 rounded-full px-2.5 py-1 text-[0.6rem] font-semibold tracking-[0.1em] uppercase',
-                        plan.highlight ? 'bg-accent text-white' : 'bg-surface-2 text-mute',
+                        plan.highlight ? 'bg-canvas text-ink' : 'bg-surface-2 text-mute',
                       )}
                     >
                       {plan.badge}
@@ -103,7 +103,7 @@ export function Pricing() {
                       <Check
                         className={cn(
                           'mt-[3px] size-3.5 shrink-0',
-                          plan.highlight ? 'text-accent' : 'text-blue',
+                          plan.highlight ? 'text-canvas/60' : 'text-blue',
                         )}
                       />
                       <span
@@ -122,7 +122,7 @@ export function Pricing() {
                   href="#contact"
                   className={cn(
                     'btn mt-7 w-full',
-                    plan.highlight ? 'btn-accent' : 'btn-primary',
+                    plan.highlight ? 'btn-on-dark' : 'btn-primary',
                   )}
                 >
                   Choose {plan.name.split(' ')[0]}

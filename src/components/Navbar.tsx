@@ -33,8 +33,8 @@ export function Navbar() {
         <div className="shell">
           <div
             className={cn(
-              'mt-3 flex items-center justify-between gap-4 border bg-canvas/85 px-4 py-3 backdrop-blur-md transition-all duration-500 md:px-6',
-              scrolled ? 'border-line shadow-[0_10px_30px_-24px_rgba(23,23,23,0.55)]' : 'border-transparent',
+              'mt-3 flex items-center justify-between gap-4 border border-line bg-surface/92 px-4 py-3 backdrop-blur-md transition-all duration-500 md:px-6',
+              scrolled ? 'border-line-strong shadow-[0_10px_30px_-24px_rgba(22,26,27,0.55)]' : 'border-line',
             )}
           >
             <a href="#home" aria-label={`${site.name} — home`} className="shrink-0">
@@ -108,7 +108,7 @@ export function Navbar() {
                       onClick={() => setOpen(false)}
                       className="flex items-baseline justify-between py-5"
                     >
-                      <span className="font-display text-[1.6rem] font-medium tracking-[-0.04em] uppercase">
+                      <span className="font-display text-[1.9rem] font-semibold tracking-[-0.05em] lowercase">
                         {link.label}
                       </span>
                       <span className="text-[0.62rem] tracking-[0.16em] text-mute">

@@ -7,8 +7,9 @@
 
 A production-ready marketing site for an independent website design and development studio:
 12 live project links, transparent INR pricing, a WhatsApp-first enquiry flow and a fully
-responsive editorial design system — warm ivory canvas, Space Grotesk display type, DM Sans body
-copy, a selective orange accent and asymmetric, Swiss-influenced layouts.
+responsive architectural design system — a cool grey-blue canvas, off-white and near-black
+plates, a single neo-grotesque family (Inter Tight display, Inter copy), heavy lowercase wordmark,
+bent-arrow marks and stacked card compositions inspired by print identity work.
 
 **Stack:** Vite 6 · React 19 · TypeScript · Tailwind CSS v4 · Framer Motion · lucide-react
 
