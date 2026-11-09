@@ -5,16 +5,10 @@ import { categories, projects, type CategoryId } from '../data/projects';
 import { asset, cn } from '../lib/utils';
 import { Reveal } from '../components/Reveal';
 
-const pattern = [7, 5, 5, 7, 4, 4, 4, 7, 5, 5, 7, 6, 6];
-const spanClass = (i: number) => {
-  const span = pattern[i % pattern.length];
-  return span === 4 ? 'xl:col-span-4' : span === 5 ? 'xl:col-span-5' : span === 7 ? 'xl:col-span-7' : 'xl:col-span-6';
-};
-
-const aspectClass = (i: number) => {
-  const span = pattern[i % pattern.length];
-  return span >= 6 ? 'aspect-[16/10]' : 'aspect-[4/3]';
-};
+// Every row is flush: 3 columns on desktop, 2 on tablet, 1 on mobile.
+// When a lone card would be left over, it fills the row as a wide feature card.
+const trailingSpan = (count: number) =>
+  count % 2 === 0 ? 'xl:col-span-3' : 'sm:col-span-2 xl:col-span-3';
 
 export function Portfolio() {
   const [filter, setFilter] = useState<CategoryId>('all');
@@ -104,9 +98,11 @@ export function Portfolio() {
           })}
         </div>
 
-        <motion.div layout className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 xl:grid-cols-12">
+        <motion.div layout className="mt-8 grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 sm:gap-5 xl:grid-cols-3">
           <AnimatePresence mode="popLayout" initial={false}>
-            {filtered.map((p, i) => (
+            {filtered.map((p, i) => {
+              const spanning = filtered.length % 3 === 1 && i === filtered.length - 1;
+              return (
               <motion.article
                 key={p.id}
                 layout={!reduce}
@@ -114,16 +110,24 @@ export function Portfolio() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={reduce ? undefined : { opacity: 0, scale: 0.97 }}
                 transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                className={cn('group relative', spanClass(filter === 'all' ? i : i))}
+                className={cn('group relative', spanning && trailingSpan(filtered.length))}
               >
                 <a
                   href={p.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block h-full overflow-hidden rounded-lg border border-line bg-ink transition-colors duration-500 hover:border-line-strong"
+                  className={cn(
+                    'block h-full overflow-hidden rounded-lg border border-line bg-ink transition-colors duration-500 hover:border-line-strong',
+                    spanning && 'xl:grid xl:grid-cols-2 xl:items-stretch',
+                  )}
                   aria-label={`${p.name} — view live website (opens in a new tab)`}
                 >
-                  <div className="relative overflow-hidden border-b border-line bg-ink-3">
+                  <div
+                    className={cn(
+                      'relative overflow-hidden border-b border-line bg-ink-3',
+                      spanning && 'xl:border-b-0 xl:border-r',
+                    )}
+                  >
                     <div className="flex items-center gap-1.5 border-b border-line px-3 py-2">
                       <span className="size-1.5 rounded-full bg-white/15" />
                       <span className="size-1.5 rounded-full bg-white/15" />
@@ -133,7 +137,12 @@ export function Portfolio() {
                       </span>
                       <ExternalLink className="ml-auto size-3 text-mute/50" />
                     </div>
-                    <div className={cn('overflow-hidden', aspectClass(filter === 'all' ? i : 0))}>
+                    <div
+                      className={cn(
+                        'overflow-hidden',
+                        spanning ? 'aspect-[16/10] xl:aspect-[16/9]' : 'aspect-[16/11]',
+                      )}
+                    >
                       <img
                         src={asset(p.image)}
                         alt={`Homepage of the ${p.name} website — ${p.category}`}
@@ -151,7 +160,12 @@ export function Portfolio() {
                     </div>
                   </div>
 
-                  <div className="flex items-start justify-between gap-4 p-4 md:p-5">
+                  <div
+                    className={cn(
+                      'flex items-start justify-between gap-4 p-4 md:p-5',
+                      spanning && 'xl:h-full xl:items-center xl:p-8',
+                    )}
+                  >
                     <div>
                       <div className="flex items-center gap-2 text-[0.62rem] uppercase tracking-[0.12em] text-mute">
                         <span className="font-mono text-mute/50">{p.index}</span>
@@ -171,7 +185,8 @@ export function Portfolio() {
                   </div>
                 </a>
               </motion.article>
-            ))}
+              );
+            })}
           </AnimatePresence>
         </motion.div>
 
