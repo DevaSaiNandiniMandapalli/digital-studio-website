@@ -45,12 +45,22 @@
         The page you were looking for does not exist, or it has moved. Head back to the studio and
         explore the work instead.
       </p>
-      <a class="cta" href="./">Back to the website</a>
+      <a class="cta" href="./" data-go="">Back to the website</a>
       <div class="links">
-        <a href="./#work">Our work</a>
-        <a href="./#pricing">Pricing</a>
-        <a href="./#contact">Contact</a>
+        <a href="./#work" data-go="#work">Our work</a>
+        <a href="./#pricing" data-go="#pricing">Pricing</a>
+        <a href="./#contact" data-go="#contact">Contact</a>
       </div>
     </main>
+    <script>
+      (function () {
+        var isRepo = location.pathname.indexOf('/digital-studio-website') === 0;
+        var base = isRepo ? '/digital-studio-website/' : '/';
+        document.querySelectorAll('[data-go]').forEach(function (a) {
+          var hash = a.getAttribute('data-go') || '';
+          a.setAttribute('href', hash ? base + hash : base);
+        });
+      })();
+    </script>
   </body>
 </html>
