@@ -5,18 +5,17 @@
 **Live now (GitHub Pages):** https://devasainandinimandapalli.github.io/digital-studio-website/
 
 
-A production-ready marketing site for a digital design and development studio: 12 live project
-links, transparent INR pricing, a WhatsApp-first enquiry flow and a fully responsive
-"DIGITAL DIMENSION" visual system — deep navy canvas, electric blue and cyan lighting,
-glass surfaces and a cinematic 3D hero.
+A production-ready marketing site for an independent website design and development studio:
+12 live project links, transparent INR pricing, a WhatsApp-first enquiry flow and a fully
+responsive editorial design system — warm ivory canvas, Space Grotesk display type, DM Sans body
+copy, a selective orange accent and asymmetric, Swiss-influenced layouts.
 
-**Stack:** Vite 6 · React 19 · TypeScript · Tailwind CSS v4 · React Three Fiber / Three.js ·
-Framer Motion · lucide-react
+**Stack:** Vite 6 · React 19 · TypeScript · Tailwind CSS v4 · Framer Motion · lucide-react
 
-**3D:** the hero scene (`src/three/DimensionScene.tsx`) is a lazily loaded React Three Fiber
-canvas with an architectural glass backdrop, floating device mockups and light rigs. It is
-compact on small screens, falls back to a CSS scene when WebGL is unavailable, and renders a
-static scene when `prefers-reduced-motion` is set.
+**Design system:** tokens (colour, type, spacing, easing) live in `src/index.css` under
+`@theme`. Sections are composed from `src/components` (Navbar, Logo, BrowserFrame, Accordion,
+Reveal, SectionHeading, Footer, FloatingActions) so every page block shares the same rhythm.
+All motion respects `prefers-reduced-motion`.
 
 ---
 
@@ -36,7 +35,7 @@ Everything customer-facing is driven by config, not hardcoded markup.
 | What | Where |
 | --- | --- |
 | Studio name, short name, phone, WhatsApp, email, location, socials, availability | `src/data/site.ts` |
-| The 13 portfolio projects (name, category, description, live URL, screenshot) | `src/data/projects.ts` |
+| The 12 portfolio projects (name, category, description, live URL, screenshot) | `src/data/projects.ts` |
 | Services and their tags | `src/data/services.ts` |
 | Packages, comparison table, pricing rules, FAQs | `src/data/pricing.ts` |
 | Design tokens (colours, fonts, easing) | `src/index.css` (`@theme`) |

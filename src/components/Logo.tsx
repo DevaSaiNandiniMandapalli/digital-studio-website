@@ -5,25 +5,36 @@ type LogoProps = {
   className?: string;
   tone?: 'light' | 'dark';
   showName?: boolean;
+  compact?: boolean;
 };
 
-export function Logo({ className, tone = 'light', showName = true }: LogoProps) {
+export function Logo({ className, tone = 'light', showName = true, compact = false }: LogoProps) {
   const dark = tone === 'dark';
   return (
-    <span className={cn('flex items-center gap-2.5', className)}>
-      <span className="relative grid size-8 place-items-center overflow-hidden rounded-[0.55rem] bg-[linear-gradient(140deg,#38d5ff,#247bff_70%)] text-[0.58rem] font-bold tracking-[0.08em] text-[#04101f] shadow-[0_6px_18px_-8px_rgba(36,123,255,0.9)]">
-        <span aria-hidden="true" className="absolute inset-x-0 top-0 h-px bg-white/70" />
+    <span className={cn('flex items-baseline gap-2', className)}>
+      <span
+        className={cn(
+          'font-display text-[1.15rem] leading-none font-bold tracking-[-0.05em]',
+          dark ? 'text-white' : 'text-ink',
+        )}
+      >
         {site.shortName}
-      </span>
-      {showName && (
-        <span
-          className={cn(
-            'font-display text-[0.95rem] font-semibold tracking-[-0.02em]',
-            dark ? 'text-white' : 'text-ink',
-          )}
-        >
-          {site.name}
+        <span aria-hidden="true" className="text-accent">
+          .
         </span>
+      </span>
+      {showName && !compact && (
+        <>
+          <span aria-hidden="true" className={cn('h-3 w-px', dark ? 'bg-white/25' : 'bg-line-strong')} />
+          <span
+            className={cn(
+              'text-[0.62rem] font-medium tracking-[0.16em] uppercase',
+              dark ? 'text-white/70' : 'text-mute',
+            )}
+          >
+            {site.name}
+          </span>
+        </>
       )}
     </span>
   );

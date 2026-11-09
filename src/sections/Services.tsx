@@ -1,52 +1,48 @@
 import { ArrowUpRight } from 'lucide-react';
-import { services } from '../data/services';
+import { Reveal } from '../components/Reveal';
 import { SectionHeading } from '../components/SectionHeading';
-import { Stagger, StaggerItem } from '../components/Reveal';
-import { TiltCard } from '../components/TiltCard';
+import { services } from '../data/services';
 
 export function Services() {
   return (
-    <section id="services" className="relative overflow-hidden border-t border-line py-20 md:py-28">
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute top-1/3 left-1/2 h-[26rem] w-[46rem] -translate-x-1/2 rounded-full bg-[#247bff]/8 blur-[130px]" />
-      </div>
-
+    <section id="services" className="relative overflow-hidden border-t border-line bg-canvas py-20 md:py-28">
       <div className="shell">
         <SectionHeading
-          eyebrow="What we create"
-          title="What We Create."
-          copy="Digital solutions designed to help businesses establish a stronger online presence."
+          eyebrow="Services"
+          title={
+            <>
+              What we can <span className="text-accent">create</span>.
+            </>
+          }
+          copy="Six focused services. Each one built around a business goal, not a template."
         />
 
-        <Stagger className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {services.map((service) => (
-            <StaggerItem key={service.id} className="h-full">
-              <TiltCard max={4} className="h-full">
-                <article className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-[linear-gradient(160deg,rgba(56,213,255,0.07),rgba(16,34,58,0.55)_45%,rgba(9,20,38,0.85))] p-6 backdrop-blur-md transition-colors duration-500 hover:border-accent/35">
-                  <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+        <div className="mt-12 border-t border-line md:mt-16">
+          {services.map((service, i) => (
+            <Reveal key={service.id} delay={i * 0.04}>
+              <a
+                href="#contact"
+                className="group grid grid-cols-[auto_1fr_auto] items-start gap-x-4 border-b border-line py-7 transition-colors duration-500 hover:bg-surface md:grid-cols-[4rem_1fr_1.15fr_auto] md:items-center md:gap-x-8 md:py-8"
+              >
+                <span className="font-display pt-1 text-[0.72rem] font-medium tracking-[0.14em] text-accent transition-transform duration-500 group-hover:-translate-y-0.5 md:pt-0">
+                  {service.index}
+                </span>
 
-                  <div className="flex items-start justify-between">
-                    <span className="grid size-11 place-items-center rounded-xl border border-line bg-white/[0.05] text-accent transition-colors duration-500 group-hover:border-accent/40 group-hover:bg-accent group-hover:text-[#04101f]">
-                      <service.icon className="size-[1.15rem]" strokeWidth={1.6} />
-                    </span>
-                    <span className="font-mono text-[0.66rem] tracking-[0.14em] text-mute-soft">{service.index}</span>
-                  </div>
+                <h3 className="h3 max-w-[18rem] transition-colors duration-300 group-hover:text-accent md:max-w-none">
+                  {service.title}
+                </h3>
 
-                  <h3 className="h3 mt-6">{service.title}</h3>
-                  <p className="mt-2.5 text-[0.85rem] leading-relaxed text-mute">{service.description}</p>
+                <p className="col-span-2 col-start-2 mt-2 max-w-[34rem] text-[0.88rem] leading-relaxed text-mute md:col-span-1 md:col-start-auto md:mt-0">
+                  {service.description}
+                </p>
 
-                  <a
-                    href="#contact"
-                    className="mt-6 inline-flex items-center gap-1.5 text-[0.78rem] font-medium text-ink/80 transition-colors hover:text-accent"
-                  >
-                    Learn more
-                    <ArrowUpRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                  </a>
-                </article>
-              </TiltCard>
-            </StaggerItem>
+                <span className="col-start-3 row-start-1 grid size-9 place-items-center rounded-full border border-line text-mute transition-all duration-500 group-hover:border-accent group-hover:bg-accent group-hover:text-white md:col-start-4">
+                  <ArrowUpRight className="size-4" />
+                </span>
+              </a>
+            </Reveal>
           ))}
-        </Stagger>
+        </div>
       </div>
     </section>
   );

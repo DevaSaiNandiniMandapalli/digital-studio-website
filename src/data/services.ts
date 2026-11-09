@@ -13,9 +13,9 @@ export const services: Service[] = [
   {
     id: 'business-website',
     index: '01',
-    title: 'Business Website Development',
+    title: 'Business Websites',
     shortTitle: 'Business websites',
-    description: 'Professional business websites that build trust and generate enquiries.',
+    description: 'Professional online identities for growing businesses.',
     icon: MonitorSmartphone,
   },
   {
@@ -23,15 +23,15 @@ export const services: Service[] = [
     index: '02',
     title: 'Restaurant & Cafe Websites',
     shortTitle: 'Restaurant sites',
-    description: 'Beautiful restaurant websites with menus, galleries, location details and enquiry functionality.',
+    description: 'Beautiful menus, galleries, locations and enquiry experiences.',
     icon: UtensilsCrossed,
   },
   {
     id: 'ecommerce',
     index: '03',
-    title: 'E-commerce Development',
+    title: 'E-commerce Websites',
     shortTitle: 'E-commerce',
-    description: 'Online storefronts and product-focused shopping experiences.',
+    description: 'Product-focused digital storefronts.',
     icon: ShoppingBag,
   },
   {
@@ -39,15 +39,15 @@ export const services: Service[] = [
     index: '04',
     title: 'Corporate & Startup Websites',
     shortTitle: 'Corporate sites',
-    description: 'Professional digital identities for ambitious companies and startups.',
+    description: 'Professional websites for companies and entrepreneurs.',
     icon: Building2,
   },
   {
     id: 'portfolio',
     index: '05',
-    title: 'Portfolio & Personal Websites',
+    title: 'Portfolio Websites',
     shortTitle: 'Portfolio sites',
-    description: 'Modern websites for creators, consultants and professionals.',
+    description: 'Personal brands and professional portfolios.',
     icon: UserRound,
   },
   {
@@ -55,7 +55,7 @@ export const services: Service[] = [
     index: '06',
     title: 'Custom Web Applications',
     shortTitle: 'Web applications',
-    description: 'Custom-built digital platforms, dashboards and business applications.',
+    description: 'Tailored web platforms and business tools.',
     icon: Code2,
   },
 ];
