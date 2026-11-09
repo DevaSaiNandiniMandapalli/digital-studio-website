@@ -1,5 +1,10 @@
 # Your Digital Studio — Website
 
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/DevaSaiNandiniMandapalli/digital-studio-website&framework=vite&build-command=npm%20run%20build&output-directory=dist)
+
+**Live now (GitHub Pages):** https://devasainandinimandapalli.github.io/digital-studio-website/
+
+
 A production-ready marketing site for a digital design and development studio: 12 live project
 links, transparent INR pricing, a WhatsApp-first enquiry flow and a fully responsive
 "DIGITAL DIMENSION" visual system — deep navy canvas, electric blue and cyan lighting,
