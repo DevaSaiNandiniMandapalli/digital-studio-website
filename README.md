@@ -74,9 +74,19 @@ at the top of the script if Chromium lives elsewhere.
 
 ## Deploy
 
-**GitHub Pages** — `.github/workflows/deploy.yml` builds and publishes on every push to `main`.
-Enable *Settings → Pages → Source: GitHub Actions*. The workflow sets `VITE_BASE` to the repository
-sub-path automatically; for a custom domain set `VITE_BASE=/` instead.
+**GitHub Pages (current setup)** — the site is published from the `gh-pages` branch of
+`DevaSaiNandiniMandapalli/digital-studio-website` to
+https://devasainandinimandapalli.github.io/digital-studio-website/
+
+To publish an update:
+
+```bash
+VITE_BASE=/digital-studio-website/ npm run build
+# copy the contents of dist/ into the gh-pages branch and push it
+```
+
+`VITE_BASE` must match the URL sub-path (use `/` for a custom domain). The branch also contains a
+`.nojekyll` file so GitHub Pages serves the hashed asset files as-is.
 
 **Any static host** — build and upload `dist/`. Set `VITE_BASE` if the site is served from a
 sub-directory.
