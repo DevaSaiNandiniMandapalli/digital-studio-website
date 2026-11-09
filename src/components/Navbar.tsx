@@ -49,7 +49,7 @@ export function Navbar() {
       <header
         className={cn(
           'fixed inset-x-0 top-0 z-50 transition-all duration-300',
-          scrolled ? 'border-b border-line bg-canvas/85 backdrop-blur-xl' : 'border-b border-transparent',
+          scrolled ? 'border-b border-line bg-canvas/70 backdrop-blur-2xl' : 'border-b border-transparent',
         )}
       >
         <div className="shell flex h-[4.5rem] items-center justify-between gap-6">
@@ -76,7 +76,7 @@ export function Navbar() {
                       {link.label}
                       <span
                         className={cn(
-                          'absolute inset-x-3.5 -bottom-0.5 h-px origin-left bg-ink transition-transform duration-300',
+                          'absolute inset-x-3.5 -bottom-0.5 h-px origin-left bg-accent transition-transform duration-300',
                           isActive ? 'scale-x-100' : 'scale-x-0',
                         )}
                       />

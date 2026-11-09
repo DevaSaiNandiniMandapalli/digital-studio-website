@@ -3,6 +3,7 @@ import { services } from '../data/services';
 import { SectionHeading } from '../components/SectionHeading';
 import { Reveal, Stagger, StaggerItem } from '../components/Reveal';
 import { whatsappMessage } from '../data/site';
+import { TiltCard } from '../components/TiltCard';
 
 const featured = ['business-website', 'restaurant-website', 'ecommerce', 'hotel', 'portfolio', 'ai-automation'];
 
@@ -39,16 +40,17 @@ export function Services() {
 
         <Stagger className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {cards.map((service) => (
-            <StaggerItem key={service.id}>
+            <StaggerItem key={service.id} className="h-full">
+              <TiltCard max={4} className="h-full">
               <a
                 href="#contact"
-                className="group flex h-full flex-col rounded-2xl border border-line bg-surface p-6 transition-colors duration-300 hover:border-ink/25 md:p-7"
+                className="group flex h-full flex-col rounded-2xl border border-line bg-surface p-6 transition-colors duration-300 hover:border-accent/40 md:p-7"
               >
                 <div className="flex items-start justify-between">
-                  <span className="grid size-10 place-items-center rounded-xl bg-canvas text-ink transition-colors duration-300 group-hover:bg-accent">
+                  <span className="grid size-10 place-items-center rounded-xl border border-line bg-white/[0.06] text-accent transition-colors duration-300 group-hover:bg-accent group-hover:text-[#0b1204]">
                     <service.icon className="size-[1.15rem]" strokeWidth={1.6} />
                   </span>
-                  <ArrowUpRight className="size-4 text-line-strong transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-ink" />
+                  <ArrowUpRight className="size-4 text-mute-soft transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent" />
                 </div>
                 <h3 className="h3 mt-6">{service.title}</h3>
                 <p className="mt-2.5 text-[0.875rem] leading-relaxed text-mute">{service.description}</p>
@@ -60,6 +62,7 @@ export function Services() {
                   ))}
                 </div>
               </a>
+              </TiltCard>
             </StaggerItem>
           ))}
         </Stagger>

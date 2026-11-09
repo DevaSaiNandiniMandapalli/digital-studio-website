@@ -164,7 +164,7 @@ export function Contact() {
   };
 
   const inputBase =
-    'w-full rounded-lg border bg-surface px-3.5 py-2.5 text-[0.87rem] text-ink placeholder:text-mute-soft/70 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-ink/40';
+    'w-full rounded-lg border bg-surface px-3.5 py-2.5 text-[0.87rem] text-ink placeholder:text-mute-soft/70 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-accent/45 focus:border-accent/60';
   const ok = 'border-line';
   const bad = 'border-red-500/60 bg-red-50/50 focus:border-red-500';
 
@@ -188,7 +188,7 @@ export function Contact() {
               <ul className="mt-9 divide-y divide-line border-y border-line">
                 <li>
                   <a href={`tel:${site.phoneRaw}`} className="group flex items-center gap-4 py-4">
-                    <span className="grid size-9 place-items-center rounded-md border border-line bg-canvas text-ink/70 transition-colors group-hover:border-ink/30 group-hover:text-ink">
+                    <span className="grid size-9 place-items-center rounded-md border border-line bg-white/[0.04] text-mute transition-colors group-hover:border-accent/40 group-hover:text-accent">
                       <Phone className="size-4" />
                     </span>
                     <span>
@@ -205,7 +205,7 @@ export function Contact() {
                     rel="noopener noreferrer"
                     className="group flex items-center gap-4 py-4"
                   >
-                    <span className="grid size-9 place-items-center rounded-md border border-line bg-canvas text-ink/70 transition-colors group-hover:border-ink/30 group-hover:text-ink">
+                    <span className="grid size-9 place-items-center rounded-md border border-line bg-white/[0.04] text-mute transition-colors group-hover:border-accent/40 group-hover:text-accent">
                       <MessageCircle className="size-4" />
                     </span>
                     <span>
@@ -216,7 +216,7 @@ export function Contact() {
                   </a>
                 </li>
                 <li className="flex items-center gap-4 py-4">
-                  <span className="grid size-9 place-items-center rounded-md border border-line bg-canvas text-ink/70">
+                  <span className="grid size-9 place-items-center rounded-md border border-line bg-white/[0.04] text-mute">
                     <MapPin className="size-4" />
                   </span>
                   <span>
@@ -225,7 +225,7 @@ export function Contact() {
                   </span>
                 </li>
                 <li className="flex items-center gap-4 py-4">
-                  <span className="grid size-9 place-items-center rounded-md border border-line bg-canvas text-ink/70">
+                  <span className="grid size-9 place-items-center rounded-md border border-line bg-white/[0.04] text-mute">
                     <Clock className="size-4" />
                   </span>
                   <span>
@@ -245,7 +245,7 @@ export function Contact() {
           </div>
 
           <Reveal delay={0.05}>
-            <div className="rounded-2xl border border-line bg-canvas p-5 md:p-8">
+            <div className="rounded-2xl border border-line bg-white/[0.04] p-5 md:p-8">
               <form ref={formRef} onSubmit={onSubmit} noValidate aria-describedby="form-note">
                 <div className="grid gap-4 sm:grid-cols-2">
                   <Field label="Full name" required error={errors.name} htmlFor="name">
@@ -364,7 +364,7 @@ export function Contact() {
                             className={cn(
                               'rounded-lg border px-2.5 py-2.5 text-[0.72rem] leading-tight font-medium transition-all duration-300',
                               active
-                                ? 'border-ink bg-ink text-white'
+                                ? 'border-accent bg-accent/12 text-ink'
                                 : 'border-line bg-surface text-mute hover:border-line-strong hover:text-ink',
                             )}
                           >
@@ -445,7 +445,7 @@ export function Contact() {
                     </div>
                   )}
                   {status === 'whatsapp' && (
-                    <div className="rounded-lg border border-line bg-canvas px-3.5 py-3 text-[0.78rem] text-mute">
+                    <div className="rounded-lg border border-line bg-white/[0.04] px-3.5 py-3 text-[0.78rem] text-mute">
                       <p className="font-medium text-ink">
                         WhatsApp opened with your enquiry — press send there to deliver it.
                       </p>

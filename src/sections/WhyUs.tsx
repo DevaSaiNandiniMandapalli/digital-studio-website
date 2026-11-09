@@ -38,7 +38,7 @@ export function WhyUs() {
         <Stagger className="mt-14 grid gap-x-10 gap-y-10 sm:grid-cols-2">
           {reasons.map((r, i) => (
             <StaggerItem key={r.title} className="flex gap-5">
-              <span className="grid size-10 shrink-0 place-items-center rounded-xl border border-line bg-surface text-ink">
+              <span className="grid size-10 shrink-0 place-items-center rounded-xl border border-line bg-white/[0.05] text-accent">
                 <r.icon className="size-[1.1rem]" strokeWidth={1.6} />
               </span>
               <div>

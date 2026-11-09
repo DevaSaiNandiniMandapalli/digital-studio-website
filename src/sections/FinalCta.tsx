@@ -4,7 +4,12 @@ import { Reveal } from '../components/Reveal';
 
 export function FinalCta() {
   return (
-    <section className="relative overflow-hidden bg-night py-20 text-white md:py-28">
+    <section className="relative overflow-hidden border-t border-line bg-night py-20 text-white md:py-28">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+        <div className="grid-floor absolute inset-0 opacity-50" />
+        <div className="absolute top-1/2 left-1/2 h-[34rem] w-[34rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-accent/10 spin-slow [transform:rotateX(70deg)]" />
+        <div className="absolute top-1/2 left-1/2 h-[22rem] w-[22rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/5 spin-slow [transform:rotateX(70deg)]" />
+      </div>
       <div
         aria-hidden="true"
         className="pointer-events-none absolute -bottom-40 left-1/2 h-[28rem] w-[28rem] -translate-x-1/2 rounded-full bg-accent/12 blur-[130px]"

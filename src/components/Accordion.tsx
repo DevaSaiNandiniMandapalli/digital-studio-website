@@ -27,7 +27,7 @@ export function Accordion({ items, tone = 'light' }: { items: Item[]; tone?: 'li
                 <span
                   className={cn(
                     'text-[0.92rem] leading-snug font-medium tracking-[-0.01em] transition-colors duration-300 md:text-[0.98rem]',
-                    dark ? 'text-white group-hover:text-white/70' : 'text-ink group-hover:text-mute',
+                    dark ? 'text-white group-hover:text-white/70' : 'text-ink group-hover:text-accent-deep',
                   )}
                 >
                   {item.q}
@@ -38,7 +38,7 @@ export function Accordion({ items, tone = 'light' }: { items: Item[]; tone?: 'li
                     dark
                       ? 'border-white/20 text-white/60'
                       : 'border-line-strong text-mute group-hover:border-ink group-hover:text-ink',
-                    isOpen && (dark ? 'rotate-45 border-accent bg-accent text-[#14210a]' : 'rotate-45 border-ink bg-ink text-white'),
+                    isOpen && (dark ? 'rotate-45 border-accent bg-accent text-[#14210a]' : 'rotate-45 border-accent bg-accent text-[#0b1204]'),
                   )}
                 >
                   <Plus className="size-3.5" />

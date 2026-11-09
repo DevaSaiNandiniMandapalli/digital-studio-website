@@ -14,7 +14,7 @@ export function Logo({ className, tone = 'light', showName = true }: LogoProps) 
       <span
         className={cn(
           'grid size-8 place-items-center rounded-[0.6rem] text-[0.6rem] font-bold tracking-[0.06em]',
-          dark ? 'bg-accent text-[#14210a]' : 'bg-ink text-canvas',
+          dark ? 'bg-accent text-[#14210a]' : 'bg-accent text-[#14210a]',
         )}
       >
         {site.shortName}

@@ -26,8 +26,12 @@ const steps = [
 
 export function Process() {
   return (
-    <section id="process" className="bg-night py-20 text-white md:py-28">
-      <div className="shell">
+    <section id="process" className="relative overflow-hidden border-y border-line bg-night py-20 text-white md:py-28">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-70">
+        <div className="grid-floor absolute inset-0" />
+        <div className="absolute -top-40 left-1/2 h-80 w-[40rem] -translate-x-1/2 rounded-full bg-accent/10 blur-[120px]" />
+      </div>
+      <div className="shell relative">
         <SectionHeading
           tone="dark"
           eyebrow="Process"
@@ -37,7 +41,7 @@ export function Process() {
 
         <Stagger className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-night-line bg-[color:var(--color-night-line)] sm:grid-cols-2 lg:grid-cols-4">
           {steps.map((step, i) => (
-            <StaggerItem key={step.title} className="bg-night p-6 md:p-7">
+            <StaggerItem key={step.title} className="bg-night/90 p-6 backdrop-blur-sm transition-colors duration-300 hover:bg-night-2 md:p-7">
               <div className="flex items-baseline justify-between">
                 <span className="font-display text-[0.8rem] font-semibold text-white/35">0{i + 1}</span>
                 <span className="text-[0.65rem] tracking-[0.1em] text-white/35 uppercase">{step.meta}</span>

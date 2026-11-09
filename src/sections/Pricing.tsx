@@ -5,6 +5,7 @@ import { selectPlan } from '../lib/plan';
 import { cn } from '../lib/utils';
 import { SectionHeading } from '../components/SectionHeading';
 import { Reveal, Stagger, StaggerItem } from '../components/Reveal';
+import { TiltCard } from '../components/TiltCard';
 
 const inr = (v: number) => `${site.pricing.symbol}${v.toLocaleString('en-IN')}`;
 
@@ -27,11 +28,12 @@ export function Pricing() {
         <Stagger className="mt-12 grid gap-5 lg:grid-cols-3">
           {plans.map((plan) => (
             <StaggerItem key={plan.id} className="h-full">
+              <TiltCard max={plan.highlight ? 5 : 3} className="h-full">
               <article
                 className={cn(
-                  'flex h-full flex-col rounded-2xl border p-6 md:p-7',
+                  'relative flex h-full flex-col rounded-2xl border p-6 md:p-7',
                   plan.highlight
-                    ? 'border-transparent bg-night text-white shadow-[0_28px_60px_-40px_rgba(21,21,21,0.65)]'
+                    ? 'border-accent/40 bg-[linear-gradient(180deg,rgba(163,230,53,0.16),rgba(255,255,255,0.02))] text-white shadow-[0_40px_90px_-45px_rgba(163,230,53,0.45)]'
                     : 'border-line bg-surface',
                 )}
               >
@@ -48,7 +50,7 @@ export function Pricing() {
                     <span
                       className={cn(
                         'inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[0.62rem] font-semibold tracking-wide uppercase',
-                        plan.highlight ? 'bg-accent text-[#14210a]' : 'bg-canvas text-ink',
+                        plan.highlight ? 'bg-accent text-[#14210a]' : 'border border-line bg-white/[0.05] text-ink',
                       )}
                     >
                       {plan.highlight && <Sparkles className="size-2.5" />}
@@ -89,6 +91,7 @@ export function Pricing() {
                   ))}
                 </ul>
               </article>
+              </TiltCard>
             </StaggerItem>
           ))}
         </Stagger>
@@ -101,7 +104,7 @@ export function Pricing() {
           <div className="no-scrollbar mt-5 overflow-x-auto rounded-2xl border border-line bg-surface">
             <table className="w-full min-w-[42rem] border-collapse text-left text-[0.82rem]">
               <thead>
-                <tr className="border-b border-line bg-canvas/60">
+                <tr className="border-b border-line bg-white/[0.03]">
                   <th scope="col" className="px-5 py-3.5 font-medium text-mute">Feature</th>
                   {comparison.columns.map((c) => (
                     <th key={c} scope="col" className="px-5 py-3.5 font-semibold text-ink">{c}</th>
