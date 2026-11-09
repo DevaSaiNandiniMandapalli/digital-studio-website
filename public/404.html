@@ -3,18 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#050B16" />
+    <meta name="theme-color" content="#0B0C0E" />
     <title>Page not found — Your Digital Studio</title>
     <meta name="robots" content="noindex, follow" />
-    <link rel="icon" type="image/svg+xml" href="/digital-studio-website/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <style>
       :root { color-scheme: dark; }
       * { box-sizing: border-box; }
       html, body { height: 100%; }
       body {
         margin: 0;
-        background: #050b16;
-        color: #f5f8ff;
+        background: #0b0c0e;
+        color: #f1efe9;
         font-family: 'Inter Tight', Inter, system-ui, -apple-system, 'Segoe UI', sans-serif;
         display: grid;
         place-items: center;
@@ -22,19 +22,19 @@
         -webkit-font-smoothing: antialiased;
       }
       .card { max-width: 34rem; text-align: center; }
-      .code { font-size: clamp(5rem, 18vw, 9rem); line-height: .85; letter-spacing: -.06em; color: #38d5ff; margin: 0; font-weight: 500; }
+      .code { font-size: clamp(5rem, 18vw, 9rem); line-height: .85; letter-spacing: -.06em; color: #c9f85a; margin: 0; font-weight: 500; }
       h1 { font-size: clamp(1.5rem, 4vw, 2rem); letter-spacing: -.02em; font-weight: 500; margin: 1.6rem 0 .6rem; }
-      p { color: #9aaac0; font-size: .93rem; line-height: 1.6; margin: 0 0 2rem; }
+      p { color: #9a9ca3; font-size: .93rem; line-height: 1.6; margin: 0 0 2rem; }
       a.cta {
         display: inline-flex; align-items: center; gap: .5rem;
-        background: linear-gradient(135deg,#38d5ff,#247bff); color: #04101f; text-decoration: none;
+        background: #c9f85a; color: #0b0c0e; text-decoration: none;
         padding: .8rem 1.3rem; border-radius: .45rem; font-weight: 600; font-size: .86rem;
         transition: transform .2s ease;
       }
       a.cta:hover { transform: translateY(-1px); }
       .links { margin-top: 1.6rem; display: flex; gap: 1.2rem; justify-content: center; }
-      .links a { color: #9aaac0; font-size: .78rem; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.15); padding-bottom: 1px; }
-      .links a:hover { color: #f5f8ff; }
+      .links a { color: #9a9ca3; font-size: .78rem; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.15); padding-bottom: 1px; }
+      .links a:hover { color: #f1efe9; }
     </style>
   </head>
   <body>
@@ -45,12 +45,22 @@
         The page you were looking for does not exist, or it has moved. Head back to the studio and
         explore the work instead.
       </p>
-      <a class="cta" href="/digital-studio-website/">Back to the website</a>
+      <a class="cta" href="./" data-go="">Back to the website</a>
       <div class="links">
-        <a href="/digital-studio-website/#work">Our work</a>
-        <a href="/digital-studio-website/#pricing">Pricing</a>
-        <a href="/digital-studio-website/#contact">Contact</a>
+        <a href="./#work" data-go="#work">Our work</a>
+        <a href="./#pricing" data-go="#pricing">Pricing</a>
+        <a href="./#contact" data-go="#contact">Contact</a>
       </div>
     </main>
+    <script>
+      (function () {
+        var isRepo = location.pathname.indexOf('/digital-studio-website') === 0;
+        var base = isRepo ? '/digital-studio-website/' : '/';
+        document.querySelectorAll('[data-go]').forEach(function (a) {
+          var hash = a.getAttribute('data-go') || '';
+          a.setAttribute('href', hash ? base + hash : base);
+        });
+      })();
+    </script>
   </body>
 </html>
