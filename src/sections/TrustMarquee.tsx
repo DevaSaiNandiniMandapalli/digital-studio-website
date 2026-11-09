@@ -1,38 +1,36 @@
-const items = [
-  'Custom Website Design',
-  'Mobile-First Development',
-  'Business Websites',
-  'SEO-Ready Structure',
-  'Fast Performance',
-  'Modern UI/UX',
-  'Responsive Design',
-  'Website Launch',
+const industries = [
+  'Restaurants',
+  'Cafés',
+  'Juice Centres',
+  'Retail Stores',
+  'Hotels & Resorts',
+  'E-commerce',
+  'Agriculture',
+  'Startups',
+  'Education',
+  'Healthcare',
+  'Real Estate',
+  'Personal Brands',
 ];
 
 export function TrustMarquee() {
-  const row = [...items, ...items];
+  const row = [...industries, ...industries];
+
   return (
-    <section aria-label="What every website includes" className="relative overflow-hidden border-y border-ink/10 bg-lime text-ink">
-      <div className="marquee-paused py-3.5 md:py-4">
-        <div className="marquee-track items-center">
-          {[0, 1].map((copy) => (
-            <ul
-              key={copy}
-              className="flex shrink-0 items-center"
-              aria-hidden={copy === 1 || undefined}
-            >
-              {row.map((item, i) => (
-                <li key={`${copy}-${i}`} className="flex items-center">
-                  <span className="whitespace-nowrap px-6 text-[0.7rem] font-semibold uppercase tracking-[0.2em] md:px-8 md:text-[0.75rem]">
-                    {item}
-                  </span>
-                  <span aria-hidden="true" className="text-[0.6rem] opacity-50">
-                    ✦
-                  </span>
-                </li>
-              ))}
-            </ul>
-          ))}
+    <section aria-label="Industries we build for" className="overflow-hidden border-y border-line bg-surface py-5">
+      <div className="flex items-center gap-6 md:gap-8">
+        <p className="hidden shrink-0 pl-5 text-[0.68rem] tracking-[0.14em] text-mute-soft uppercase md:block md:pl-8">
+          Industries we build for
+        </p>
+        <div className="relative min-w-0 flex-1 overflow-hidden [mask-image:linear-gradient(90deg,transparent,black_6%,black_94%,transparent)]">
+          <div className="marquee items-center gap-8 pr-8">
+            {row.map((item, i) => (
+              <span key={`${item}-${i}`} className="flex items-center gap-8 whitespace-nowrap">
+                <span className="text-[0.83rem] font-medium text-ink/70">{item}</span>
+                <span className="size-1 rounded-full bg-accent-deep/60" />
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </section>

@@ -1,162 +1,146 @@
-import { Check, Info } from 'lucide-react';
-import { plans, pricingRules, comparison } from '../data/pricing';
-import { formatINR } from '../lib/utils';
+import { Check, Sparkles } from 'lucide-react';
+import { comparison, plans, pricingRules } from '../data/pricing';
+import { site, whatsappMessage } from '../data/site';
 import { selectPlan } from '../lib/plan';
-import { Reveal } from '../components/Reveal';
-import { SectionHeading } from '../components/SectionHeading';
 import { cn } from '../lib/utils';
+import { SectionHeading } from '../components/SectionHeading';
+import { Reveal, Stagger, StaggerItem } from '../components/Reveal';
+
+const inr = (v: number) => `${site.pricing.symbol}${v.toLocaleString('en-IN')}`;
 
 export function Pricing() {
   return (
-    <section id="pricing" className="relative bg-paper py-20 text-ink md:py-28 lg:py-32">
+    <section id="pricing" className="border-t border-line bg-canvas py-20 md:py-28">
       <div className="shell">
         <SectionHeading
-          tone="dark"
           eyebrow="Pricing"
-          title={
-            <>
-              Straightforward packages.
-              <br />
-              <span className="font-serif italic">Serious</span> websites.
-            </>
+          title="Clear packages. No surprises."
+          copy="One-time project pricing in Indian Rupees. Pick the level of website your business needs today — you can always upgrade later."
+          action={
+            <div className="rounded-xl border border-line bg-surface px-4 py-3 text-[0.78rem] text-mute">
+              <p className="font-medium text-ink">Custom work quoted separately</p>
+              <p className="mt-1">E-commerce, web apps, AI & automation</p>
+            </div>
           }
-          description="Three advertised starting packages with no hidden extras. Pick the scope that fits your business today — upgrade whenever you are ready."
         />
 
-        <div className="mt-12 grid items-start gap-5 lg:mt-16 lg:grid-cols-3">
-          {plans.map((plan, i) => (
-            <Reveal key={plan.id} delay={i * 0.08}>
-              <div
+        <Stagger className="mt-12 grid gap-5 lg:grid-cols-3">
+          {plans.map((plan) => (
+            <StaggerItem key={plan.id} className="h-full">
+              <article
                 className={cn(
-                  'relative flex h-full flex-col rounded-xl border p-6 transition-transform duration-500 md:p-7',
+                  'flex h-full flex-col rounded-2xl border p-6 md:p-7',
                   plan.highlight
-                    ? 'border-ink bg-ink text-paper shadow-[0_30px_70px_-40px_rgba(11,12,14,0.65)] lg:-mt-4 lg:pb-9 lg:pt-9'
-                    : 'border-ink/12 bg-white/55 hover:-translate-y-1 hover:border-ink/25',
+                    ? 'border-transparent bg-night text-white shadow-[0_28px_60px_-40px_rgba(21,21,21,0.65)]'
+                    : 'border-line bg-surface',
                 )}
               >
-                {plan.badge && (
-                  <span
-                    className={cn(
-                      'absolute right-6 top-6 rounded-full px-2.5 py-1 text-[0.58rem] font-bold uppercase tracking-[0.14em]',
-                      plan.highlight ? 'bg-lime text-ink' : 'bg-ink/8 text-ink/60',
-                    )}
-                  >
-                    {plan.badge}
-                  </span>
-                )}
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <h3 className={cn('font-display text-[1.05rem] font-semibold', plan.highlight ? 'text-white' : 'text-ink')}>
+                      {plan.name}
+                    </h3>
+                    <p className={cn('mt-1 text-[0.78rem]', plan.highlight ? 'text-white/50' : 'text-mute-soft')}>
+                      {plan.tagline}
+                    </p>
+                  </div>
+                  {plan.badge && (
+                    <span
+                      className={cn(
+                        'inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[0.62rem] font-semibold tracking-wide uppercase',
+                        plan.highlight ? 'bg-accent text-[#14210a]' : 'bg-canvas text-ink',
+                      )}
+                    >
+                      {plan.highlight && <Sparkles className="size-2.5" />}
+                      {plan.badge}
+                    </span>
+                  )}
+                </div>
 
-                <p className={cn('text-[0.68rem] uppercase tracking-[0.18em]', plan.highlight ? 'text-lime/80' : 'text-ink/40')}>
-                  {plan.tagline}
-                </p>
-                <h3 className="mt-2 text-[1.3rem] font-medium tracking-tight">{plan.name}</h3>
-
-                <div className="mt-6 flex items-baseline gap-1.5">
-                  <span className="font-display text-[2.9rem] font-medium leading-none tracking-[-0.04em]">
-                    {formatINR(plan.price)}
+                <div className="mt-8 flex items-end gap-1.5">
+                  <span className={cn('font-display text-[2.4rem] leading-none font-semibold tracking-[-0.04em]', plan.highlight ? 'text-white' : 'text-ink')}>
+                    {inr(plan.price)}
                   </span>
-                  <span className={cn('text-[0.72rem]', plan.highlight ? 'text-mute' : 'text-ink/45')}>
-                    / one-time
+                  <span className={cn('pb-1 text-[0.72rem]', plan.highlight ? 'text-white/45' : 'text-mute-soft')}>
+                    one-time
                   </span>
                 </div>
-                <p className={cn('mt-3 text-[0.85rem] leading-relaxed', plan.highlight ? 'text-paper/70' : 'text-ink/55')}>
+                <p className={cn('mt-2 text-[0.82rem] leading-relaxed', plan.highlight ? 'text-white/60' : 'text-mute')}>
                   {plan.description}
                 </p>
-
-                <div className={cn('my-6 h-px w-full', plan.highlight ? 'bg-line' : 'bg-ink/10')} />
-
-                <ul className="flex flex-1 flex-col gap-2.5">
-                  {plan.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2.5">
-                      <Check
-                        className={cn('mt-0.5 size-3.5 shrink-0', plan.highlight ? 'text-lime' : 'text-ink/70')}
-                        strokeWidth={2.5}
-                      />
-                      <span className={cn('text-[0.83rem] leading-snug', plan.highlight ? 'text-paper/80' : 'text-ink/70')}>
-                        {f}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
 
                 <button
                   type="button"
                   onClick={() => selectPlan(plan.id)}
-                  className={cn('btn mt-7 w-full', plan.highlight ? 'btn-primary' : 'btn-outline-dark')}
+                  className={cn('btn mt-6 w-full', plan.highlight ? 'btn-accent' : 'btn-ghost')}
                 >
                   Choose {plan.name.split(' ')[0]}
                 </button>
-                {plan.highlight && (
-                  <p className="mt-3 text-center text-[0.66rem] text-mute">Most chosen by new businesses</p>
-                )}
-              </div>
-            </Reveal>
+
+                <ul className={cn('mt-6 space-y-2.5 border-t pt-6 text-[0.82rem]', plan.highlight ? 'border-night-line' : 'border-line')}>
+                  {plan.features.map((f) => (
+                    <li key={f} className="flex gap-2.5">
+                      <Check
+                        className={cn('mt-0.5 size-3.5 shrink-0', plan.highlight ? 'text-accent' : 'text-accent-deep')}
+                        strokeWidth={2.5}
+                      />
+                      <span className={plan.highlight ? 'text-white/70' : 'text-mute'}>{f}</span>
+                    </li>
+                  ))}
+                </ul>
+              </article>
+            </StaggerItem>
           ))}
-        </div>
+        </Stagger>
 
-        <Reveal className="mt-8">
-          <div className="flex items-start gap-3 rounded-lg border border-ink/10 bg-ink/[0.03] px-4 py-3.5">
-            <Info className="mt-0.5 size-4 shrink-0 text-ink/40" />
-            <p className="text-[0.78rem] leading-relaxed text-ink/55">
-              All packages include 2–4 revision rounds and are delivered in roughly 5–25 days
-              depending on scope, confirmed after requirements review. Domain, premium hosting, paid
-              APIs and third-party subscriptions are additional. E-commerce, complex payments and
-              custom applications are quoted separately.
-            </p>
+        <Reveal className="mt-14">
+          <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+            <h3 className="h3">Compare every detail</h3>
+            <p className="text-[0.78rem] text-mute-soft">Swipe the table sideways on smaller screens.</p>
           </div>
-        </Reveal>
-
-        <Reveal className="mt-16 md:mt-20">
-          <h3 className="text-[1.4rem] font-medium tracking-tight md:text-[1.7rem]">Compare the packages</h3>
-          <div className="mt-6 overflow-x-auto rounded-xl border border-ink/12 bg-white/40">
-            <table className="w-full min-w-[38rem] border-collapse text-left">
-              <caption className="sr-only">Feature comparison of the Starter, Professional and Premium website packages</caption>
+          <div className="no-scrollbar mt-5 overflow-x-auto rounded-2xl border border-line bg-surface">
+            <table className="w-full min-w-[42rem] border-collapse text-left text-[0.82rem]">
               <thead>
-                <tr className="border-b border-ink/12">
-                  <th scope="col" className="sticky left-0 z-10 bg-paper px-4 py-4 text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-ink/40">
-                    Feature
-                  </th>
-                  {comparison.columns.map((col, i) => (
-                    <th
-                      key={col}
-                      scope="col"
-                      className={cn(
-                        'px-4 py-4 text-[0.78rem] font-semibold',
-                        i === 1 && 'bg-ink/[0.045] text-ink',
-                      )}
-                    >
-                      {col}
-                      <span className="ml-1.5 font-normal text-ink/45">{formatINR(plans[i].price)}</span>
-                    </th>
+                <tr className="border-b border-line bg-canvas/60">
+                  <th scope="col" className="px-5 py-3.5 font-medium text-mute">Feature</th>
+                  {comparison.columns.map((c) => (
+                    <th key={c} scope="col" className="px-5 py-3.5 font-semibold text-ink">{c}</th>
                   ))}
                 </tr>
               </thead>
               <tbody>
-                {comparison.rows.map((row, r) => (
-                  <tr key={row.label} className={cn('border-b border-ink/8 last:border-0', r % 2 === 1 && 'bg-ink/[0.018]')}>
-                    <th scope="row" className="sticky left-0 z-10 bg-paper px-4 py-3 text-[0.8rem] font-medium text-ink/70">
-                      {row.label}
-                    </th>
+                {comparison.rows.map((row) => (
+                  <tr key={row.label} className="border-b border-line/70 last:border-0">
+                    <th scope="row" className="px-5 py-3 font-normal text-mute">{row.label}</th>
                     {row.values.map((v, i) => (
-                      <td
-                        key={i}
-                        className={cn('px-4 py-3 text-[0.8rem] text-ink/60', i === 1 && 'bg-ink/[0.045] font-medium text-ink/80')}
-                      >
-                        {v}
-                      </td>
+                      <td key={i} className="px-5 py-3 text-ink/85">{v}</td>
                     ))}
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-          <ul className="mt-6 grid gap-2 md:grid-cols-2 md:gap-x-10">
-            {pricingRules.map((rule) => (
-              <li key={rule} className="flex gap-2 text-[0.72rem] leading-relaxed text-ink/45">
-                <span aria-hidden="true" className="mt-1.5 size-1 shrink-0 rounded-full bg-ink/30" />
-                {rule}
-              </li>
+        </Reveal>
+
+        <Reveal className="mt-8 grid gap-3 rounded-2xl border border-line bg-surface p-5 text-[0.78rem] leading-relaxed text-mute md:grid-cols-2 md:p-6">
+          <div>
+            {pricingRules.slice(0, 3).map((r) => (
+              <p key={r} className="mb-2 last:mb-0">· {r}</p>
             ))}
-          </ul>
+          </div>
+          <div className="flex flex-col items-start gap-2 md:items-end md:text-right">
+            {pricingRules.slice(3).map((r) => (
+              <p key={r}>· {r}</p>
+            ))}
+            <a
+              href={whatsappMessage('Hi! I need a custom quotation for my website.')}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-1 font-medium text-ink underline decoration-line-strong underline-offset-4 hover:decoration-ink"
+            >
+              Ask for a custom quotation
+            </a>
+          </div>
         </Reveal>
       </div>
     </section>

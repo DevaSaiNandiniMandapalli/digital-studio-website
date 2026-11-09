@@ -1,60 +1,43 @@
 import type { ReactNode } from 'react';
 import { cn } from '../lib/utils';
+import { Reveal } from './Reveal';
 
-type Props = {
-  eyebrow?: string;
+type SectionHeadingProps = {
+  eyebrow: string;
   title: ReactNode;
-  description?: ReactNode;
-  align?: 'left' | 'between';
+  copy?: ReactNode;
+  align?: 'left' | 'center';
   tone?: 'light' | 'dark';
   className?: string;
-  id?: string;
+  action?: ReactNode;
 };
 
 export function SectionHeading({
   eyebrow,
   title,
-  description,
-  align = 'between',
+  copy,
+  align = 'left',
   tone = 'light',
   className,
-  id,
-}: Props) {
+  action,
+}: SectionHeadingProps) {
   const dark = tone === 'dark';
   return (
-    <div
+    <Reveal
       className={cn(
-        'flex flex-col gap-8',
-        align === 'between'
-          ? 'lg:flex-row lg:items-end lg:justify-between lg:gap-16'
-          : 'max-w-3xl',
+        'flex flex-col gap-6 md:flex-row md:flex-wrap md:items-end md:justify-between',
+        align === 'center' && 'md:flex-col md:items-center md:text-center',
         className,
       )}
     >
-      <div className="max-w-2xl">
-        {eyebrow && (
-          <p className={cn('eyebrow mb-5', dark && 'text-ink/50')}>{eyebrow}</p>
+      <div className={cn('max-w-2xl', align === 'center' && 'mx-auto')}>
+        <span className={cn('eyebrow', dark && 'text-white/45')}>{eyebrow}</span>
+        <h2 className={cn('h2 mt-4', dark ? 'text-white' : 'text-ink')}>{title}</h2>
+        {copy && (
+          <p className={cn('lede mt-4', dark && 'text-white/60', align === 'center' && 'mx-auto')}>{copy}</p>
         )}
-        <h2
-          id={id}
-          className={cn(
-            'text-[clamp(2rem,4.4vw,3.5rem)] leading-[0.98]',
-            dark ? 'text-ink' : 'text-paper',
-          )}
-        >
-          {title}
-        </h2>
       </div>
-      {description && (
-        <p
-          className={cn(
-            'max-w-md text-[0.975rem] leading-relaxed',
-            dark ? 'text-ink/60' : 'text-mute',
-          )}
-        >
-          {description}
-        </p>
-      )}
-    </div>
+      {action && <div className="w-full md:w-auto md:shrink-0">{action}</div>}
+    </Reveal>
   );
 }

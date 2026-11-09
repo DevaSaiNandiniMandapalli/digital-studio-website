@@ -1,4 +1,5 @@
 import {
+  Sparkles,
   MonitorSmartphone,
   UtensilsCrossed,
   ShoppingBag,
@@ -91,6 +92,14 @@ export const services: Service[] = [
       'Semantic structure, metadata, performance and accessibility — the technical foundation of visibility.',
     icon: Search,
     tags: ['Core Web Vitals', 'Metadata'],
+  },
+  {
+    id: 'ai-automation',
+    title: 'AI & Automation Solutions',
+    description:
+      'Practical automation and AI-assisted tools on custom quotation — enquiry routing, content workflows and internal dashboards.',
+    icon: Sparkles,
+    tags: ['Custom quote', 'Automation'],
   },
   {
     id: 'web-apps',

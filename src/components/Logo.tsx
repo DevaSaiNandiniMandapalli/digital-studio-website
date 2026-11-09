@@ -1,29 +1,34 @@
 import { site } from '../data/site';
 import { cn } from '../lib/utils';
 
-export function Logo({ tone = 'light', className }: { tone?: 'light' | 'dark'; className?: string }) {
+type LogoProps = {
+  className?: string;
+  tone?: 'light' | 'dark';
+  showName?: boolean;
+};
+
+export function Logo({ className, tone = 'light', showName = true }: LogoProps) {
+  const dark = tone === 'dark';
   return (
-    <a
-      href="#home"
-      aria-label={`${site.name} — home`}
-      className={cn(
-        'group flex items-center gap-2.5 text-[0.95rem] font-semibold tracking-tight',
-        tone === 'dark' ? 'text-ink' : 'text-paper',
-        className,
-      )}
-    >
+    <span className={cn('flex items-center gap-2.5', className)}>
       <span
-        aria-hidden="true"
         className={cn(
-          'relative grid size-8 place-items-center rounded-[7px] border text-[0.7rem] font-bold tracking-[-0.02em] transition-colors duration-500',
-          tone === 'dark'
-            ? 'border-ink/15 bg-ink text-lime'
-            : 'border-line-strong bg-white/[0.04] text-lime group-hover:bg-lime group-hover:text-ink',
+          'grid size-8 place-items-center rounded-[0.6rem] text-[0.6rem] font-bold tracking-[0.06em]',
+          dark ? 'bg-accent text-[#14210a]' : 'bg-ink text-canvas',
         )}
       >
         {site.shortName}
       </span>
-      <span className="whitespace-nowrap">{site.name}</span>
-    </a>
+      {showName && (
+        <span
+          className={cn(
+            'font-display text-[0.95rem] font-semibold tracking-[-0.02em]',
+            dark ? 'text-white' : 'text-ink',
+          )}
+        >
+          {site.name}
+        </span>
+      )}
+    </span>
   );
 }

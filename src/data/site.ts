@@ -6,7 +6,7 @@ export const site = {
   /** Temporary placeholder until the final brand name is supplied. */
   name: 'Your Digital Studio',
   shortName: 'YDS',
-  tagline: 'Your Business Deserves More Than Just a Website.',
+  tagline: 'Good Ideas Deserve Great Websites.',
   description:
     'A freelance website design and development studio building modern, fast and professional websites for businesses across India and beyond.',
   founded: '',
@@ -33,15 +33,15 @@ export const site = {
     note: 'Domain, premium hosting, paid APIs and third-party subscriptions are billed separately.',
   },
   cta: {
-    primary: 'Get Your Website',
-    secondary: 'Explore Our Work',
+    primary: 'Start a Project',
+    secondary: 'See Our Work',
   },
 } as const;
 
 export const navLinks = [
   { label: 'Home', href: '#home' },
   { label: 'Services', href: '#services' },
-  { label: 'Our Work', href: '#work' },
+  { label: 'Portfolio', href: '#work' },
   { label: 'Pricing', href: '#pricing' },
   { label: 'About', href: '#about' },
   { label: 'Contact', href: '#contact' },

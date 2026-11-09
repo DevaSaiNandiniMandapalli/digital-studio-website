@@ -4,17 +4,17 @@ import { cn } from '../lib/utils';
 
 type Item = { q: string; a: string };
 
-export function Accordion({ items, tone = 'dark' }: { items: Item[]; tone?: 'light' | 'dark' }) {
+export function Accordion({ items, tone = 'light' }: { items: Item[]; tone?: 'light' | 'dark' }) {
   const [open, setOpen] = useState<number | null>(0);
   const baseId = useId();
   const dark = tone === 'dark';
 
   return (
-    <div className={cn('border-t', dark ? 'border-ink/10' : 'border-line')}>
+    <div className={cn('border-t', dark ? 'border-night-line' : 'border-line')}>
       {items.map((item, i) => {
         const isOpen = open === i;
         return (
-          <div key={item.q} className={cn('border-b', dark ? 'border-ink/10' : 'border-line')}>
+          <div key={item.q} className={cn('border-b', dark ? 'border-night-line' : 'border-line')}>
             <h3>
               <button
                 type="button"
@@ -26,8 +26,8 @@ export function Accordion({ items, tone = 'dark' }: { items: Item[]; tone?: 'lig
               >
                 <span
                   className={cn(
-                    'text-[0.95rem] font-medium leading-snug tracking-tight transition-colors duration-300 md:text-[1rem]',
-                    dark ? 'text-ink group-hover:text-ink/70' : 'text-paper group-hover:text-paper/70',
+                    'text-[0.92rem] leading-snug font-medium tracking-[-0.01em] transition-colors duration-300 md:text-[0.98rem]',
+                    dark ? 'text-white group-hover:text-white/70' : 'text-ink group-hover:text-mute',
                   )}
                 >
                   {item.q}
@@ -35,8 +35,10 @@ export function Accordion({ items, tone = 'dark' }: { items: Item[]; tone?: 'lig
                 <span
                   className={cn(
                     'mt-0.5 grid size-6 shrink-0 place-items-center rounded-full border transition-all duration-300',
-                    dark ? 'border-ink/20 text-ink/60' : 'border-line-strong text-mute',
-                    isOpen && (dark ? 'rotate-45 border-ink bg-ink text-paper' : 'rotate-45 border-lime bg-lime text-ink'),
+                    dark
+                      ? 'border-white/20 text-white/60'
+                      : 'border-line-strong text-mute group-hover:border-ink group-hover:text-ink',
+                    isOpen && (dark ? 'rotate-45 border-accent bg-accent text-[#14210a]' : 'rotate-45 border-ink bg-ink text-white'),
                   )}
                 >
                   <Plus className="size-3.5" />
@@ -55,8 +57,8 @@ export function Accordion({ items, tone = 'dark' }: { items: Item[]; tone?: 'lig
               <div className="overflow-hidden">
                 <p
                   className={cn(
-                    'max-w-2xl pb-6 pr-8 text-[0.875rem] leading-relaxed',
-                    dark ? 'text-ink/60' : 'text-mute',
+                    'max-w-2xl pr-8 pb-6 text-[0.86rem] leading-relaxed',
+                    dark ? 'text-white/55' : 'text-mute',
                   )}
                 >
                   {item.a}

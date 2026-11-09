@@ -164,38 +164,38 @@ export function Contact() {
   };
 
   const inputBase =
-    'w-full rounded-lg border bg-white px-3.5 py-2.5 text-[0.87rem] text-ink placeholder:text-ink/30 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-ink/10';
-  const ok = 'border-ink/15 focus:border-ink/50';
+    'w-full rounded-lg border bg-surface px-3.5 py-2.5 text-[0.87rem] text-ink placeholder:text-mute-soft/70 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-ink/40';
+  const ok = 'border-line';
   const bad = 'border-red-500/60 bg-red-50/50 focus:border-red-500';
 
   return (
-    <section id="contact" className="relative bg-paper py-20 text-ink md:py-28 lg:py-32">
+    <section id="contact" className="relative border-t border-line bg-surface py-20 text-ink md:py-28">
       <div className="shell">
         <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
           <div>
             <Reveal>
-              <p className="eyebrow mb-5 text-ink/45">Start a project</p>
-              <h2 className="text-[clamp(2rem,4.2vw,3.3rem)] leading-[0.98]">
-                Let&apos;s build something <span className="font-serif italic">amazing</span> together.
+              <span className="eyebrow">Start a project</span>
+              <h2 className="h2 mt-4">
+                Tell us about your business. We will take it from there.
               </h2>
-              <p className="mt-6 max-w-md text-[0.93rem] leading-relaxed text-ink/55">
+              <p className="lede mt-4">
                 Tell us about your business and the website you need. We&apos;ll discuss your
                 requirements and recommend the right solution.
               </p>
             </Reveal>
 
             <Reveal delay={0.1}>
-              <ul className="mt-9 divide-y divide-ink/10 border-y border-ink/10">
+              <ul className="mt-9 divide-y divide-line border-y border-line">
                 <li>
                   <a href={`tel:${site.phoneRaw}`} className="group flex items-center gap-4 py-4">
-                    <span className="grid size-9 place-items-center rounded-md border border-ink/12 bg-white/60 text-ink/70 transition-colors group-hover:border-ink/30 group-hover:text-ink">
+                    <span className="grid size-9 place-items-center rounded-md border border-line bg-canvas text-ink/70 transition-colors group-hover:border-ink/30 group-hover:text-ink">
                       <Phone className="size-4" />
                     </span>
                     <span>
-                      <span className="block text-[0.65rem] uppercase tracking-[0.14em] text-ink/40">Call us</span>
+                      <span className="block text-[0.62rem] tracking-[0.14em] text-mute-soft uppercase">Call us</span>
                       <span className="block text-[0.9rem] font-medium">{site.phone}</span>
                     </span>
-                    <ArrowUpRight className="ml-auto size-4 text-ink/30 transition-colors group-hover:text-ink" />
+                    <ArrowUpRight className="ml-auto size-4 text-line-strong transition-colors group-hover:text-ink" />
                   </a>
                 </li>
                 <li>
@@ -205,31 +205,31 @@ export function Contact() {
                     rel="noopener noreferrer"
                     className="group flex items-center gap-4 py-4"
                   >
-                    <span className="grid size-9 place-items-center rounded-md border border-ink/12 bg-white/60 text-ink/70 transition-colors group-hover:border-ink/30 group-hover:text-ink">
+                    <span className="grid size-9 place-items-center rounded-md border border-line bg-canvas text-ink/70 transition-colors group-hover:border-ink/30 group-hover:text-ink">
                       <MessageCircle className="size-4" />
                     </span>
                     <span>
-                      <span className="block text-[0.65rem] uppercase tracking-[0.14em] text-ink/40">WhatsApp</span>
+                      <span className="block text-[0.62rem] tracking-[0.14em] text-mute-soft uppercase">WhatsApp</span>
                       <span className="block text-[0.9rem] font-medium">Chat instantly</span>
                     </span>
-                    <ArrowUpRight className="ml-auto size-4 text-ink/30 transition-colors group-hover:text-ink" />
+                    <ArrowUpRight className="ml-auto size-4 text-line-strong transition-colors group-hover:text-ink" />
                   </a>
                 </li>
                 <li className="flex items-center gap-4 py-4">
-                  <span className="grid size-9 place-items-center rounded-md border border-ink/12 bg-white/60 text-ink/70">
+                  <span className="grid size-9 place-items-center rounded-md border border-line bg-canvas text-ink/70">
                     <MapPin className="size-4" />
                   </span>
                   <span>
-                    <span className="block text-[0.65rem] uppercase tracking-[0.14em] text-ink/40">Based in</span>
+                    <span className="block text-[0.62rem] tracking-[0.14em] text-mute-soft uppercase">Based in</span>
                     <span className="block text-[0.9rem] font-medium">{site.location}</span>
                   </span>
                 </li>
                 <li className="flex items-center gap-4 py-4">
-                  <span className="grid size-9 place-items-center rounded-md border border-ink/12 bg-white/60 text-ink/70">
+                  <span className="grid size-9 place-items-center rounded-md border border-line bg-canvas text-ink/70">
                     <Clock className="size-4" />
                   </span>
                   <span>
-                    <span className="block text-[0.65rem] uppercase tracking-[0.14em] text-ink/40">Typical reply</span>
+                    <span className="block text-[0.62rem] tracking-[0.14em] text-mute-soft uppercase">Typical reply</span>
                     <span className="block text-[0.9rem] font-medium">Within one business day</span>
                   </span>
                 </li>
@@ -237,15 +237,15 @@ export function Contact() {
             </Reveal>
 
             <Reveal delay={0.15}>
-              <div className="mt-8 flex items-center gap-2.5 text-[0.75rem] text-ink/50">
-                <span className="status-dot size-1.5 rounded-full bg-[#4ea72e]" />
+              <div className="mt-8 flex items-center gap-2.5 text-[0.75rem] text-mute">
+                <span className="size-1.5 rounded-full bg-accent-deep" />
                 {site.availability} · taking projects for the current month
               </div>
             </Reveal>
           </div>
 
           <Reveal delay={0.05}>
-            <div className="rounded-xl border border-ink/12 bg-white/70 p-5 shadow-[0_20px_60px_-40px_rgba(11,12,14,0.4)] md:p-8">
+            <div className="rounded-2xl border border-line bg-canvas p-5 md:p-8">
               <form ref={formRef} onSubmit={onSubmit} noValidate aria-describedby="form-note">
                 <div className="grid gap-4 sm:grid-cols-2">
                   <Field label="Full name" required error={errors.name} htmlFor="name">
@@ -349,7 +349,7 @@ export function Contact() {
                   </Field>
 
                   <div className="sm:col-span-2" role="group" aria-labelledby="plan-label">
-                    <p id="plan-label" className="mb-1.5 text-[0.7rem] font-medium uppercase tracking-[0.1em] text-ink/50">
+                    <p id="plan-label" className="mb-1.5 text-[0.68rem] font-medium tracking-[0.1em] text-mute uppercase">
                       Preferred package
                     </p>
                     <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
@@ -362,10 +362,10 @@ export function Contact() {
                             onClick={() => setValues((v) => ({ ...v, plan: opt.value }))}
                             aria-pressed={active}
                             className={cn(
-                              'rounded-lg border px-2.5 py-2.5 text-[0.72rem] font-medium leading-tight transition-all duration-300',
+                              'rounded-lg border px-2.5 py-2.5 text-[0.72rem] leading-tight font-medium transition-all duration-300',
                               active
-                                ? 'border-ink bg-ink text-paper'
-                                : 'border-ink/15 bg-white text-ink/60 hover:border-ink/35 hover:text-ink',
+                                ? 'border-ink bg-ink text-white'
+                                : 'border-line bg-surface text-mute hover:border-line-strong hover:text-ink',
                             )}
                           >
                             {opt.label}
@@ -431,7 +431,7 @@ export function Contact() {
                   )}
                 </button>
 
-                <p id="form-note" className="mt-3 text-center text-[0.66rem] leading-relaxed text-ink/40">
+                <p id="form-note" className="mt-3 text-center text-[0.66rem] leading-relaxed text-mute-soft">
                   {endpoint
                     ? 'Your details are sent securely to our enquiry inbox.'
                     : 'Your details are formatted into a WhatsApp message and opened in a new tab — nothing is sent until you press send in WhatsApp.'}
@@ -445,7 +445,7 @@ export function Contact() {
                     </div>
                   )}
                   {status === 'whatsapp' && (
-                    <div className="rounded-lg border border-ink/15 bg-ink/[0.04] px-3.5 py-3 text-[0.78rem] text-ink/70">
+                    <div className="rounded-lg border border-line bg-canvas px-3.5 py-3 text-[0.78rem] text-mute">
                       <p className="font-medium text-ink">
                         WhatsApp opened with your enquiry — press send there to deliver it.
                       </p>
@@ -497,7 +497,7 @@ function Field({
 }) {
   return (
     <div className={className}>
-      <label htmlFor={htmlFor} className="mb-1.5 flex items-center gap-1 text-[0.7rem] font-medium uppercase tracking-[0.1em] text-ink/50">
+      <label htmlFor={htmlFor} className="mb-1.5 flex items-center gap-1 text-[0.68rem] font-medium tracking-[0.1em] text-mute uppercase">
         {label}
         {required && <span className="text-ink/30">*</span>}
         {hint && <span className="ml-1 font-normal normal-case tracking-normal text-ink/30">({hint})</span>}

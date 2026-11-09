@@ -1,39 +1,36 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { ArrowUpRight, Menu, MessageCircle, X } from 'lucide-react';
+import { ArrowUpRight, Menu, MessageCircle, Phone, X } from 'lucide-react';
 import { navLinks, site, whatsappMessage } from '../data/site';
+import { cn } from '../lib/utils';
 import { Logo } from './Logo';
-import { cn, scrollToId } from '../lib/utils';
-
-const base = import.meta.env.BASE_URL;
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [active, setActive] = useState('#home');
+  const [active, setActive] = useState('home');
   const reduce = useReducedMotion();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => setScrolled(window.scrollY > 12);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   useEffect(() => {
-    const ids = navLinks.map((l) => l.href.replace('#', ''));
+    const sections = navLinks
+      .map((l) => document.querySelector(l.href))
+      .filter((el): el is Element => Boolean(el));
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) setActive(`#${e.target.id}`);
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(entry.target.id);
         });
       },
-      { rootMargin: '-45% 0px -50% 0px', threshold: 0 },
+      { rootMargin: '-45% 0px -50% 0px' },
     );
-    ids.forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
+    sections.forEach((s) => observer.observe(s));
     return () => observer.disconnect();
   }, []);
 
@@ -47,73 +44,62 @@ export function Navbar() {
     };
   }, [open]);
 
-  const handleNav = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    if (window.location.pathname.replace(base, '/') === '/' || window.location.pathname === base) {
-      e.preventDefault();
-      setOpen(false);
-      setTimeout(() => scrollToId(href), open ? 260 : 0);
-      history.replaceState(null, '', `${base}${href}`);
-    }
-  };
-
   return (
     <>
       <header
         className={cn(
-          'fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-500',
-          scrolled
-            ? 'border-b border-line bg-ink/80 backdrop-blur-xl'
-            : 'border-b border-transparent bg-transparent',
+          'fixed inset-x-0 top-0 z-50 transition-all duration-300',
+          scrolled ? 'border-b border-line bg-canvas/85 backdrop-blur-xl' : 'border-b border-transparent',
         )}
       >
-        <div className="shell flex h-[4.25rem] items-center justify-between gap-4 md:h-[4.75rem]">
-          <Logo />
+        <div className="shell flex h-[4.5rem] items-center justify-between gap-6">
+          <a href="#home" aria-label={`${site.name} — home`} className="shrink-0">
+            <Logo showName={false} className="md:hidden" />
+            <Logo className="hidden md:flex" />
+          </a>
 
-          <nav aria-label="Primary" className="hidden lg:block">
+          <nav aria-label="Primary" className="hidden md:block">
             <ul className="flex items-center gap-1">
-              {navLinks.map((link) => (
-                <li key={link.href}>
-                  <a
-                    href={`${base}${link.href}`}
-                    onClick={(e) => handleNav(e, link.href)}
-                    className={cn(
-                      'relative rounded-full px-3.5 py-2 text-[0.82rem] font-medium transition-colors duration-300',
-                      active === link.href
-                        ? 'text-paper'
-                        : 'text-mute hover:text-paper',
-                    )}
-                  >
-                    {link.label}
-                    {active === link.href && (
-                      <motion.span
-                        layoutId="nav-active"
-                        className="absolute inset-0 -z-10 rounded-full border border-line bg-white/[0.05]"
-                        transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+              {navLinks.map((link) => {
+                const id = link.href.replace('#', '');
+                const isActive = active === id;
+                return (
+                  <li key={link.href}>
+                    <a
+                      href={link.href}
+                      aria-current={isActive ? 'true' : undefined}
+                      className={cn(
+                        'relative rounded-full px-3.5 py-2 text-[0.83rem] font-medium transition-colors',
+                        isActive ? 'text-ink' : 'text-mute hover:text-ink',
+                      )}
+                    >
+                      {link.label}
+                      <span
+                        className={cn(
+                          'absolute inset-x-3.5 -bottom-0.5 h-px origin-left bg-ink transition-transform duration-300',
+                          isActive ? 'scale-x-100' : 'scale-x-0',
+                        )}
                       />
-                    )}
-                  </a>
-                </li>
-              ))}
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
           </nav>
 
           <div className="flex items-center gap-2">
-            <a
-              href={`${base}#contact`}
-              onClick={(e) => handleNav(e, '#contact')}
-              className="btn btn-primary hidden !py-2.5 !text-[0.8rem] sm:inline-flex"
-            >
+            <a href="#contact" className="btn btn-primary hidden h-10 px-5 text-[0.82rem] md:inline-flex">
               Let&apos;s Talk
-              <ArrowUpRight className="size-4" strokeWidth={2.25} />
+              <ArrowUpRight className="size-3.5" />
             </a>
             <button
               type="button"
               onClick={() => setOpen(true)}
               aria-label="Open menu"
               aria-expanded={open}
-              className="grid size-10 place-items-center rounded-lg border border-line-strong text-paper transition-colors hover:bg-white/5 lg:hidden"
+              className="grid size-11 place-items-center rounded-full border border-line-strong bg-surface md:hidden"
             >
-              <Menu className="size-5" />
+              <Menu className="size-[1.1rem]" />
             </button>
           </div>
         </div>
@@ -122,53 +108,47 @@ export function Navbar() {
       <AnimatePresence>
         {open && (
           <motion.div
-            className="fixed inset-0 z-[60] flex flex-col bg-ink lg:hidden"
-            initial={reduce ? { opacity: 1 } : { opacity: 0, clipPath: 'inset(0 0 100% 0)' }}
-            animate={{ opacity: 1, clipPath: 'inset(0 0 0% 0)' }}
-            exit={reduce ? { opacity: 1 } : { opacity: 0, clipPath: 'inset(0 0 100% 0)' }}
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            initial={reduce ? { opacity: 0 } : { opacity: 0, y: -12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={reduce ? { opacity: 0 } : { opacity: 0, y: -12 }}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed inset-0 z-[60] flex flex-col bg-canvas md:hidden"
           >
-            <div className="shell flex h-[4.25rem] items-center justify-between">
+            <div className="shell flex h-[4.5rem] items-center justify-between border-b border-line">
               <Logo />
               <button
                 type="button"
                 onClick={() => setOpen(false)}
                 aria-label="Close menu"
-                className="grid size-10 place-items-center rounded-lg border border-line-strong text-paper"
+                className="grid size-11 place-items-center rounded-full border border-line-strong bg-surface"
               >
-                <X className="size-5" />
+                <X className="size-[1.1rem]" />
               </button>
             </div>
 
-            <nav aria-label="Mobile" className="shell flex flex-1 flex-col justify-center pb-8">
+            <nav aria-label="Mobile" className="shell flex-1 overflow-y-auto pt-8">
               <ul className="flex flex-col">
                 {navLinks.map((link, i) => (
-                  <motion.li
-                    key={link.href}
-                    initial={reduce ? undefined : { opacity: 0, y: 18 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.08 + i * 0.055, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                    className="border-b border-line"
-                  >
+                  <li key={link.href} className="border-b border-line">
                     <a
-                      href={`${base}${link.href}`}
-                      onClick={(e) => handleNav(e, link.href)}
-                      className="flex items-baseline justify-between py-4"
+                      href={link.href}
+                      onClick={() => setOpen(false)}
+                      className="flex items-center justify-between py-4"
                     >
-                      <span className="font-display text-[1.75rem] font-medium tracking-tight text-paper">
+                      <span className="font-display text-[1.65rem] font-semibold tracking-[-0.03em]">
                         {link.label}
                       </span>
-                      <span className="font-mono text-[0.65rem] text-mute">
+                      <span className="font-mono text-[0.7rem] text-mute-soft">
                         0{i + 1}
                       </span>
                     </a>
-                  </motion.li>
+                  </li>
                 ))}
               </ul>
 
               <div className="mt-8 flex flex-col gap-3">
-                <a href={`${base}#contact`} onClick={(e) => handleNav(e, '#contact')} className="btn btn-primary w-full">
-                  Get Your Website
+                <a href="#contact" onClick={() => setOpen(false)} className="btn btn-primary w-full">
+                  Start a Project
                   <ArrowUpRight className="size-4" />
                 </a>
                 <a
@@ -178,11 +158,16 @@ export function Navbar() {
                   className="btn btn-ghost w-full"
                 >
                   <MessageCircle className="size-4" />
-                  WhatsApp us
+                  Chat on WhatsApp
                 </a>
-                <p className="pt-1 text-center text-xs text-mute">
-                  {site.phone} · {site.availability}
-                </p>
+              </div>
+
+              <div className="mt-8 flex flex-col gap-1 pb-10 text-[0.85rem] text-mute">
+                <a href={`tel:${site.phoneRaw}`} className="inline-flex items-center gap-2">
+                  <Phone className="size-3.5" />
+                  {site.phone}
+                </a>
+                <p>{site.location}</p>
               </div>
             </nav>
           </motion.div>

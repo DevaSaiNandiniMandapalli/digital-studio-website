@@ -1,81 +1,59 @@
-import { Reveal } from '../components/Reveal';
+import { Reveal, Stagger, StaggerItem } from '../components/Reveal';
 import { SectionHeading } from '../components/SectionHeading';
 
 const steps = [
   {
-    n: '01',
     title: 'Discover',
-    body: 'We understand your business, audience, goals and requirements — then recommend the right scope.',
+    copy: 'A short call to understand your business, customers and what the website has to achieve.',
+    meta: 'Day 1–2',
   },
   {
-    n: '02',
     title: 'Design',
-    body: 'We create a professional design based on your brand identity, industry and content.',
+    copy: 'Structure, copy direction and a visual design built around your brand — reviewed with you before any code.',
+    meta: 'Day 2–5',
   },
   {
-    n: '03',
-    title: 'Develop',
-    body: 'We build, optimize and test your website across devices, browsers and connection speeds.',
+    title: 'Build',
+    copy: 'Clean, fast development with responsive layouts, tested forms and content in place.',
+    meta: 'Day 5–14',
   },
   {
-    n: '04',
     title: 'Launch',
-    body: 'We deploy your website and help you establish your online presence from day one.',
+    copy: 'Domain, hosting, analytics and a walkthrough so you know how to update and use the site.',
+    meta: 'Launch day',
   },
 ];
 
 export function Process() {
   return (
-    <section id="process" className="relative overflow-hidden bg-ink py-20 md:py-28 lg:py-32">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-line-strong to-transparent"
-      />
+    <section id="process" className="bg-night py-20 text-white md:py-28">
       <div className="shell">
         <SectionHeading
-          eyebrow="How we work"
-          title={
-            <>
-              A clear process.
-              <br />
-              No <span className="font-serif italic text-lime">guesswork</span>.
-            </>
-          }
-          description="Four deliberate stages from first conversation to launch day. You always know what is happening and what comes next."
+          tone="dark"
+          eyebrow="Process"
+          title="A simple, transparent way to get online."
+          copy="No jargon and no endless back and forth. Four clear steps from first conversation to a live website."
         />
 
-        <ol className="mt-14 grid gap-0 border-t border-line md:mt-20 md:grid-cols-2 xl:grid-cols-4">
+        <Stagger className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-night-line bg-[color:var(--color-night-line)] sm:grid-cols-2 lg:grid-cols-4">
           {steps.map((step, i) => (
-            <Reveal as="li" key={step.n} delay={i * 0.08} className="group relative border-b border-line md:border-b-0">
-              <div className="relative flex h-full flex-col gap-7 px-0 py-8 md:px-7 md:py-9 xl:border-l xl:border-line xl:px-8 xl:first:border-l-0 xl:first:pl-0">
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-[0.7rem] text-lime">{step.n}</span>
-                  <span className="hidden h-px w-8 bg-line-strong transition-all duration-500 group-hover:w-12 group-hover:bg-lime md:block" />
-                </div>
-                <div>
-                  <h3 className="text-[1.45rem] font-medium tracking-tight text-paper transition-colors duration-300 group-hover:text-lime md:text-[1.6rem]">
-                    {step.title}
-                  </h3>
-                  <p className="mt-3 max-w-xs text-[0.86rem] leading-relaxed text-mute">{step.body}</p>
-                </div>
-                <span
-                  aria-hidden="true"
-                  className="pointer-events-none absolute right-0 top-4 font-display text-[5rem] font-medium leading-none text-white/[0.035] transition-colors duration-500 group-hover:text-white/[0.06] xl:right-4"
-                >
-                  {step.n}
-                </span>
+            <StaggerItem key={step.title} className="bg-night p-6 md:p-7">
+              <div className="flex items-baseline justify-between">
+                <span className="font-display text-[0.8rem] font-semibold text-white/35">0{i + 1}</span>
+                <span className="text-[0.65rem] tracking-[0.1em] text-white/35 uppercase">{step.meta}</span>
               </div>
-            </Reveal>
+              <h3 className="mt-8 font-display text-[1.3rem] font-semibold tracking-[-0.02em] text-white">
+                {step.title}
+              </h3>
+              <p className="mt-2.5 text-[0.83rem] leading-relaxed text-white/55">{step.copy}</p>
+            </StaggerItem>
           ))}
-        </ol>
+        </Stagger>
 
-        <Reveal className="mt-12 flex flex-col items-start justify-between gap-4 rounded-lg border border-line bg-ink-2 px-5 py-4 md:flex-row md:items-center">
-          <p className="text-[0.86rem] text-mute">
-            <span className="font-medium text-paper">Timelines:</span> Starter ≈ 5–7 days ·
-            Professional ≈ 10–14 days · Premium ≈ 18–25 days, confirmed after scope review.
-          </p>
-          <a href="#contact" className="text-[0.8rem] font-semibold text-lime link-underline">
-            Book a discovery chat
+        <Reveal className="mt-8 flex flex-col gap-3 border-t border-night-line pt-6 text-[0.8rem] text-white/45 sm:flex-row sm:items-center sm:justify-between">
+          <p>Typical delivery: 5–7 days for a starter site, 10–14 days for a business site, 18–25 days for e-commerce.</p>
+          <a href="#contact" className="font-medium text-white underline decoration-white/25 underline-offset-4 hover:decoration-accent">
+            Book an intro call
           </a>
         </Reveal>
       </div>
