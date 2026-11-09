@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { cn } from '../lib/utils';
+import { asset, cn } from '../lib/utils';
 
 type BrowserFrameProps = {
   image: string;
@@ -54,7 +54,7 @@ export function BrowserFrame({
           </div>
         ) : (
           <img
-            src={image}
+            src={asset(image)}
             alt={alt}
             loading={priority ? 'eager' : 'lazy'}
             decoding="async"
