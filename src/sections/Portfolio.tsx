@@ -7,7 +7,6 @@ import { categories, projects, type CategoryId } from '../data/projects';
 import { cn } from '../lib/utils';
 
 const ease = [0.16, 1, 0.3, 1] as const;
-const spans = ['lg:col-span-7', 'lg:col-span-5', 'lg:col-span-5', 'lg:col-span-7'];
 
 export function Portfolio() {
   const [active, setActive] = useState<CategoryId>('all');
@@ -26,15 +25,15 @@ export function Portfolio() {
             <span className="eyebrow">Selected work</span>
             <h2 className="h2 mt-4">
               A portfolio built <br className="hidden md:block" />
-              for <span className="text-accent">real businesses</span>.
+              for <span className="text-accent">real businesses</span>
             </h2>
             <p className="lede mt-4">
               Restaurants, retail stores, juice centres and hospitality brands — every build starts
               with the business, then becomes a website.
             </p>
           </div>
-          <div className="shrink-0">
-            <p className="font-display text-[2.4rem] leading-none font-medium tracking-[-0.05em]">
+          <div className="shrink-0 border-t border-line pt-4 md:border-t-0 md:pt-0 md:pb-1 md:text-right">
+            <p className="font-display text-[2.4rem] leading-none font-bold tracking-[-0.05em] tabular-nums">
               {String(projects.length).padStart(2, '0')}
               <span className="text-accent">+</span>
             </p>
@@ -42,7 +41,7 @@ export function Portfolio() {
           </div>
         </Reveal>
 
-        <div className="mt-10 flex flex-wrap gap-2 md:mt-12">
+        <div className="mt-10 flex flex-wrap gap-2 border-t border-line pt-6 md:mt-12">
           {categories.map((cat) => (
             <button
               key={cat.id}
@@ -61,7 +60,7 @@ export function Portfolio() {
           ))}
         </div>
 
-        <motion.div layout className="mt-10 grid gap-x-6 gap-y-12 md:mt-14 lg:grid-cols-12 lg:gap-y-20">
+        <motion.div layout className="mt-10 grid gap-x-8 gap-y-12 md:mt-14 md:grid-cols-2 lg:gap-x-12 lg:gap-y-16">
           <AnimatePresence mode="popLayout">
             {visible.map((project, i) => (
               <motion.article
@@ -71,7 +70,7 @@ export function Portfolio() {
                 animate={reduce ? undefined : { opacity: 1, y: 0 }}
                 exit={reduce ? undefined : { opacity: 0, transition: { duration: 0.2 } }}
                 transition={{ duration: 0.65, delay: reduce ? 0 : Math.min(i * 0.05, 0.3), ease }}
-                className={cn('group col-span-1', spans[i % spans.length], i % 4 === 1 && 'lg:mt-16')}
+                className="group" 
               >
                 <a
                   href={project.url}
@@ -84,20 +83,20 @@ export function Portfolio() {
                     image={project.image}
                     alt={`${project.name} website preview`}
                     url={project.name.toLowerCase().replace(/[^a-z0-9]+/g, '')}
-                    viewportClassName={i % 4 === 0 || i % 4 === 3 ? 'aspect-[16/10]' : 'aspect-[4/3]'}
+                    viewportClassName="aspect-[16/11]"
                   />
 
                   <div className="mt-4 flex items-start justify-between gap-4 border-t border-line pt-4">
-                    <div>
+                    <div className="min-w-0">
                       <div className="flex items-baseline gap-2">
-                        <span className="font-display text-[0.68rem] tracking-[0.12em] text-accent">
+                        <span className="font-display text-[0.68rem] tracking-[0.12em] text-accent tabular-nums">
                           {project.index}
                         </span>
-                        <h3 className="font-display text-[1.05rem] leading-tight font-medium tracking-[-0.02em] md:text-[1.15rem]">
+                        <h3 className="truncate font-display text-[1.05rem] leading-tight font-semibold tracking-[-0.02em] md:text-[1.15rem]">
                           {project.name}
                         </h3>
                       </div>
-                      <p className="mt-1.5 text-[0.76rem] tracking-[0.02em] text-mute">
+                      <p className="mt-1.5 truncate text-[0.76rem] tracking-[0.02em] text-mute">
                         {project.category}
                         <span aria-hidden="true" className="px-2 text-line-strong">
                           /
@@ -105,7 +104,7 @@ export function Portfolio() {
                         {project.type === 'concept' ? 'Studio concept' : 'Commissioned'}
                       </p>
                     </div>
-                    <span className="grid size-8 shrink-0 place-items-center rounded-full border border-line text-mute transition-all duration-500 group-hover:border-accent group-hover:bg-accent group-hover:text-white">
+                    <span className="grid size-8 shrink-0 place-items-center border border-line text-mute transition-all duration-500 group-hover:border-accent group-hover:bg-accent group-hover:text-white">
                       <ArrowUpRight className="size-3.5" />
                     </span>
                   </div>
