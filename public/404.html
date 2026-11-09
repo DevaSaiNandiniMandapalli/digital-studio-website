@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0B0C0E" />
+    <title>Page not found — Your Digital Studio</title>
+    <meta name="robots" content="noindex, follow" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <style>
+      :root { color-scheme: dark; }
+      * { box-sizing: border-box; }
+      html, body { height: 100%; }
+      body {
+        margin: 0;
+        background: #0b0c0e;
+        color: #f1efe9;
+        font-family: 'Inter Tight', Inter, system-ui, -apple-system, 'Segoe UI', sans-serif;
+        display: grid;
+        place-items: center;
+        padding: 1.5rem;
+        -webkit-font-smoothing: antialiased;
+      }
+      .card { max-width: 34rem; text-align: center; }
+      .code { font-size: clamp(5rem, 18vw, 9rem); line-height: .85; letter-spacing: -.06em; color: #c9f85a; margin: 0; font-weight: 500; }
+      h1 { font-size: clamp(1.5rem, 4vw, 2rem); letter-spacing: -.02em; font-weight: 500; margin: 1.6rem 0 .6rem; }
+      p { color: #9a9ca3; font-size: .93rem; line-height: 1.6; margin: 0 0 2rem; }
+      a.cta {
+        display: inline-flex; align-items: center; gap: .5rem;
+        background: #c9f85a; color: #0b0c0e; text-decoration: none;
+        padding: .8rem 1.3rem; border-radius: .45rem; font-weight: 600; font-size: .86rem;
+        transition: transform .2s ease;
+      }
+      a.cta:hover { transform: translateY(-1px); }
+      .links { margin-top: 1.6rem; display: flex; gap: 1.2rem; justify-content: center; }
+      .links a { color: #9a9ca3; font-size: .78rem; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.15); padding-bottom: 1px; }
+      .links a:hover { color: #f1efe9; }
+    </style>
+  </head>
+  <body>
+    <main class="card">
+      <p class="code">404</p>
+      <h1>This page took a different path.</h1>
+      <p>
+        The page you were looking for does not exist, or it has moved. Head back to the studio and
+        explore the work instead.
+      </p>
+      <a class="cta" href="./">Back to the website</a>
+      <div class="links">
+        <a href="./#work">Our work</a>
+        <a href="./#pricing">Pricing</a>
+        <a href="./#contact">Contact</a>
+      </div>
+    </main>
+  </body>
+</html>
