@@ -4,12 +4,13 @@ import { useFrame } from '@react-three/fiber';
 import { useGLTF } from '@react-three/drei';
 import { scrollState } from '../../lib/scrollState';
 import { glowTexture } from './textures';
+import { asset } from '../../lib/asset';
 
 /**
  * Custom GLB sculpture that hovers in the aperture and retreats as it opens.
  */
 function Sculpture() {
-  const { scene } = useGLTF('/models/atelier-core.glb');
+  const { scene } = useGLTF(asset('/models/atelier-core.glb'));
   const ref = useRef<THREE.Group>(null!);
   const model = useMemo(() => scene.clone(true), [scene]);
 
@@ -29,7 +30,7 @@ function Sculpture() {
     </group>
   );
 }
-useGLTF.preload('/models/atelier-core.glb');
+useGLTF.preload(asset('/models/atelier-core.glb'));
 
 /**
  * The sculptural glass portal at the centre of the Digital Atelier.

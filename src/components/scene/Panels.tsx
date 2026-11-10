@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
 import { useTexture } from '@react-three/drei';
 import { scrollState } from '../../lib/scrollState';
+import { asset } from '../../lib/asset';
 
 interface PanelDef {
   src: string;
@@ -15,13 +16,13 @@ interface PanelDef {
 }
 
 const DESKTOP_PANELS: PanelDef[] = [
-  { src: '/shots/kasoori.webp', position: [-3.2, 1.95, 1.4], rotation: [0.02, 0.55, 0.03], size: 2.05, floatSpeed: 0.55, phase: 0, drift: 0.9 },
-  { src: '/shots/grand-4-seasons.webp', position: [3.25, 1.35, 1.1], rotation: [0.02, -0.55, -0.03], size: 2.0, floatSpeed: 0.48, phase: 1.7, drift: 1.15 },
-  { src: '/shots/joyess-lifestyle.webp', position: [0.8, 0.08, 2.55], rotation: [0.03, -0.08, 0.012], size: 1.55, floatSpeed: 0.6, phase: 3.1, drift: 0.6 },
+  { src: asset('/shots/kasoori.webp'), position: [-3.2, 1.95, 1.4], rotation: [0.02, 0.55, 0.03], size: 2.05, floatSpeed: 0.55, phase: 0, drift: 0.9 },
+  { src: asset('/shots/grand-4-seasons.webp'), position: [3.25, 1.35, 1.1], rotation: [0.02, -0.55, -0.03], size: 2.0, floatSpeed: 0.48, phase: 1.7, drift: 1.15 },
+  { src: asset('/shots/joyess-lifestyle.webp'), position: [0.8, 0.08, 2.55], rotation: [0.03, -0.08, 0.012], size: 1.55, floatSpeed: 0.6, phase: 3.1, drift: 0.6 },
 ];
 
 const MOBILE_PANELS: PanelDef[] = [
-  { src: '/shots/kasoori.webp', position: [0.9, 1.9, 2.0], rotation: [0.02, -0.35, 0.02], size: 1.5, floatSpeed: 0.5, phase: 0, drift: 0.8 },
+  { src: asset('/shots/kasoori.webp'), position: [0.9, 1.9, 2.0], rotation: [0.02, -0.35, 0.02], size: 1.5, floatSpeed: 0.5, phase: 0, drift: 0.8 },
 ];
 
 function Panel({ def }: { def: PanelDef }) {

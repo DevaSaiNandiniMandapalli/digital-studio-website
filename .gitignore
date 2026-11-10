@@ -11,3 +11,6 @@ dist-ssr
 logs
 *.log
 .agent_tmp
+
+# Local build artifacts
+*.zip

@@ -1,3 +1,4 @@
+import { asset } from '../../lib/asset';
 import { useEffect, useRef } from 'react';
 import { ScrollTrigger } from '../../lib/smooth';
 import { Reveal, SectionHeading } from '../ui';
@@ -115,7 +116,7 @@ export function Blueprint() {
                       <span className="h-2 w-2 rounded-full bg-white/20" />
                     </div>
                     <img
-                      src="/shots/kasoori.webp"
+                      src={asset('/shots/kasoori.webp')}
                       alt="Finished website preview revealed by the blueprint scanner"
                       className="h-full w-full object-cover object-top"
                       loading="lazy"
