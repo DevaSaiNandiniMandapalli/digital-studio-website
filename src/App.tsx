@@ -4,9 +4,10 @@ import { ScrollProgress } from './components/ScrollProgress';
 import { FloatingActions } from './components/FloatingActions';
 import { Hero } from './sections/Hero';
 import { Intro } from './sections/Intro';
-import { Marquee } from './components/Marquee';
+import { LogoMarquee } from './components/LogoMarquee';
 import { Portfolio } from './sections/Portfolio';
 import { Services } from './sections/Services';
+import { Bento } from './sections/Bento';
 import { Process } from './sections/Process';
 import { Pricing } from './sections/Pricing';
 import { About } from './sections/About';
@@ -29,9 +30,10 @@ export default function App() {
       <main id="main">
         <Hero />
         <Intro />
-        <Marquee />
+        <LogoMarquee />
         <Portfolio />
         <Services />
+        <Bento />
         <Process />
         <Pricing />
         <About />

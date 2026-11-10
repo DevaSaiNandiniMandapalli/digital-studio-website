@@ -46,20 +46,34 @@ export function Hero() {
           '-=1.05',
         );
 
-      gsap.to('[data-hero-glow]', {
-        yPercent: 22,
-        ease: 'none',
-        scrollTrigger: { trigger: root, start: 'top top', end: 'bottom top', scrub: true },
+      const push = gsap.timeline({
+        defaults: { ease: 'none' },
+        scrollTrigger: { trigger: root, start: 'top top', end: 'bottom top', scrub: 0.65 },
       });
 
+      push
+        .to('[data-hero-copy]', { yPercent: -12, opacity: 0.12, scale: 0.975 }, 0)
+        .to('[data-hero-glow]', { scale: 1.45, opacity: 1, yPercent: 18 }, 0)
+        .to('[data-hero-frames]', { scale: 1.2, rotateX: -9, yPercent: -3 }, 0)
+        .to(
+          '[data-hero-frame]',
+          {
+            yPercent: (i: number) => -14 - i * 9,
+            scale: (i: number) => 1 + i * 0.045,
+            opacity: 0.3,
+            stagger: 0.05,
+          },
+          0,
+        );
+
       gsap.to('[data-depth="far"]', {
-        yPercent: -8,
-        rotateY: 4,
+        yPercent: -6,
+        rotateY: 3,
         ease: 'none',
         scrollTrigger: { trigger: root, start: 'top top', end: 'bottom top', scrub: 1.1 },
       });
       gsap.to('[data-depth="near"]', {
-        yPercent: -22,
+        yPercent: -16,
         ease: 'none',
         scrollTrigger: { trigger: root, start: 'top top', end: 'bottom top', scrub: 0.9 },
       });
@@ -120,7 +134,7 @@ export function Hero() {
 
       <div className="shell">
         <div className="grid items-center gap-14 lg:grid-cols-12 lg:gap-6">
-          <div className="lg:col-span-6 xl:col-span-5">
+          <div data-hero-copy className="lg:col-span-6 xl:col-span-5">
             <div data-hero-fade className="flex items-center gap-3">
               <span className="eyebrow">Independent digital studio — Hyderabad</span>
             </div>

@@ -350,7 +350,12 @@
 }
 
 .marquee {
-  animation: marquee 42s linear infinite;
+  animation: marquee 46s linear infinite;
+}
+
+.marquee-reverse {
+  animation-direction: reverse;
+  animation-duration: 54s;
 }
 
 @keyframes marquee {

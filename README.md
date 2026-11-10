@@ -11,14 +11,16 @@ A production-ready marketing site for an independent website design and developm
 with Instrument Serif italic counterpoints, layered browser-window compositions in real CSS 3D
 perspective, depth-based scrolling and a light "paper" break for the work section.
 
-**Stack:** Vite 6 · React 19 · TypeScript · Tailwind CSS v4 · GSAP + ScrollTrigger · Framer Motion · lucide-react
+**Stack:** Vite 6 · React 19 · TypeScript · Tailwind CSS v4 · GSAP + ScrollTrigger · Framer Motion · Three.js + React Three Fiber · lucide-react
 
 **Design system:** tokens (colour, type, spacing, easing) live in `src/index.css` under
 `@theme`; `.on-paper` re-declares the same tokens for light bands. Sections are composed from
-`src/components` (Navbar, Logo, BrowserFrame, Tilt, Marquee, ScrollProgress, Accordion, Reveal,
-SectionHeading, Footer, FloatingActions). The hero runs a GSAP entrance timeline plus pointer
-parallax and ScrollTrigger depth; magnetic buttons and card tilt are CSS-transform based and
-disabled for coarse pointers and `prefers-reduced-motion`.
+`src/components` (Navbar, Logo, BrowserFrame, Tilt, LogoMarquee, Sculpture, ScrollProgress,
+Accordion, Reveal, SectionHeading, Footer, FloatingActions). The hero runs a GSAP entrance
+timeline, pointer parallax and a scrubbed scroll push-through; `LogoMarquee` drives the two-row
+client ribbon; `Sculpture` lazily mounts a real Three.js scene (PMREM studio environment, chrome
+torus knot) only when the bento grid enters the viewport. Motion is disabled for coarse pointers
+and `prefers-reduced-motion`.
 
 ---
 
