@@ -11,58 +11,68 @@ interface PanelDef {
   size: number;
   floatSpeed: number;
   phase: number;
+  drift: number;
 }
 
 const DESKTOP_PANELS: PanelDef[] = [
-  { src: '/shots/kasoori.webp', position: [-3.2, 1.95, 1.4], rotation: [0.02, 0.55, 0.03], size: 2.05, floatSpeed: 0.55, phase: 0 },
-  { src: '/shots/grand-4-seasons.webp', position: [3.25, 1.35, 1.1], rotation: [0.02, -0.55, -0.03], size: 2.0, floatSpeed: 0.48, phase: 1.7 },
-  { src: '/shots/joyess-lifestyle.webp', position: [0.8, 0.08, 2.55], rotation: [0.03, -0.08, 0.012], size: 1.55, floatSpeed: 0.6, phase: 3.1 },
+  { src: '/shots/kasoori.webp', position: [-3.2, 1.95, 1.4], rotation: [0.02, 0.55, 0.03], size: 2.05, floatSpeed: 0.55, phase: 0, drift: 0.9 },
+  { src: '/shots/grand-4-seasons.webp', position: [3.25, 1.35, 1.1], rotation: [0.02, -0.55, -0.03], size: 2.0, floatSpeed: 0.48, phase: 1.7, drift: 1.15 },
+  { src: '/shots/joyess-lifestyle.webp', position: [0.8, 0.08, 2.55], rotation: [0.03, -0.08, 0.012], size: 1.55, floatSpeed: 0.6, phase: 3.1, drift: 0.6 },
 ];
 
 const MOBILE_PANELS: PanelDef[] = [
-  { src: '/shots/kasoori.webp', position: [0.9, 1.9, 2.0], rotation: [0.02, -0.35, 0.02], size: 1.5, floatSpeed: 0.5, phase: 0 },
+  { src: '/shots/kasoori.webp', position: [0.9, 1.9, 2.0], rotation: [0.02, -0.35, 0.02], size: 1.5, floatSpeed: 0.5, phase: 0, drift: 0.8 },
 ];
 
 function Panel({ def }: { def: PanelDef }) {
   const tex = useTexture(def.src);
   const group = useRef<THREE.Group>(null!);
-  const h = def.size * 0.68;
+  const screen = useRef<THREE.MeshBasicMaterial>(null!);
+  const h = def.size * 0.66;
 
   const frameMat = useMemo(
     () => new THREE.MeshStandardMaterial({ color: '#1c2734', metalness: 0.9, roughness: 0.35 }),
     [],
   );
 
+  useMemo(() => {
+    tex.colorSpace = THREE.SRGBColorSpace;
+    tex.anisotropy = 8;
+    tex.minFilter = THREE.LinearMipmapLinearFilter;
+    tex.needsUpdate = true;
+  }, [tex]);
+
   useFrame((state) => {
-    const t = state.clock.elapsedTime;
     if (!group.current) return;
-    group.current.position.y = def.position[1] + Math.sin(t * def.floatSpeed + def.phase) * 0.09;
-    group.current.rotation.z = def.rotation[2] + Math.sin(t * def.floatSpeed * 0.7 + def.phase) * 0.015;
-    // panels drift gently toward the camera lane as the portal opens
-    const push = scrollState.main * 0.5;
-    group.current.position.z = def.position[2] + push;
+    const t = state.clock.elapsedTime;
+    const s = scrollState.main;
+    const base = def.position;
+
+    group.current.position.x = base[0] + Math.sin(t * 0.18 + def.phase) * 0.035 + s * def.drift * 0.45;
+    group.current.position.y = base[1] + Math.sin(t * def.floatSpeed + def.phase) * 0.06 - s * 0.18;
+    group.current.position.z = base[2] + s * (0.9 + def.drift * 0.7);
+
+    group.current.rotation.y = def.rotation[1] + Math.sin(t * 0.16 + def.phase) * 0.025 + s * def.drift * 0.12;
+    group.current.rotation.x = def.rotation[0] + Math.sin(t * 0.18 + def.phase * 1.4) * 0.02;
+    group.current.rotation.z = def.rotation[2] + Math.sin(t * def.floatSpeed * 0.7 + def.phase) * 0.012;
+
+    if (screen.current) {
+      screen.current.opacity = Math.max(0, Math.min(1, 1.35 - s * 1.9));
+    }
   });
 
   return (
     <group ref={group} position={def.position} rotation={def.rotation}>
-      {/* frame */}
-      <mesh material={frameMat} position={[0, 0, -0.02]}>
-        <boxGeometry args={[def.size + 0.09, h + 0.09, 0.04]} />
+      <mesh material={frameMat} position={[0, 0, -0.05]}>
+        <boxGeometry args={[def.size + 0.09, h + 0.09, 0.06]} />
       </mesh>
-      {/* screen */}
-      <mesh>
+      <mesh position={[0, 0, 0.002]}>
         <planeGeometry args={[def.size, h]} />
-        <meshBasicMaterial map={tex} toneMapped={false} />
+        <meshBasicMaterial ref={screen} map={tex} toneMapped={false} transparent />
       </mesh>
-      {/* edge glow */}
-      <mesh position={[0, 0, 0.021]}>
-        <planeGeometry args={[def.size + 0.02, h + 0.02]} />
-        <meshBasicMaterial color="#72c9ff" transparent opacity={0.06} blending={THREE.AdditiveBlending} />
-      </mesh>
-      {/* little stand/base light */}
-      <mesh position={[0, -h / 2 - 0.12, 0]}>
-        <boxGeometry args={[def.size * 0.34, 0.012, 0.012]} />
-        <meshBasicMaterial color="#b7f45a" transparent opacity={0.5} />
+      <mesh position={[0, -h / 2 - 0.09, 0.002]}>
+        <planeGeometry args={[def.size * 0.34, 0.01]} />
+        <meshBasicMaterial color="#b7f45a" transparent opacity={0.45} />
       </mesh>
     </group>
   );

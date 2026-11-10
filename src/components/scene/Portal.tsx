@@ -17,8 +17,8 @@ function Sculpture() {
     const t = state.clock.elapsedTime;
     const open = scrollState.opening;
     if (!ref.current) return;
-    ref.current.rotation.y += dt * (0.14 + open * 0.3);
-    ref.current.rotation.x = Math.sin(t * 0.22) * 0.14;
+    ref.current.rotation.y += dt * (0.09 + open * 0.16);
+    ref.current.rotation.x = Math.sin(t * 0.16) * 0.07;
     ref.current.position.z = THREE.MathUtils.lerp(0.62, -1.05, open);
     ref.current.scale.setScalar(THREE.MathUtils.lerp(0.5, 0.32, open));
   });
@@ -52,11 +52,11 @@ export function Portal({ quality }: { quality: 'high' | 'low' }) {
     const open = scrollState.opening;
 
     if (group.current) {
-      group.current.position.y = 1.25 + Math.sin(t * 0.4) * 0.035;
+      group.current.position.y = 1.25 + Math.sin(t * 0.28) * 0.022;
       group.current.rotation.z = Math.sin(t * 0.18) * 0.02;
     }
-    if (ringA.current) ringA.current.rotation.z += dt * 0.12;
-    if (ringB.current) ringB.current.rotation.z -= dt * 0.16;
+    if (ringA.current) ringA.current.rotation.z += dt * 0.06;
+    if (ringB.current) ringB.current.rotation.z -= dt * 0.08;
 
     if (membrane.current) {
       const m = membrane.current.material as THREE.MeshPhysicalMaterial;

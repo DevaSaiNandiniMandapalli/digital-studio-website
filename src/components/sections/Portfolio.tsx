@@ -37,27 +37,29 @@ export function Portfolio() {
   return (
     <section id="work" className="section-pad relative z-10 border-t border-white/[0.06] bg-ink">
       <div className="shell">
-        <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
-          <SectionHeading
-            eyebrow="Selected Work"
-            title={
-              <>
-                Our work speaks
-                <br className="hidden sm:block" /> through <span className="text-lime">design.</span>
-              </>
-            }
-            lead="Explore digital experiences we've developed for different businesses and industries."
-          />
-          <Reveal delay={0.1}>
-            <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.14em] text-muted">
-              <span className="h-1.5 w-1.5 rounded-full bg-sky" />
+        <div className="grid gap-8 border-b border-white/[0.08] pb-8 lg:grid-cols-12 lg:items-end lg:gap-10">
+          <div className="lg:col-span-8">
+            <SectionHeading
+              eyebrow="Selected Work"
+              title={
+                <>
+                  Our work speaks through{' '}
+                  <span className="text-lime">design.</span>
+                </>
+              }
+              lead="Explore digital experiences we've developed for different businesses and industries."
+            />
+          </div>
+          <Reveal delay={0.1} className="lg:col-span-4 lg:pb-2">
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] uppercase leading-relaxed tracking-[0.14em] text-muted lg:justify-end lg:text-right">
+              <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-sky" />
               Studio concepts — self-initiated design explorations
             </div>
           </Reveal>
         </div>
 
         {/* filters */}
-        <div className="mt-10 flex flex-wrap gap-2 border-b border-white/[0.08] pb-5">
+        <div className="mt-7 flex flex-wrap items-center gap-2">
           {CATEGORIES.map((c) => {
             const active = filter === c;
             return (
@@ -80,12 +82,9 @@ export function Portfolio() {
           </span>
         </div>
 
-        <motion.div layout className="mt-9 grid grid-cols-1 gap-x-5 gap-y-10 md:grid-cols-12">
+        <motion.div layout className="mt-9 grid grid-cols-1 gap-x-5 gap-y-9 sm:grid-cols-2 lg:grid-cols-3">
           <AnimatePresence mode="popLayout">
             {visible.map((p) => {
-              const pos = visible.indexOf(p);
-              const row = Math.floor(pos / 2);
-              const wide = row % 2 === 0 ? pos % 2 === 0 : pos % 2 === 1;
               return (
                 <motion.article
                   key={p.id}
@@ -93,8 +92,7 @@ export function Portfolio() {
                   initial={reduce ? false : { opacity: 0, y: 26 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={reduce ? undefined : { opacity: 0, scale: 0.97 }}
-                  transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                  className={wide ? 'md:col-span-7' : 'md:col-span-5'}
+                  transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
                 >
                   <TiltCard
                     className="rounded-xl"
@@ -108,7 +106,7 @@ export function Portfolio() {
                       className="group block"
                       aria-label={`${p.name} — open live website`}
                     >
-                      <BrowserFrame src={p.shot} alt={`${p.name} website preview`} tall={wide} />
+                      <BrowserFrame src={p.shot} alt={`${p.name} website preview`} />
 
                       <div className="mt-4 flex items-start justify-between gap-4">
                         <div>

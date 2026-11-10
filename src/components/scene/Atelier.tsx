@@ -1,7 +1,7 @@
 import { Suspense, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Environment, Lightformer, Preload } from '@react-three/drei';
+import { Environment, Lightformer, Preload, PerformanceMonitor } from '@react-three/drei';
 import { scrollState } from '../../lib/scrollState';
 import { sampleMain, sampleFinal } from './cameraPath';
 import { Portal } from './Portal';
@@ -81,7 +81,8 @@ function useWebGL() {
 export function Atelier({ mobile, active }: { mobile: boolean; active: boolean }) {
   const supported = useWebGL();
   const quality: 'high' | 'low' = mobile ? 'low' : 'high';
-  const dpr = useMemo<[number, number]>(() => (mobile ? [1, 1.4] : [1, 1.75]), [mobile]);
+  const [dprMax, setDprMax] = useState(mobile ? 1.3 : 1.6);
+  const dpr = useMemo<[number, number]>(() => [1, dprMax], [dprMax]);
 
   if (!supported) {
     return (
@@ -101,6 +102,11 @@ export function Atelier({ mobile, active }: { mobile: boolean; active: boolean }
     >
       <color attach="background" args={['#080b12']} />
       <fog attach="fog" args={['#080b12', 10, 34]} />
+      <PerformanceMonitor
+        onDecline={() => setDprMax((d) => (d > 1 ? 1 : d))}
+        flipflops={2}
+        onFallback={() => setDprMax(1)}
+      />
       <Suspense fallback={null}>
         <Lights />
         <EnvRig />
