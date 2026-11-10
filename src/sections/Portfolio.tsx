@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { BrowserFrame } from '../components/BrowserFrame';
+import { Tilt } from '../components/Tilt';
 import { Reveal } from '../components/Reveal';
 import { categories, projects, type CategoryId } from '../data/projects';
 import { cn } from '../lib/utils';
@@ -18,7 +19,10 @@ export function Portfolio() {
   );
 
   return (
-    <section id="work" className="relative overflow-hidden border-t border-line bg-canvas py-20 md:py-28">
+    <section
+      id="work"
+      className="on-paper relative overflow-hidden border-t border-line py-20 md:py-28"
+    >
       <div className="shell">
         <Reveal className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
           <div className="max-w-2xl">
@@ -49,7 +53,7 @@ export function Portfolio() {
               onClick={() => setActive(cat.id)}
               aria-pressed={active === cat.id}
               className={cn(
-                'rounded-full border px-4 py-2 text-[0.68rem] font-medium tracking-[0.06em] transition-all duration-300',
+                'border px-4 py-2 text-[0.68rem] font-medium tracking-[0.06em] transition-all duration-300',
                 active === cat.id
                   ? 'border-ink bg-ink text-canvas'
                   : 'border-line-strong text-mute hover:border-ink hover:text-ink',
@@ -79,12 +83,14 @@ export function Portfolio() {
                   className="block"
                   aria-label={`Open ${project.name} project in a new tab`}
                 >
+                  <Tilt>
                   <BrowserFrame
                     image={project.image}
                     alt={`${project.name} website preview`}
                     url={project.name.toLowerCase().replace(/[^a-z0-9]+/g, '')}
                     viewportClassName="aspect-[16/11]"
                   />
+                  </Tilt>
 
                   <div className="mt-4 flex items-start justify-between gap-4 border-t border-line pt-4">
                     <div className="min-w-0">
@@ -104,7 +110,7 @@ export function Portfolio() {
                         {project.type === 'concept' ? 'Studio concept' : 'Commissioned'}
                       </p>
                     </div>
-                    <span className="grid size-8 shrink-0 place-items-center border border-line text-mute transition-all duration-500 group-hover:border-accent group-hover:bg-accent group-hover:text-white">
+                    <span className="grid size-8 shrink-0 place-items-center border border-line text-mute transition-all duration-500 group-hover:border-accent group-hover:bg-accent group-hover:text-[#f2ede3]">
                       <ArrowUpRight className="size-3.5" />
                     </span>
                   </div>

@@ -1,8 +1,10 @@
 import { Footer } from './components/Footer';
 import { Navbar } from './components/Navbar';
+import { ScrollProgress } from './components/ScrollProgress';
 import { FloatingActions } from './components/FloatingActions';
 import { Hero } from './sections/Hero';
 import { Intro } from './sections/Intro';
+import { Marquee } from './components/Marquee';
 import { Portfolio } from './sections/Portfolio';
 import { Services } from './sections/Services';
 import { Process } from './sections/Process';
@@ -18,14 +20,16 @@ export default function App() {
     <div className="relative min-h-screen bg-canvas">
       <a
         href="#main"
-        className="sr-only z-[70] bg-accent px-4 py-2 text-sm font-semibold text-white focus:not-sr-only focus:fixed focus:top-4 focus:left-4"
+        className="sr-only z-[70] bg-accent px-4 py-2 text-sm font-semibold text-[#0b0b0c] focus:not-sr-only focus:fixed focus:top-4 focus:left-4"
       >
         Skip to content
       </a>
+      <ScrollProgress />
       <Navbar />
       <main id="main">
         <Hero />
         <Intro />
+        <Marquee />
         <Portfolio />
         <Services />
         <Process />

@@ -27,7 +27,7 @@ export function Intro() {
               <span className="block">
                 digital experiences{' '}
                 <span className="relative inline-block">
-                  <span className="relative z-10">people remember.</span>
+                  <span className="relative z-10">people <span className="font-serif italic text-accent">remember.</span></span>
                   <motion.span
                     aria-hidden="true"
                     initial={reduce ? undefined : { scaleX: 0 }}
@@ -44,7 +44,7 @@ export function Intro() {
           <div className="flex items-end lg:col-span-3">
             <Reveal delay={0.15} className="w-full">
               <div className="flex items-start gap-4 border-t border-line pt-4 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-6">
-                <span aria-hidden="true" className="aurora-mark mt-1 size-3 shrink-0 rounded-full" />
+                <span aria-hidden="true" className="mt-1 size-2.5 shrink-0 bg-accent" />
                 <p className="text-[0.9rem] leading-relaxed text-mute">
                   Your website is often the first impression your business makes. We make sure it is
                   a good one.

@@ -36,7 +36,7 @@ export function Services() {
                   {service.description}
                 </p>
 
-                <span className="col-start-3 row-start-1 grid size-9 place-items-center rounded-full border border-line text-mute transition-all duration-500 group-hover:border-accent group-hover:bg-accent group-hover:text-white md:col-start-4">
+                <span className="col-start-3 row-start-1 grid size-9 place-items-center rounded-full border border-line text-mute transition-all duration-500 group-hover:border-accent group-hover:bg-accent group-hover:text-[#0b0b0c] md:col-start-4">
                   <ArrowUpRight className="size-4" />
                 </span>
               </a>

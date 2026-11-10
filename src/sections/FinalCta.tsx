@@ -8,11 +8,11 @@ export function FinalCta() {
   const reduce = useReducedMotion();
 
   return (
-    <section className="relative overflow-hidden bg-night py-20 text-canvas md:py-28">
+    <section className="relative overflow-hidden bg-night py-20 text-ink md:py-28">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -top-24 -right-24 size-[22rem] rounded-full opacity-25 blur-[90px]"
-        style={{ background: 'radial-gradient(circle, #93a7ad, transparent 70%)' }}
+        className="pointer-events-none absolute -top-32 -right-24 size-[30rem] rounded-full opacity-40 blur-[100px]"
+        style={{ background: 'radial-gradient(circle, rgba(214,96,58,0.65), transparent 70%)' }}
       />
       <div className="shell relative">
         <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
@@ -22,13 +22,13 @@ export function FinalCta() {
               whileInView={reduce ? undefined : { opacity: 1 }}
               viewport={{ once: true, margin: '-80px' }}
               transition={{ duration: 0.6 }}
-              className="flex items-center gap-3 text-[0.64rem] tracking-[0.2em] text-white/45 uppercase"
+              className="flex items-center gap-3 text-[0.64rem] tracking-[0.2em] text-mute uppercase"
             >
               <span aria-hidden="true" className="h-px w-8 bg-accent" />
               Next project
             </motion.p>
 
-            <h2 className="mt-6 font-display text-[clamp(2.1rem,5vw+0.5rem,4.9rem)] leading-[0.94] font-bold tracking-[-0.055em] lowercase text-[#efefeb]">
+            <h2 className="mt-6 font-display text-[clamp(2.1rem,5vw+0.5rem,4.9rem)] leading-[0.94] font-bold tracking-[-0.055em] lowercase text-ink">
               {['Let’s build something', 'worth remembering.'].map((line, i) => (
                 <span key={line} className="block overflow-hidden">
                   <motion.span
@@ -52,7 +52,7 @@ export function FinalCta() {
               viewport={{ once: true, margin: '-80px' }}
               transition={{ duration: 0.8, delay: 0.2, ease }}
             >
-              <p className="max-w-sm text-[0.92rem] leading-relaxed text-white/55">
+              <p className="max-w-sm text-[0.92rem] leading-relaxed text-mute">
                 Tell us what you are building. We will tell you exactly how we would make it stand
                 out — and what it would cost.
               </p>
@@ -65,7 +65,7 @@ export function FinalCta() {
                   href={whatsappMessage()}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn border border-white/20 text-white hover:border-white/50"
+                  className="btn border border-line-strong text-ink hover:border-accent hover:text-accent"
                 >
                   <MessageCircle className="size-4" />
                   Chat on WhatsApp
@@ -75,11 +75,11 @@ export function FinalCta() {
           </div>
         </div>
 
-        <div className="mt-16 flex flex-wrap items-center justify-between gap-4 border-t border-white/12 pt-6">
-          <p className="font-display text-[0.78rem] tracking-[0.16em] text-white/45 uppercase">
+        <div className="mt-16 flex flex-wrap items-center justify-between gap-4 border-t border-line pt-6">
+          <p className="font-display text-[0.78rem] tracking-[0.16em] text-mute uppercase">
             We don&rsquo;t just build websites. We create digital impressions.
           </p>
-          <p className="text-[0.7rem] tracking-[0.14em] text-white/35 uppercase">
+          <p className="text-[0.7rem] tracking-[0.14em] text-mute-soft uppercase">
             Hyderabad · India · Worldwide
           </p>
         </div>

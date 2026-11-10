@@ -36,9 +36,9 @@ export function BrowserFrame({
     >
       <div className="flex items-center gap-2 border-b border-line bg-surface-2/70 px-2.5 py-1.5">
         <span aria-hidden="true" className="flex gap-1">
-          <span className="size-[5px] rounded-full bg-[#d8d4c9]" />
-          <span className="size-[5px] rounded-full bg-[#d8d4c9]" />
-          <span className="size-[5px] rounded-full bg-[#d8d4c9]" />
+          <span className="size-[5px] rounded-full bg-[#f2ede3]/30" />
+          <span className="size-[5px] rounded-full bg-[#f2ede3]/30" />
+          <span className="size-[5px] rounded-full bg-[#f2ede3]/30" />
         </span>
         <span className="min-w-0 flex-1 truncate rounded-[2px] bg-canvas px-2 py-[3px] text-[0.44rem] tracking-[0.02em] text-mute sm:text-[0.5rem]">
           {url ?? 'yourdigitalstudio'}

@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="YDS — Your Digital Studio">
-  <rect width="64" height="64" fill="#161a1b"/>
-  <text x="11" y="45" font-family="Inter Tight, Inter, Helvetica, Arial, sans-serif" font-size="30" font-weight="700" letter-spacing="-2" fill="#efefeb">yds</text>
-  <circle cx="52" cy="41" r="2.4" fill="#8fa3a9"/>
+  <rect width="64" height="64" fill="#0b0b0c"/>
+  <text x="11" y="45" font-family="Inter Tight, Inter, Helvetica, Arial, sans-serif" font-size="30" font-weight="700" letter-spacing="-2" fill="#f2ede3">yds</text>
+  <circle cx="52" cy="41" r="2.4" fill="#d6603a"/>
 </svg>

@@ -1,248 +1,270 @@
-import { useEffect, useRef, useState } from 'react';
-import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from 'framer-motion';
-import { ArrowDownRight, ArrowUpRight } from 'lucide-react';
-import { BentArrow } from '../components/BentArrow';
+import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ArrowUpRight } from 'lucide-react';
 import { BrowserFrame } from '../components/BrowserFrame';
-import { site, whatsappMessage } from '../data/site';
+import { BentArrow } from '../components/BentArrow';
+import { useMagnetic } from '../lib/useMagnetic';
 
-const ease = [0.16, 1, 0.3, 1] as const;
+gsap.registerPlugin(ScrollTrigger);
+
+const reduceMotion = () =>
+  typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 export function Hero() {
-  const reduce = useReducedMotion();
-  const ref = useRef<HTMLDivElement>(null);
-  const [pointer, setPointer] = useState(false);
-
-  const px = useMotionValue(0);
-  const py = useMotionValue(0);
-  const sx = useSpring(px, { stiffness: 60, damping: 20, mass: 0.6 });
-  const sy = useSpring(py, { stiffness: 60, damping: 20, mass: 0.6 });
-  const ax = useTransform(sx, (v) => v * 14);
-  const bx = useTransform(sx, (v) => v * -26);
-  const by = useTransform(sy, (v) => v * -18);
-  const cx = useTransform(sx, (v) => v * 34);
-  const cy = useTransform(sy, (v) => v * 26);
+  const section = useRef<HTMLElement | null>(null);
+  const stage = useRef<HTMLDivElement | null>(null);
+  const primary = useMagnetic<HTMLAnchorElement>(0.18);
+  const secondary = useMagnetic<HTMLAnchorElement>(0.14);
 
   useEffect(() => {
-    if (reduce) return;
-    setPointer(window.matchMedia('(pointer: fine)').matches);
-  }, [reduce]);
+    const root = section.current;
+    const tilt = stage.current;
+    if (!root || !tilt || reduceMotion()) return;
 
-  const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!pointer || !ref.current) return;
-    const rect = ref.current.getBoundingClientRect();
-    px.set((e.clientX - rect.left) / rect.width - 0.5);
-    py.set((e.clientY - rect.top) / rect.height - 0.5);
-  };
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
 
-  const onLeave = () => {
-    px.set(0);
-    py.set(0);
-  };
+      tl.from('[data-hero-line]', {
+        yPercent: 118,
+        rotate: 3,
+        duration: 1.25,
+        stagger: 0.09,
+      })
+        .from('[data-hero-fade]', { y: 26, opacity: 0, duration: 1, stagger: 0.08 }, '-=0.85')
+        .from(
+          '[data-hero-frame]',
+          {
+            y: 90,
+            opacity: 0,
+            rotateY: -26,
+            rotateX: 8,
+            scale: 0.94,
+            duration: 1.5,
+            stagger: 0.14,
+          },
+          '-=1.05',
+        );
 
-  const line = (delay: number) => ({
-    initial: reduce ? undefined : { y: '110%' },
-    animate: reduce ? undefined : { y: '0%' },
-    transition: { duration: 1.05, delay, ease },
-  });
+      gsap.to('[data-hero-glow]', {
+        yPercent: 22,
+        ease: 'none',
+        scrollTrigger: { trigger: root, start: 'top top', end: 'bottom top', scrub: true },
+      });
+
+      gsap.to('[data-depth="far"]', {
+        yPercent: -8,
+        rotateY: 4,
+        ease: 'none',
+        scrollTrigger: { trigger: root, start: 'top top', end: 'bottom top', scrub: 1.1 },
+      });
+      gsap.to('[data-depth="near"]', {
+        yPercent: -22,
+        ease: 'none',
+        scrollTrigger: { trigger: root, start: 'top top', end: 'bottom top', scrub: 0.9 },
+      });
+
+      if (window.matchMedia('(pointer: coarse)').matches) return;
+
+      const rx = gsap.quickTo(tilt, 'rotateX', { duration: 1.1, ease: 'power3.out' });
+      const ry = gsap.quickTo(tilt, 'rotateY', { duration: 1.1, ease: 'power3.out' });
+      const mx = gsap.quickTo('[data-hero-frames]', 'x', { duration: 1.2, ease: 'power3.out' });
+      const my = gsap.quickTo('[data-hero-frames]', 'y', { duration: 1.2, ease: 'power3.out' });
+
+      const onMove = (e: PointerEvent) => {
+        const r = root.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width - 0.5;
+        const py = (e.clientY - r.top) / r.height - 0.5;
+        rx(py * -5);
+        ry(px * 9);
+        mx(px * -22);
+        my(py * -14);
+        root.style.setProperty('--spot-x', `${e.clientX - r.left}px`);
+        root.style.setProperty('--spot-y', `${e.clientY - r.top}px`);
+      };
+
+      root.addEventListener('pointermove', onMove);
+      return () => root.removeEventListener('pointermove', onMove);
+    }, root);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <section id="home" className="relative overflow-hidden pt-28 pb-16 md:pt-36 md:pb-24">
-      <div className="shell">
-        <motion.div
-          initial={reduce ? undefined : { opacity: 0 }}
-          animate={reduce ? undefined : { opacity: 1 }}
-          transition={{ duration: 0.6 }}
-          className="flex items-center justify-between border-b border-line pb-4"
-        >
-          <span className="eyebrow">Independent digital studio — Hyderabad, India</span>
-          <span className="hidden items-center gap-2 text-[0.62rem] tracking-[0.16em] text-mute uppercase md:flex">
-            <span className="size-1.5 bg-accent" />
-            {site.availability}
-            <BentArrow className="ml-2 size-3.5 text-mute-soft" />
-          </span>
-        </motion.div>
-
+    <section
+      id="home"
+      ref={section}
+      className="grain relative isolate overflow-hidden bg-canvas pt-28 pb-16 md:pt-32 md:pb-24"
+    >
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
         <div
-          ref={ref}
-          onMouseMove={onMove}
-          onMouseLeave={onLeave}
-          className="grid items-start gap-x-8 gap-y-12 pt-10 md:pt-14 lg:grid-cols-12 lg:gap-y-0"
-        >
-          <div className="lg:col-span-6 xl:col-span-6">
-            <h1 className="display">
-              <span className="block overflow-hidden">
-                <motion.span className="block" {...line(0.05)}>
-                  Good ideas.
-                </motion.span>
+          data-hero-glow
+          className="absolute -top-[26rem] left-1/2 h-[62rem] w-[62rem] -translate-x-1/2 rounded-full"
+          style={{
+            background:
+              'radial-gradient(circle at 50% 50%, rgba(214,96,58,0.22), rgba(214,96,58,0.06) 38%, transparent 66%)',
+          }}
+        />
+        <div
+          className="absolute inset-0 opacity-70"
+          style={{
+            background:
+              'radial-gradient(520px circle at var(--spot-x, 72%) var(--spot-y, 28%), rgba(242,237,227,0.1), transparent 62%)',
+          }}
+        />
+        <div
+          className="absolute inset-x-0 bottom-0 h-72"
+          style={{ background: 'linear-gradient(to top, #0b0b0c, transparent)' }}
+        />
+      </div>
+
+      <div className="shell">
+        <div className="grid items-center gap-14 lg:grid-cols-12 lg:gap-6">
+          <div className="lg:col-span-6 xl:col-span-5">
+            <div data-hero-fade className="flex items-center gap-3">
+              <span className="eyebrow">Independent digital studio — Hyderabad</span>
+            </div>
+
+            <h1 className="display mt-7 text-[clamp(2.7rem,6vw+1rem,5.1rem)]">
+              <span className="block overflow-hidden pb-[0.06em]">
+                <span data-hero-line className="block">
+                  good ideas.
+                </span>
               </span>
-              <span className="block overflow-hidden">
-                <motion.span className="block" {...line(0.16)}>
-                  Deserve great
-                </motion.span>
+              <span className="block overflow-hidden pb-[0.06em]">
+                <span data-hero-line className="block">
+                  deserve{' '}
+                  <span className="type-3d font-serif text-[1.08em] leading-[0.8] font-normal italic text-accent">
+                    great
+                  </span>
+                </span>
               </span>
-              <span className="block overflow-hidden">
-                <motion.span className="block" {...line(0.27)}>
-                  <span className="outline-type">Websites</span>
-                  <span aria-hidden="true">.</span>
-                </motion.span>
+              <span className="block overflow-hidden pb-[0.06em]">
+                <span data-hero-line className="block">
+                  websites.
+                </span>
               </span>
             </h1>
 
-            <motion.p
-              initial={reduce ? undefined : { opacity: 0, y: 18 }}
-              animate={reduce ? undefined : { opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.45, ease }}
-              className="lede mt-7 max-w-[34rem] text-[1.02rem] md:mt-8"
-            >
-              We design and develop beautiful, high-performing websites that help businesses build
-              credibility, attract customers and grow online.
-            </motion.p>
+            <p data-hero-fade className="lede mt-7 max-w-[34ch]">
+              We design and build distinctive, high-performing websites for ambitious businesses —
+              from restaurants and retail brands to startups and established companies.
+            </p>
 
-            <motion.div
-              initial={reduce ? undefined : { opacity: 0, y: 18 }}
-              animate={reduce ? undefined : { opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.55, ease }}
-              className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center"
-            >
-              <a href="#contact" className="btn btn-primary">
+            <div data-hero-fade className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-4">
+              <a ref={primary} href="#contact" className="btn btn-primary">
                 Let&rsquo;s build your website
                 <ArrowUpRight className="size-4" />
               </a>
-              <a href="#work" className="btn btn-ghost">
+              <a
+                ref={secondary}
+                href="#work"
+                className="link-underline text-[0.78rem] font-medium tracking-[0.1em] text-ink uppercase"
+              >
                 Explore our work
-                <ArrowDownRight className="size-4" />
+                <BentArrow className="size-4 text-accent" />
               </a>
-            </motion.div>
+            </div>
 
-            <motion.div
-              initial={reduce ? undefined : { opacity: 0 }}
-              animate={reduce ? undefined : { opacity: 1 }}
-              transition={{ duration: 0.9, delay: 0.7 }}
-              className="mt-12 flex flex-wrap items-center gap-x-3 gap-y-2 border-t border-line pt-5 text-[0.66rem] tracking-[0.16em] text-mute uppercase md:mt-16"
+            <div
+              data-hero-fade
+              className="mt-14 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-line pt-5 text-[0.66rem] tracking-[0.16em] text-mute"
             >
-              <span>Website design</span>
-              <span aria-hidden="true" className="text-mute-soft">
-                /
-              </span>
-              <span>Development</span>
-              <span aria-hidden="true" className="text-mute-soft">
-                /
-              </span>
-              <span>Digital experiences</span>
-            </motion.div>
+              <span className="uppercase">Website design</span>
+              <span aria-hidden="true" className="size-1 bg-accent" />
+              <span className="uppercase">Development</span>
+              <span aria-hidden="true" className="size-1 bg-accent" />
+              <span className="uppercase">Digital experiences</span>
+            </div>
           </div>
 
-          {/* Stacked card composition */}
-          <div className="lg:col-span-6">
-            <div className="relative pb-10 lg:-mt-10 lg:ml-6 lg:pb-16">
+          <div className="lg:col-span-6 xl:col-span-7">
+            <div className="stage">
               <div
-                aria-hidden="true"
-                className="steel-wash pointer-events-none absolute -inset-x-6 -top-8 bottom-6 opacity-60 lg:-inset-x-10"
-              />
-
-              <motion.div
-                initial={reduce ? undefined : { opacity: 0, y: 40 }}
-                animate={reduce ? undefined : { opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 0.3, ease }}
-                className="relative mx-auto max-w-[30rem] lg:max-w-none"
+                ref={stage}
+                className="layer relative mx-auto h-[23rem] w-full max-w-[34rem] sm:h-[27rem] lg:h-[32rem] lg:max-w-none"
               >
-                <motion.div
-                  style={pointer ? { x: ax, y: by } : undefined}
-                  className="relative z-10 w-[92%]"
-                >
-                  <BrowserFrame
-                    image="/projects/kasoori.jpg"
-                    alt="Kasoori restaurant website preview"
-                    url="kasoori — restaurant"
-                    priority
-                    viewportClassName="aspect-[16/11] sm:aspect-[16/10]"
-                    className="edge-card -rotate-[2.2deg]"
-                  />
-                </motion.div>
-
-                <motion.div
-                  style={pointer ? { x: bx, y: cy } : undefined}
-                  className="absolute top-[16%] right-0 z-0 w-[46%] lg:-right-4"
-                >
-                  <BrowserFrame
-                    image="/projects/grand-4-seasons.jpg"
-                    alt="Grand 4 Seasons hospitality website preview"
-                    url="grand 4 seasons"
-                    viewportClassName="aspect-[4/3]"
-                    className="edge-card rotate-[3.4deg]"
-                  />
-                </motion.div>
-
-                <motion.div
-                  style={pointer ? { x: cx } : undefined}
-                  className="relative z-20 -mt-8 ml-auto w-[62%] sm:-mt-10 lg:-mt-16"
-                >
-                  <BrowserFrame
-                    image="/projects/fluids-store.jpg"
-                    alt="Fluids Store e-commerce website preview"
-                    url="fluids — e-commerce"
-                    viewportClassName="aspect-[4/3]"
-                    className="edge-card rotate-[2.4deg]"
-                  />
-                </motion.div>
-
-                <motion.div
-                  initial={reduce ? undefined : { opacity: 0, y: 24 }}
-                  animate={reduce ? undefined : { opacity: 1, y: 0 }}
-                  transition={{ duration: 0.9, delay: 0.6, ease }}
-                  style={pointer ? { x: bx, y: by } : undefined}
-                  className="plate-dark absolute -bottom-4 left-0 z-30 w-[58%] px-4 py-4 sm:-bottom-8 sm:px-5 sm:py-5"
-                >
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="font-display text-[1.35rem] leading-[0.75] font-bold tracking-[-0.06em] text-white lowercase">
-                      yds
-                      <span aria-hidden="true" className="text-white/40">
-                        .
-                      </span>
+                <div data-hero-frames className="layer absolute inset-0">
+                  <div
+                    data-hero-frame
+                    data-depth="far"
+                    className="layer absolute top-[2%] left-0 hidden w-[54%] sm:block"
+                    style={{ transform: 'rotateY(15deg) rotateZ(-4deg) translateZ(-90px)' }}
+                  >
+                    <div className="float-slower">
+                      <BrowserFrame
+                        image="/projects/kapoors-cafe.jpg"
+                        alt="Kapoor's Cafe restaurant website preview"
+                        url="kapoors cafe — restaurant"
+                        viewportClassName="aspect-[16/11]"
+                        hover="none"
+                        className="edge-card opacity-80"
+                      />
                     </div>
-                    <div className="text-right text-[0.44rem] leading-[1.7] tracking-[0.14em] text-white/35 uppercase">
-                      <span className="block">Design</span>
-                      <span className="block">Build</span>
-                      <span className="block">Launch</span>
+                    <div
+                      aria-hidden="true"
+                      className="reflection mt-1 h-16 bg-gradient-to-b from-white/12 to-transparent blur-[2px]"
+                    />
+                  </div>
+
+                  <div
+                    data-hero-frame
+                    data-depth="near"
+                    className="layer absolute top-[18%] right-0 w-[74%] sm:w-[70%]"
+                    style={{ transform: 'rotateY(-17deg) rotateX(5deg) translateZ(70px)' }}
+                  >
+                    <div className="float-slow">
+                      <BrowserFrame
+                        image="/projects/kasoori.jpg"
+                        alt="Kasoori restaurant website preview"
+                        url="kasoori — restaurant"
+                        priority
+                        viewportClassName="aspect-[16/10]"
+                        hover="none"
+                        className="edge-card"
+                      />
+                    </div>
+                    <div
+                      aria-hidden="true"
+                      className="reflection mt-1 h-20 bg-gradient-to-b from-white/14 to-transparent blur-[3px]"
+                    />
+                  </div>
+
+                  <div
+                    data-hero-frame
+                    className="layer absolute bottom-[2%] left-[2%] w-[52%] sm:bottom-[1%] sm:left-[4%] sm:w-[44%]"
+                    style={{ transform: 'rotateY(11deg) rotateZ(3deg) translateZ(150px)' }}
+                  >
+                    <div className="float-slow" style={{ animationDelay: '-4s' }}>
+                      <BrowserFrame
+                        image="/projects/fluids-store.jpg"
+                        alt="Fluids Store e-commerce website preview"
+                        url="fluids — e-commerce"
+                        viewportClassName="aspect-[4/3]"
+                        hover="none"
+                        className="edge-card"
+                      />
                     </div>
                   </div>
-                  <div className="mt-5 flex items-end justify-between gap-3 text-[0.44rem] leading-[1.7] tracking-[0.12em] text-white/45 uppercase">
-                    <span>
-                      Hyderabad
-                      <br />
-                      India — worldwide
-                    </span>
-                    <span className="text-right">
-                      +91 93921 94979
-                      <br />
-                      wa.me/919392194979
-                    </span>
-                  </div>
-                </motion.div>
-              </motion.div>
+                </div>
 
-              <div className="relative z-40 mt-16 hidden items-start gap-3 lg:flex">
-                <span aria-hidden="true" className="mt-2 h-px w-8 bg-line-strong" />
-                <p className="max-w-[20rem] text-[0.7rem] leading-relaxed tracking-[0.02em] text-mute">
-                  A small studio with international standards — design, build and launch handled
-                  end to end.
-                </p>
+                <div
+                  aria-hidden="true"
+                  data-hero-frame
+                  className="plate-dark absolute right-[2%] bottom-0 hidden items-center gap-4 px-4 py-3 sm:flex"
+                  style={{ transform: 'rotateY(-14deg) translateZ(190px)' }}
+                >
+                  <span className="font-display text-[1.05rem] leading-none font-bold tracking-[-0.05em]">
+                    yds<span className="text-accent">.</span>
+                  </span>
+                  <span className="text-[0.52rem] tracking-[0.18em] text-mute uppercase">
+                    Design · Build · Launch
+                  </span>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-
-      <div className="shell mt-12 md:mt-14">
-        <a
-          href={whatsappMessage()}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 border-t border-line pt-5 text-[0.66rem] tracking-[0.16em] text-mute uppercase transition-colors hover:text-accent"
-        >
-          <span aria-hidden="true" className="size-1.5 bg-accent" />
-          Prefer to talk first? WhatsApp the studio
-        </a>
       </div>
     </section>
   );

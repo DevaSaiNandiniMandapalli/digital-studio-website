@@ -32,7 +32,7 @@ export function FloatingActions() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat with us on WhatsApp"
-        className="flex items-center gap-2 bg-ink px-4 py-3.5 text-canvas shadow-[0_12px_36px_-18px_rgba(22,26,27,0.9)] transition-colors duration-300 hover:bg-[#2e3a3f] active:bg-[#2e3a3f]"
+        className="flex items-center gap-2 bg-ink px-4 py-3.5 text-canvas shadow-[0_14px_40px_-16px_rgba(0,0,0,0.85)] transition-colors duration-300 hover:bg-accent active:bg-accent"
       >
         <MessageCircle className="size-[1.15rem]" strokeWidth={2.1} />
         <span className="hidden text-[0.78rem] font-semibold sm:inline">Chat on WhatsApp</span>

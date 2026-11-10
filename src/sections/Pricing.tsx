@@ -12,7 +12,10 @@ export function Pricing() {
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <section id="pricing" className="relative overflow-hidden border-t border-line bg-canvas py-20 md:py-28">
+    <section
+      id="pricing"
+      className="on-paper relative overflow-hidden border-t border-line py-20 md:py-28"
+    >
       <div className="shell">
         <SectionHeading
           eyebrow="Pricing"

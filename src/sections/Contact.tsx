@@ -101,7 +101,10 @@ export function Contact() {
   });
 
   return (
-    <section id="contact" className="relative overflow-hidden border-t border-line bg-canvas py-20 md:py-28">
+    <section
+      id="contact"
+      className="on-paper relative overflow-hidden border-t border-line py-20 md:py-28"
+    >
       <div className="shell">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-5">
@@ -156,7 +159,7 @@ export function Contact() {
             <Reveal delay={0.06}>
               {state === 'sent' ? (
                 <div className="flex h-full min-h-[26rem] flex-col items-start justify-center border border-line bg-surface p-8">
-                  <span className="grid size-11 place-items-center rounded-full bg-accent text-white">
+                  <span className="grid size-11 place-items-center rounded-full bg-accent text-[#0b0b0c]">
                     <Check className="size-5" />
                   </span>
                   <h3 className="mt-5 font-display text-[1.4rem] font-medium tracking-[-0.03em] uppercase">

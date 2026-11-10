@@ -45,3 +45,18 @@ export const navLinks = [
 
 export const whatsappMessage = (message = 'Hi! I would like to discuss a website for my business.') =>
   `${site.whatsapp}?text=${encodeURIComponent(message)}`;
+
+export const industries = [
+  'Restaurants & cafés',
+  'Hotels & resorts',
+  'Juice centres',
+  'Retail & clothing',
+  'E-commerce',
+  'Agriculture',
+  'Startups',
+  'Education',
+  'Healthcare',
+  'Real estate',
+  'Personal brands',
+  'Corporate',
+] as const;

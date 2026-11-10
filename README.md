@@ -6,17 +6,19 @@
 
 
 A production-ready marketing site for an independent website design and development studio:
-12 live project links, transparent INR pricing, a WhatsApp-first enquiry flow and a fully
-responsive architectural design system — a cool grey-blue canvas, off-white and near-black
-plates, a single neo-grotesque family (Inter Tight display, Inter copy), heavy lowercase wordmark,
-bent-arrow marks and stacked card compositions inspired by print identity work.
+12 live project links, transparent INR pricing, a WhatsApp-first enquiry flow and a cinematic
+3D design system — an obsidian canvas, bone plates and a single ember accent, Inter Tight display
+with Instrument Serif italic counterpoints, layered browser-window compositions in real CSS 3D
+perspective, depth-based scrolling and a light "paper" break for the work section.
 
-**Stack:** Vite 6 · React 19 · TypeScript · Tailwind CSS v4 · Framer Motion · lucide-react
+**Stack:** Vite 6 · React 19 · TypeScript · Tailwind CSS v4 · GSAP + ScrollTrigger · Framer Motion · lucide-react
 
 **Design system:** tokens (colour, type, spacing, easing) live in `src/index.css` under
-`@theme`. Sections are composed from `src/components` (Navbar, Logo, BrowserFrame, Accordion,
-Reveal, SectionHeading, Footer, FloatingActions) so every page block shares the same rhythm.
-All motion respects `prefers-reduced-motion`.
+`@theme`; `.on-paper` re-declares the same tokens for light bands. Sections are composed from
+`src/components` (Navbar, Logo, BrowserFrame, Tilt, Marquee, ScrollProgress, Accordion, Reveal,
+SectionHeading, Footer, FloatingActions). The hero runs a GSAP entrance timeline plus pointer
+parallax and ScrollTrigger depth; magnetic buttons and card tilt are CSS-transform based and
+disabled for coarse pointers and `prefers-reduced-motion`.
 
 ---
 
